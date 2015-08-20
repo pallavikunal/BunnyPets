@@ -1,0 +1,135 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.users.show_user_details'); ?>
+
+        <small> <?php echo trans('backend.users.show_all_user_details'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.user.index'); ?>"><?php echo trans('backend.users.users'); ?></a></li>
+        <li class="active"><?php echo trans('backend.users.details'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">
+
+                <div class="box-header">
+                    <?php if($user !== NULL): ?>
+                    <h3 class="box-title"><?php echo $user->firstName; ?>'<?php echo trans('backend.users.sdetails'); ?></h3>
+                    <div class='pull-right margin'>
+                        <a href="<?php echo URL::route('admin.user.edit',['id' => $user->id ]); ?>" class='btn btn-primary'><?php echo trans('backend.edit_details'); ?></a>
+                    </div>
+                    <?php endif; ?>
+                </div><!-- /.box-header -->
+
+                <!-- form start -->
+                <div class="box-body">
+                    <?php if($user === NULL): ?>
+                    <div class="alert alert-info">                        
+                        <b>Woops!</b> We are not able find any details for this user.
+                    </div>
+                    <?php else: ?>
+                    <dl class="dl-horizontal">
+                        <dt><?php echo trans('backend.users.index_first_name'); ?></dt>
+                        <dd><p><?php echo $user->firstName; ?></p></dd>
+                        <dt><?php echo trans('backend.users.index_last_name'); ?></dt>
+                        <dd><p><?php echo $user->lastName; ?></p></dd>
+                        <dt><?php echo trans('backend.users.index_email'); ?></dt>
+                        <dd><p><?php echo $user->email; ?></p></dd>
+                        <dt><?php echo trans('backend.users.index_role'); ?></dt>
+                        <dd>
+                            <?php if($user->role_id == 1): ?>
+                            <p class='text-green'><?php echo trans('backend.users.admin'); ?></p>
+                            <?php elseif($user->role_id == 2): ?>
+                            <p class='text-light-blue'><?php echo trans('backend.users.travel_agent'); ?></p>
+                            <?php else: ?>
+                            <p class='text-muted'><?php echo trans('backend.users.normal_user'); ?></p>
+                            <?php endif; ?>
+                        </dd>
+                         <?php if($user->role_id != '1'): ?>
+                        <dt><?php echo trans('backend.users.agencyName'); ?></dt>
+                        <dd><p><?php if($user->agencyName): ?><?php echo $user->agencyName; ?> <?php else: ?> Not available <?php endif; ?></p></dd>
+                        <dt><?php echo trans('frontend.agent.profile.agency_address'); ?></dt>
+                        <dd><p><?php if($user->agencyAddress): ?><?php echo $user->agencyAddress; ?> <?php else: ?> Not available <?php endif; ?> </p></dd>
+                        <dt><?php echo trans('frontend.agent.profile.about_me'); ?></dt>
+                        <dd><p><?php if($user->about_me): ?><?php echo $user->about_me; ?> <?php else: ?> Not available <?php endif; ?></p></dd>
+                        <dt><?php echo trans('frontend.agent.profile.contact_number'); ?></dt>
+                        <dd><p><?php if($user->contactNumber): ?><?php echo $user->contactNumber; ?> <?php else: ?> Not available <?php endif; ?></p></dd> 
+                         <?php endif; ?>
+                        
+                        <dt><?php echo trans('backend.status'); ?></dt>
+                        <dd>                                                                  
+                            <?php if($user->status == '1'): ?>
+                            <p class='text-green'><?php echo trans('backend.active'); ?></p>
+                            <?php elseif($user->status === '2'): ?>
+                            <p class='text-green'><?php echo trans('backend.blocked'); ?></p>
+                            <?php else: ?>
+                            <?php echo trans('backend.inactive'); ?>
+
+                            <?php endif; ?>
+
+                        </dd>
+                        <dt><?php echo trans('backend.users.user_image'); ?></dt>
+                        <dd><p>
+                                <?php if($user->avtar): ?>
+                                <img src="<?php echo asset('/uploads/avtar/'); ?>/<?php echo $user->avtar; ?>"
+                                     width="100px;" height="100px;">
+                                <?php else: ?>
+                                <img src="<?php echo asset('/packages/images/'); ?>/user-pic-.png"
+                                     width="100px;" height="100px;">
+                                <?php endif; ?>
+                            </p>
+                        </dd>   
+                        <dt><?php echo trans('backend.created_at'); ?></dt>
+                        <dd><p><?php echo date('d M, Y', strtotime($user->created_at)); ?></p></dd>
+                        <dt><?php echo trans('backend.modified_at'); ?></dt>
+                        <dd><p><?php echo date('d M, Y', strtotime($user->updated_at)); ?></p></dd>
+                    </dl>
+                    <?php endif; ?>
+                </div><!-- /.box-body -->
+                 <?php if($user->role_id != '1'): ?>
+                <hr/>
+                <h3 class="box-title">Pay In Details</h3>
+                <!-- form start -->
+                <div class="box-body">
+                   
+                    <?php if(($payInInfo === NULL) || (isset($payInInfo->account_number) && $payInInfo->account_number == '0')): ?>
+                    <div class="alert alert-info">                        
+                        <b>Woops!</b> We are not able find any Pay In details for this user.
+                    </div>
+                    <?php else: ?>
+                    <dl class="dl-horizontal">
+                        <dt><?php echo trans('frontend.agent.pay_in_details.account_holder_name'); ?></dt>
+                        <dd><p><?php echo isset($payInInfo->account_holder_name)?$payInInfo->account_holder_name:'Not available'; ?></p></dd>
+                        <dt><?php echo trans('frontend.agent.pay_in_details.account_number'); ?></dt>
+                        <dd><p><?php echo (isset($payInInfo->account_number) && ($payInInfo->account_number != '0'))?$payInInfo->account_number:'Not available'; ?></p></dd>
+                        <dt><?php echo trans('frontend.agent.pay_in_details.bank_name'); ?></dt>
+                        <dd><p><?php echo (isset($payInInfo->bank_name) && $payInInfo->bank_name !='')?$payInInfo->bank_name:'Not available'; ?></p></dd>
+                        <dt><?php echo trans('frontend.agent.pay_in_details.branch'); ?></dt>
+                        <dd><p><?php echo (isset($payInInfo->branch) && $payInInfo->branch !='')?$payInInfo->branch:'Not available'; ?></p></dd>
+                        <dt><?php echo trans('frontend.agent.pay_in_details.ifscCode'); ?></dt>
+                        <dd><p><?php echo (isset($payInInfo->IFSC_code) && $payInInfo->IFSC_code !='')?$payInInfo->IFSC_code:'Not available'; ?></p></dd>                        
+                        <dt><?php echo trans('backend.modified_at'); ?></dt>
+                        <dd><p><?php echo date('d M, Y', strtotime($user->updated_at)); ?></p></dd>
+                    </dl>
+                    <?php endif; ?>                    
+                </div><!-- /.box-body -->
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

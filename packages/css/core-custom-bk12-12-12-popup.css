@@ -1,0 +1,595 @@
+@charset "utf-8";
+/* CSS Document */
+
+@font-face {
+	font-family:"MuseoSans300";
+	src:url('../fonts/museoSlab/MuseoSans300.eot'),
+	url('../fonts/museoSlab/MuseoSans300.eot?#iefix') format('eot'),
+	url("../fonts/museoSlab/MuseoSans300.ttf") format('truetype'),
+	url("../fonts/museoSlab/MuseoSans300.svg#MuseoSans300") format('svg'),
+	url("../fonts/museoSlab/MuseoSans300.woff") format('woff');
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"MuseoSans500";
+	src:url('../fonts/museoSlab/MuseoSans500.eot'),
+	url('../fonts/museoSlab/MuseoSans500.eot?#iefix') format('eot'),
+	url("../fonts/museoSlab/MuseoSans500.ttf") format('truetype'),
+	url("../fonts/museoSlab/MuseoSans500.svg#MuseoSans500") format('svg'),
+	url("../fonts/museoSlab/MuseoSans500.woff") format('woff');
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"MuseoSlab100";
+	src:url('../fonts/museoSlab/MuseoSlab100.eot'),
+	url('../fonts/museoSlab/MuseoSlab100.eot?#iefix') format('eot'),
+	url("../fonts/museoSlab/MuseoSlab100.ttf") format('truetype'),
+	url("../fonts/museoSlab/MuseoSlab100.svg#MuseoSlab100") format('svg'),
+	url("../fonts/museoSlab/MuseoSlab100.woff") format('woff');
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"MuseoSlab300";
+	src:url('../fonts/museoSlab/MuseoSlab300.eot'),
+	url('../fonts/museoSlab/MuseoSlab300.eot?#iefix') format('eot'),
+	url("../fonts/museoSlab/MuseoSlab300.ttf") format('truetype'),
+	url("../fonts/museoSlab/MuseoSlab300.svg#MuseoSlab300") format('svg'),
+	url("../fonts/museoSlab/MuseoSlab300.woff") format('woff');
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face {
+	font-family:"MuseoSlab500";
+	src:url('../fonts/museoSlab/MuseoSlab500.eot'),
+	url('../fonts/museoSlab/MuseoSlab500.eot?#iefix') format('eot'),
+	url("../fonts/museoSlab/MuseoSlab500.ttf") format('truetype'),
+	url("../fonts/museoSlab/MuseoSlab500.svg#MuseoSlab500") format('svg'),
+	url("../fonts/museoSlab/MuseoSlab500.woff") format('woff');
+	font-weight:normal;
+	font-style:normal;
+}
+@font-face{
+	font-family:"Rupee_Foradian";
+	src:url('../fonts/museoSlab/Rupee_Foradian.eot'),
+	url('../fonts/museoSlab/Rupee_Foradian.eot?#iefix') format('eot'),
+	url("../fonts/museoSlab/Rupee_Foradian.ttf") format('truetype'),
+	url("../fonts/museoSlab/Rupee_Foradian.svg#Rupee_Foradian") format('svg'),
+	url("../fonts/museoSlab/Rupee_Foradian.woff") format('woff');
+	font-weight:normal;
+	font-style:normal;
+}
+
+
+.MuseoSans300{font-family:"MuseoSans300";}
+.MuseoSans500{font-family:"MuseoSans500";}
+.MuseoSlab100{font-family:"MuseoSlab100";}
+.MuseoSlab300{font-family:"MuseoSlab300";}
+.MuseoSlab500{font-family:"MuseoSlab500";}
+.Rupee-Foradian{ font-family:"Rupee_Foradian";}
+
+
+.fontSize10{font-size:10px;}
+.fontSize12{font-size:12px;}
+.fontSize14{font-size:14px;}
+.fontSize15{font-size:15px;}
+.fontSize16{font-size:16px;}
+.fontSize18{font-size:18px;}
+.fontSize20{font-size:20px;}
+.fontSize22{font-size:22px;}
+.fontSize24{font-size:24px;}
+.fontSize26{font-size:26px;}
+.fontSize28{font-size:28px;}
+
+
+.color-maroon{color:#603813;}
+.color-yellow{color:#f7941e;}
+a.color-yellow{color:#f7941e;}
+.color-whiite{ color:#FFF;}
+a.color-whiite{ color:#FFF;}
+.color-grey{ color:#999;}
+.color-light-maroon{color: #603813}
+a.color-light-maroon{color: #603813}
+
+/* width */
+.width10{width:10%;}
+.width20{width:20%;}
+.width25{width:25%;}
+.width28{width:28%;}
+.width30{width:30%;}
+.width40{width:40%;}
+.width50{width:50%;}
+.width60{width:60%;}
+.width70{width:70%;}
+.width80{width:80%;}
+.width90{width:90%;}
+.width100{width:100%;}
+
+.height440{ height:440px;}
+
+/* float */
+.floatL{float:left;}
+.floatR{float:right;}
+
+/* align */
+.alignCenter{ text-align:center;}
+.alignLeft{ text-align:left;}
+.alignRight{ text-align:right;}
+
+/*logo and header */
+.navbar-brand{padding:0; margin-top:-3px;}
+
+.work-b{}
+
+
+
+
+/*footer*/
+#footer-banner .col-xs-12{margin:0; padding:0;}
+#footer-banner img{width:100%; height:200px;}
+.footerBG{ background-color:#333; min-height:230px;}
+.footerContainer{}
+.popup-box{width:95%; margin-left:auto; margin-right:auto; color:#666;}
+.popup-input{ width:100%; height:35px; text-indent:5px; padding:2px; border:1px solid #ccc; outline:none;}
+.popup-textarea{ width:100%; height:100px; text-indent:5px; padding:2px; border:1px solid #ccc; outline:none;}
+
+
+/* travel details page */
+.sidebar-module{margin:0; margin-top:10px;}
+
+
+@media (min-width: 1200px) {
+	/* align css */
+	.clearfix{clear:both;}
+	.alignCenter{ text-align:center;}
+	
+	.marginLeft5{margin-left:5px;}
+	.marginLeft10{margin-left:10px;}
+	.marginLeft15{margin-left:15px;}
+	.marginLeft20{margin-left:20px;}
+	.marginLeft25{margin-left:25px;}
+	.marginLeft30{margin-left:30px;}
+	.marginLeft35{margin-left:35px;}
+	.marginLeft35{margin-left:35px;}
+	.marginLeft40{margin-left:40px;}
+	.marginLeft50{margin-left:50px;}
+	.marginLeft55{margin-left:55px;}
+	.marginLeft60{margin-left:60px;}
+	.marginLeft70{margin-left:70px;}
+	.marginLeft100{margin-left:100px;}
+	
+	.marginBottom5{margin-bottom:5px;}
+	.marginBottom10{margin-bottom:10px;}
+	.marginBottom15{margin-bottom:15px;}
+	.marginBottom20{margin-bottom:20px;}
+	.marginBottom25{margin-bottom:25px;}
+	.marginBottom30{margin-bottom:30px;}
+	.marginBottom35{margin-bottom:35px;}
+	.marginBottom40{margin-bottom:40px;}
+	.marginBottom50{margin-bottom:50px;}
+	.marginBottom60{margin-bottom:60px;}
+	.marginBottom-5{margin-bottom:5%;}
+	.marginBottom-10{margin-bottom:10%;}
+	
+	
+	.marginRight5{margin-right:5px;}
+	.marginRight10{margin-right:10px;}
+	.marginRight15{margin-right:15px;}
+	.marginRight20{margin-right:20px;}
+	.marginRight25{margin-right:25px;}
+	.marginRight30{margin-right:30px;}
+	.marginRight35{margin-right:35px;}
+	.marginRight40{margin-right:40px;}
+	.marginRight45{margin-right:45px;}
+	
+	
+	
+	.marginTop5{ margin-top:5px;}
+	.marginTop10{margin-top:10px;}
+	.marginTop15{margin-top:15px;}
+	.marginTop20{margin-top:20px;}
+	.marginTop25{margin-top:25px;}
+	.marginTop30{margin-top:30px;}
+	.marginTop35{margin-top:35px;}
+	.marginTop40{margin-top:40px;}
+	
+	
+	.paddingTop5{padding-top:5px;}
+	.paddingTop10{padding-top:10px;}
+	.paddingTop15{padding-top:15px;}
+	.paddingTop20{padding-top:20px;}
+	.paddingTop25{padding-top:25px;}
+	.paddingTop30{padding-top:30px;}
+	.paddingTop35{padding-top:35px;}
+	.paddingTop40{padding-top:40px;}
+	
+	hr{border:none;}
+	.seperator{width: 70%;height: 1px;margin: 30px;background-image: radial-gradient(#000, #FFF), radial-gradient(#000, #FFF);background-position: 0, 100%, 0, 100%;}
+	.seperator1{width: 70%;height: 1px;margin: 30px;background-image: radial-gradient(#000, #FFF), radial-gradient(#000, #FFF);background-position: 0, 100%, 0, 100%;}
+	.hr-divider {margin: 50px auto; /* Space out the Bootstrap <hr> more */}
+	.hr-divider1 {margin:50px auto 0 auto; /* Space out the Bootstrap <hr> more */}
+	.adt-img-txt-bg{text-align:center;position:absolute; width:261px; height:40px; background-color:#000; margin-left:49px; margin-top:-41px; opacity:0.6; padding-top:5px;}
+	.adt-img-txt{color:#FFF;font-family:"MuseoSlab100"; font-weight:normal;}
+	
+	#footer-banner .col-xs-12{margin:0; padding:0;}
+	#footer-banner img{width:100%; height:300px;}
+	.positionAbsolute{ position:absolute; margin-top:5px;}
+	.positionRelative{ position:relative; top:-240px;}
+	.positionRelative-footer{ position:relative; top:-85px;}
+	.footer-link{ width:100%; margin-top:10px;}
+	.footer-link li{ list-style:none; float:left;}
+	.footer-link li a{color:#fff; padding-right:10px; padding-left:10px; border-right:1px solid #fff;}
+	.footer-link li:last-child a{color:#fff; padding-right:10px; padding-left:10px; border-right:none;}
+	
+	/*banner form */
+	.downArrow{position:absolute; z-index:8; margin-top:15px; margin-left:26%; color:#000;}
+	.height300{height:300px;}
+	.min-height100{ min-height:100px;}
+	.borderRight{border-right:1px solid #ccc;}
+	.footerColHeight{ min-height:140px; color:#fff;}
+	.social-icon{width:100%; text-align:center;}
+	
+	
+	.calender-icon{ margin-right:7px; margin-top:-3px; margin-left:-3px;}
+	
+	
+	/*inner banner*/
+	.inner-banner{ position:relative; width:100%;}
+	.inner-banner .banner-col1{position:relative; width:100%;}
+	.inner-banner .banner-col1 .item1{width:100%;}
+	.inner-banner .banner-col1 .item1 img{width:100%; height:162px;}
+	
+	.sub-left-colm{width:100%; min-height:100px; background-color:#f6f5f5; border:1px solid #DBDBDB;}
+	.sub-left-colm .title-colm{width:100%; height:40px; text-align:center; color:#fff; background-color:#603813; font-size:16px;line-height:37px; font-family:"MuseoSlab500";}
+	.sub-left-colm .left-content-colm{width:90%; margin:10px auto;}
+	.sub-left-colm .left-content-colm a{ color:#f7941e;}
+	.sub-left-colm .left-content-colm ul{padding:0;}
+	.sub-left-colm .left-content-colm li{list-style:none;}
+	
+	.sub-right{width:90%; margin-left:2%; min-height:100px;}
+	.sub-right-colm{width:100%; min-height:100px; background-color:#f6f5f5; border:1px solid #DBDBDB; color:#646464;}
+	
+	.btn-book{background-color: #f7941e;border-color: #f7941e;border-radius: 0;color: #fff;padding:2% 3%; font-weight:bold;}
+	.btn-book-position{width:60%; margin-left:auto; margin-right:auto;}
+}
+
+@media (min-width: 768px) {
+	.clearfix{clear:both;}
+	.alignCenter{ text-align:center;}
+	
+	.marginLeft5{margin-left:5px;}
+	.marginLeft10{margin-left:10px;}
+	.marginLeft15{margin-left:15px;}
+	.marginLeft20{margin-left:20px;}
+	.marginLeft25{margin-left:25px;}
+	.marginLeft30{margin-left:30px;}
+	.marginLeft35{margin-left:35px;}
+	.marginLeft35{margin-left:35px;}
+	.marginLeft40{margin-left:40px;}
+	.marginLeft50{margin-left:50px;}
+	.marginLeft55{margin-left:55px;}
+	.marginLeft60{margin-left:60px;}
+	.marginLeft70{margin-left:70px;}
+	.marginLeft100{margin-left:100px;}
+	
+	.marginBottom5{margin-bottom:5px;}
+	.marginBottom10{margin-bottom:10px;}
+	.marginBottom15{margin-bottom:15px;}
+	.marginBottom20{margin-bottom:20px;}
+	.marginBottom25{margin-bottom:25px;}
+	.marginBottom30{margin-bottom:30px;}
+	.marginBottom35{margin-bottom:35px;}
+	.marginBottom40{margin-bottom:40px;}
+	
+	.marginRight5{margin-right:5px;}
+	.marginRight10{margin-right:10px;}
+	.marginRight15{margin-right:15px;}
+	.marginRight20{margin-right:20px;}
+	.marginRight25{margin-right:25px;}
+	.marginRight30{margin-right:30px;}
+	.marginRight35{margin-right:35px;}
+	.marginRight40{margin-right:40px;}
+	.marginRight45{margin-right:45px;}
+	
+	.margin-L-R{ margin-left:auto; margin-right:auto;}
+	
+	
+	
+	.marginTop5{ margin-top:5px;}
+	.marginTop10{margin-top:10px;}
+	.marginTop15{margin-top:15px;}
+	.marginTop20{margin-top:20px;}
+	.marginTop25{margin-top:25px;}
+	.marginTop30{margin-top:30px;}
+	.marginTop35{margin-top:35px;}
+	.marginTop40{margin-top:40px;}
+	
+	
+	.paddingTop5{padding-top:5px;}
+	.paddingTop10{padding-top:10px;}
+	.paddingTop15{padding-top:15px;}
+	.paddingTop20{padding-top:20px;}
+	.paddingTop25{padding-top:25px;}
+	.paddingTop30{padding-top:30px;}
+	.paddingTop35{padding-top:35px;}
+	.paddingTop40{padding-top:40px;}
+	
+	.border-top{ width:106%;height:3px; border-top:1px solid #ccc; margin:30px 0; }
+	
+/*inner banner*/
+	.inner-banner{ position:relative; width:100%;}
+	.inner-banner .banner-col1{position:relative; width:100%;}
+	.inner-banner .banner-col1 .item1{width:100%;}
+	.inner-banner .banner-col1 .item1 img{width:100%; height:200px;}
+	.inner-banner .banner-col1 .item2{width:100%;}
+	.inner-banner .banner-col1 .item2 img{width:100%; height:129px;}
+	
+	.sub-left-colm{width:100%; min-height:100px; background-color:#f6f5f5; border:1px solid #DBDBDB;}
+	.sub-left-colm .title-colm{width:100%; height:40px; text-align:center; color:#fff; background-color:#603813; font-size:16px;line-height:37px; font-family:"MuseoSlab500";}
+	.sub-left-colm .left-content-colm{width:90%; margin:10px auto;}
+	.sub-left-colm .left-content-colm a{ color:#f7941e;}
+	.sub-left-colm .left-content-colm ul{padding:0;}
+	.sub-left-colm .left-content-colm li{list-style:none;}
+	
+	.sub-right{width:90%; margin-left:2%; min-height:100px;}
+	.sub-right-colm{width:100%; min-height:100px; background-color:#f6f5f5; border:1px solid #DBDBDB; color:#646464;}
+	
+	.btn-book{background-color: #f7941e;border-color: #f7941e;border-radius: 0;color: #fff;padding:2% 3%; font-weight:bold;}
+	.btn-book-position{width:60%; margin-left:auto; margin-right:auto;}
+	
+	.sidebar-module{margin: 0 -23px;}
+	#slider-DP img{height:340px; width:100%;}
+	
+	/*details page*/
+	.right-glance-box{width:95%; margin-left:auto; margin-right:auto;}
+	.right-glance-box ul{padding:0; width:98%; padding-left:1%; list-style:none; line-height:35px;}
+	.right-glance-box .title{color:#603813; font-weight:bold;}
+	.right-glance-box .activity-icons{ background-image:url(../images/activity-type-icons.png); background-position:0 8px; background-repeat:no-repeat; width:100%; height:auto; float:left; text-indent:25px;}
+	.right-glance-box .location-icons{ background-image:url(../images/location-icons.png); background-position:0 8px; background-repeat:no-repeat; width:100%; height:auto; float:left; text-indent:25px;}
+	.right-glance-box .duration-icons{ background-image:url(../images/duration-icons.png); background-position:0 8px; background-repeat:no-repeat; width:100%; height:auto; float:left; text-indent:25px;}
+	.right-glance-box .fitness-icons{ background-image:url(../images/fitness-level-icons.png); background-position:0 8px; background-repeat:no-repeat; width:100%; height:auto; float:left; text-indent:25px;}
+	.right-glance-box .refund-policy-icons{ background-image:url(../images/refund-policy-icons.png); background-position:0 8px; background-repeat:no-repeat; width:100%; height:auto; float:left; text-indent:25px;}
+	.google-map-box{ width:100%; height:280xp;}
+	#map-canvas{ width:100%; height:280px;}
+	.calender-selection{width:100%; height:auto; padding:2%; border-top:1px solid #ccc;}
+	.calender-dropdown{ width:60px;}	
+	.calender-dropdown > .dropdown-menu{height:auto; overflow:hidden;}
+	.calender-dropdown > .dropdown-toggle{ background-color:#d1d1d1;}
+	.best-price{width:130px; height:40px; background-image:url(../images/best-price-icon.png); background-repeat:no-repeat; background-position:0 5px; line-height:14px; padding-left:40px; padding-top:8px;}
+	
+	
+}
+
+@-moz-document url-prefix() {
+	.btn .caret{ margin-top:-10px;}
+}
+
+#rememberMe{left:18px;}
+
+/* =============================Base for label styling */
+[type="checkbox"]:not(:checked),
+[type="checkbox"]:checked {
+  position: absolute;
+  left: -9999px;
+  outline:none;
+}
+[type="checkbox"]:not(:checked) + label,
+[type="checkbox"]:checked + label {
+  position: relative;
+  padding-left: 25px;
+  cursor: pointer;
+  outline:none;
+  font-weight:normal;
+}
+
+/* checkbox aspect */
+[type="checkbox"]:not(:checked) + label:before,
+[type="checkbox"]:checked + label:before {
+  content: '';
+  position: absolute;
+  left:0; top: 2px;
+  width: 17px; height: 17px;
+  border: 1px solid #aaa;
+  background: #f8f8f8;
+  border-radius: 3px;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.3);
+  outline:none;
+}
+/* checked mark aspect */
+[type="checkbox"]:not(:checked) + label:after,
+[type="checkbox"]:checked + label:after {
+  content: '✔';
+  position: absolute;
+  top: 0; left: 4px;
+  font-size: 14px;
+  color: #09ad7e;
+  transition: all .2s;
+  outline:none;
+}
+/* checked mark aspect changes */
+[type="checkbox"]:not(:checked) + label:after {
+  opacity: 0;
+  transform: scale(0);
+  outline:none;
+}
+[type="checkbox"]:checked + label:after {
+  opacity: 1;
+  transform: scale(1);
+  outline:none;
+}
+/* disabled checkbox */
+[type="checkbox"]:disabled:not(:checked) + label:before,
+[type="checkbox"]:disabled:checked + label:before {
+  box-shadow: none;
+  border-color: #bbb;
+  background-color: #ddd;
+  outline:none;
+}
+[type="checkbox"]:disabled:checked + label:after {
+  color: #999;
+  outline:none;
+}
+[type="checkbox"]:disabled + label {
+  color: #aaa;
+  outline:none;
+}
+/* accessibility */
+[type="checkbox"]:checked:focus + label:before,
+[type="checkbox"]:not(:checked):focus + label:before {
+  border: 1px dotted blue;
+  outline:none;
+}
+
+/* hover style just for information */
+label:hover:before {
+  border: 1px solid #4778d9!important;
+  outline:none;
+}
+
+/* for video*/
+.video-wrapper{
+	display: block;
+	position: relative;
+	height: 100%;
+}
+.video-wrapper video{
+	position: absolute;
+	width: 100%;
+	height: auto;
+	margin-top:-170px;
+}
+
+/*login flip*/
+#myModal{
+	/*width:288px;
+	height:321px;
+	margin:0 auto;
+	position:relative;*/
+	z-index:1;
+	
+	-moz-perspective: 800px;
+	-webkit-perspective: 800px;
+	perspective: 800px;
+}
+
+#myModal form{
+	width:100%;
+	height:100%;
+	position:absolute;
+	top:0;
+	left:0;
+	
+	/* Enabling 3d space for the transforms */
+	-moz-transform-style: preserve-3d;
+	-webkit-transform-style: preserve-3d;
+	transform-style: preserve-3d;
+	
+	/* When the forms are flipped, they will be hidden */
+	-moz-backface-visibility: hidden;
+	-webkit-backface-visibility: hidden;
+	backface-visibility: hidden;
+	
+	/* Enabling a smooth animated transition */
+	-moz-transition:0.8s;
+	-webkit-transition:0.8s;
+	transition:0.8s;
+	
+	/* Configure a keyframe animation for Firefox */
+	-moz-animation: pulse 2s infinite;
+	
+	/* Configure it for Chrome and Safari */
+	-webkit-animation: pulse 2s infinite;
+}
+
+
+/* Firefox Keyframe Animation */
+@-moz-keyframes pulse{
+	0%{		box-shadow:0 0 1px #008aff;}
+	50%{	box-shadow:0 0 8px #008aff;}
+	100%{	box-shadow:0 0 1px #008aff;}
+}
+
+/* Webkit keyframe animation */
+@-webkit-keyframes pulse{
+	0%{		box-shadow:0 0 1px #008aff;}
+	50%{	box-shadow:0 0 10px #008aff;}
+	100%{	box-shadow:0 0 1px #008aff;}
+}
+
+#login{
+	/*background:url('../img/login_form_bg.jpg') no-repeat;*/
+	z-index:1;
+	opacity:0;
+	
+	
+	/* Rotating the recover password form by default */
+	-moz-transform:rotateY(180deg);
+	-webkit-transform:rotateY(180deg);
+	transform:rotateY(180deg);
+}
+
+#forgotpassword{
+	/*background:url('../img/recover_form_bg.jpg') no-repea*/t;
+	z-index:1;
+	opacity:0;
+	
+	/* Rotating the recover password form by default */
+	-moz-transform:rotateY(180deg);
+	-webkit-transform:rotateY(180deg);
+	transform:rotateY(180deg);
+}
+#signup{
+	/*background:url('../img/recover_form_bg.jpg') no-repea*/t;
+	z-index:100;
+	
+	
+}
+
+#myModal.flipped #login{
+	
+	opacity:0;
+	
+	/**
+	 * Rotating the login form when the
+	 * flipped class is added to the container
+	 */
+	
+	-moz-transform:rotateY(-180deg);
+	-webkit-transform:rotateY(-180deg);
+	transform:rotateY(-180deg);
+}
+
+#myModal.flipped #forgotpassword{
+	
+	opacity:1;
+	
+	/* Rotating the recover div into view */
+	-moz-transform:rotateY(0deg);
+	-webkit-transform:rotateY(0deg);
+	transform:rotateY(0deg);
+}
+#myModal.signFlipped #login{
+	opacity:1;
+	
+	/* Rotating the recover div into view */
+	-moz-transform:rotateY(0deg);
+	-webkit-transform:rotateY(0deg);
+	transform:rotateY(0deg);
+	
+}
+#myModal.signFlipped #signup{
+	
+	opacity:0;
+	
+	/**
+	 * Rotating the login form when the
+	 * flipped class is added to the container
+	 */
+	
+	-moz-transform:rotateY(-180deg);
+	-webkit-transform:rotateY(-180deg);
+	transform:rotateY(-180deg);
+}
+

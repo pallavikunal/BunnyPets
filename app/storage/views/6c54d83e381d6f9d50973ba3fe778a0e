@@ -1,0 +1,29 @@
+<div class="modal fade closeOnSideClick" id="userProfilePoP" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">    	
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Operator / Agency  </h4>
+            </div>
+
+            <div class="modal-body">                                    
+                <div class="review-popup-LB floatL">
+                    <?php if($agentDetails['agentDetail']['avtar']): ?>
+                    <img src="<?php echo asset('uploads/avtar/'); ?>/<?php echo $agentDetails['agentDetail']['avtar']; ?>"
+                        src="/uploads/avtar/<?php echo $agentDetails['agentDetail']['avtar']; ?>"
+                         width="100px;" height="100px;">
+                    <?php else: ?>
+                    <img src="<?php echo asset('packages/images/user-pic-.png'); ?>" width="100px;" height="100px;">
+                    <?php endif; ?>                    
+                    <br>                 	
+                </div>
+                <div class="review-popup-RB floatR">
+                    <span class="width100 marginTop5 floatL marginBottom5"><b><?php echo ucfirst($agentDetails['agentDetail']['agencyName']); ?></b></span>
+                    <span class="width100 marginTop5 floatL marginBottom5 star-strip star-strip<?php echo (int)$agentDetails['ratingAverage']; ?>"></span>                    
+                    <span class="width100 marginTop5 floatL marginBottom5 tour-pp-discription"><?php echo ucfirst($agentDetails['agentDetail']['about_me']); ?></span>
+                </div>
+                <div class="clearfix"></div>
+            </div>      
+        </div>                 
+    </div>
+</div>

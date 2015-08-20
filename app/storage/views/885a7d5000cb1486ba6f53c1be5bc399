@@ -1,0 +1,46 @@
+<?php $__env->startSection('content'); ?>
+<!--Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.change_password.change_password'); ?>
+
+    </h1>
+</section>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary"> 
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+                <!-- form start -->
+                <?php echo Form::open(['route' => 'admin.changePassword','method' => 'post']); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="password"><?php echo trans('frontend.agent.change_password.new_password'); ?></label>
+                        <?php echo Form::input('password','password',null,['class' => 'form-control', 'id'=> 'email','placeholder' => trans('frontend.agent.change_password.enter_password')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('password'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="password_confirmation"><?php echo trans('frontend.agent.change_password.confirm_new_password'); ?></label>
+                        <?php echo Form::input('password','password_confirmation',null,['class' => 'form-control', 'id'=> 'password_confirmation','placeholder' => trans('frontend.agent.change_password.enter_confirm_password')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('password_confirmation'); ?></p>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <?php echo Form::submit(trans('backend.save'), array('class' => 'btn btn-primary')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

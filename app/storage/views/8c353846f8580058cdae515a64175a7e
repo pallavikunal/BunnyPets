@@ -1,0 +1,64 @@
+<?php $__env->startSection('dashboard_content'); ?>
+
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+		<h3 class="MuseoSans300 color-maroon">My Booking</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 table-ovrflow">
+		<table class="table table-hover table-bordered">
+		   <thead>
+			  <tr>
+				 <th class="bg-gray clr-brown">Booking No.</th>
+				 <th class="bg-gray clr-brown">Tour Name</th>
+				 <th class="bg-gray clr-brown">Booking Date</th>
+				 <th class="bg-gray clr-brown">Amount</th>
+				 <th class="bg-gray clr-brown">Status</th>
+				 <th class="bg-gray clr-brown">Payment Mode</th>
+			  </tr>
+		   </thead>
+		   <tbody>
+		   <?php if(isset($bookings) && $bookings->count() > 0): ?>
+            <?php foreach($bookings as $bookedTour): ?>
+			  <tr>
+				 <td>
+					<a href="<?php echo URL::route('booking-details',[$bookedTour->order_id]); ?>" class="color-yellow">
+                        <?php echo $bookedTour->order_id; ?>
+
+                    </a>
+				 </td>
+				 <td><?php echo substr(ucfirst($bookedTour->booking->tours->title),0,26); ?>..</td>
+				 <td><?php echo date("d M,Y",strtotime($bookedTour->created_at)); ?></td>
+				 <td><span class="Rupee-Foradian">`</span> <?php echo $bookedTour->order_amount; ?></td>
+				 <td>
+					<?php if($bookedTour->order_status == 1): ?><span class='color-green'>Success</span>
+                    <?php elseif($bookedTour->order_status == 2): ?>Cancelled
+                    <?php elseif($bookedTour->order_status == 4 && ($bookedTour->booking->tour_dates < date("Y-m-d"))): ?><span class='color-red'>Expired</span>
+                    <?php elseif($bookedTour->order_status == 4 && ($bookedTour->booking->tour_dates > date("Y-m-d"))): ?><span class='color-green'>Requested</span>
+                    <?php else: ?> Failure <?php endif; ?>
+				 </td>
+				 <td>
+					<?php if($bookedTour->order_type == 2): ?> Offline
+                    <?php else: ?> Online
+                    <?php endif; ?>
+				 </td>
+			  </tr>
+			  <?php endforeach; ?>
+            <?php else: ?>
+			 <tr>
+                 <td colspan="6">
+					You haven't booked any adventure yet! <a href='<?php echo URL::route("tours"); ?>'>Browse</a> adventures.
+				</td>
+			 </tr>
+			 <?php endif; ?>
+		   </tbody>
+		</table>
+	</div>
+</div>
+
+
+
+
+    <?php $__env->stopSection(); ?>
+<?php echo $__env->make('user.profile.dashboard', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

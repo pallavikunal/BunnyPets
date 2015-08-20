@@ -1,0 +1,27 @@
+<div class="modal fade" id="showPartnerRegister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+
+    <div class="modal-dialog modal-sm">    	
+        <div class="modal-content">            
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title color-yellow MuseoSlab500" id="myModalLabel">Sign Up</h4>
+            </div>            
+            <?php echo Form::open(['name' => 'frmRegister','id' => 'frmRegister']); ?>
+
+            <div class="modal-body">                                                            
+                <div id="successMessageRegistration" class="color-green fontSize12" style="display:none;">&nbsp;</div>
+                <?php echo Form::text('firstName',null,['class' => 'popup-input marginTop10', 'id'=> 'firstName','placeholder' => 'First Name*']); ?><span id="error_firstName" class="color-red fontSize12"></span>
+                <?php echo Form::text('lastName',null,['class' => 'popup-input marginTop10', 'id'=> 'lastName','placeholder' => 'Last Name*']); ?><span id="error_lastName" class="color-red fontSize12"></span>
+                <?php echo Form::text('email',null,['class' => 'popup-input marginTop10', 'id'=> 'email','placeholder' => 'Email Address*']); ?><span id="error_email" class="color-red fontSize12"></span>
+                <?php echo Form::Input('password','password',null,['class' => 'popup-input marginTop10', 'id'=> 'password','placeholder' => 'Password*']); ?><span id="error_password" class="color-red fontSize12"></span>
+                <?php echo Form::text('agencyName',null,['class' => 'popup-input marginTop10', 'id'=> 'agencyName','placeholder' => 'Agency Name*']); ?><span id="error_agencyName" class="color-red fontSize12"></span>
+                <?php echo Form::submit('Sign Up', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100', 'id' => 'register-button')); ?>
+
+
+                <div class="clearfix"></div>
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div>                 
+    </div>
+</div>

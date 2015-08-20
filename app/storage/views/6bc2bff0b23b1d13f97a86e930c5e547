@@ -1,0 +1,12 @@
+<!-- FOOTER -->
+<footer class="footerBG">
+    <div class="container">        
+    </div>
+</footer>
+<!-- END footer -->
+<script src="<?php echo asset('packages/js/jquery.min.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/ie10-viewport-bug-workaround.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/common.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/jquery-ui.min.js'); ?>"></script>
+<?php echo $__env->yieldContent('page-script'); ?>

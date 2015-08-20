@@ -1,0 +1,156 @@
+/**
+ * Default DropKick theme
+ *
+ * Feel free to edit the default theme
+ * or even add your own.
+ *
+ * See the readme for themeing help
+ *
+ */
+.dk_container {
+    background: url("../img/icons/calendar-dp.png") no-repeat scroll left center rgba(255, 255, 255, 0);
+    background-color: #fff;
+    border-bottom: 1px solid #D6D6D6;
+    font-family: 'Helvetica', Arial, sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    height:30px;
+    padding-left:30px;
+}
+.dk_container:focus {
+    outline: 0; }
+.dk_container a {
+    cursor: pointer;
+    text-decoration: none; }
+
+.dk_toggle {
+    background: url(../img/icons/dk_arrows.png) right center no-repeat;
+    background-position: 99.5% center;
+    color:#888;
+    font-size:14px;
+    border: 0;
+    height: 30px;
+    padding: 5px 10px;
+    border-bottom: 1px solid #D6D6D6;
+    position: relative; }
+.dk_toggle:hover, .dk_toggle:focus {
+    border-color: #D6D6D6; }
+
+
+.dk_focus .dk_toggle {
+    border-color: #D6D6D6; }
+
+.dk_open {
+    z-index: 10; }
+.dk_open .dk_toggle {
+    background-color: #fff;
+    border-color: #DB007B;
+    color: #000;
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0; }
+
+.dk_open_top .dk_toggle {
+    border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px; }
+.dk_open_top .dk_options, .dk_open_top .dk_options_inner {
+    border-radius: 5px 5px 0 0;
+    -moz-border-radius: 5px 5px 0 0;
+    -webkit-border-radius: 5px 5px 0 0; }
+
+.dk_options {
+    background: #fff;
+    border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px; }
+.dk_options a {
+    background-color: #fff;
+    border-bottom: 1px solid #999;
+    font-weight: normal;
+    font-size:14px;
+    padding: 5px 40px; }
+.dk_options a:hover, .dk_options:focus,
+.dk_options .dk_option_current a {
+    background-color: #E7F1FC;
+    border-bottom-color: #f7941e;
+    color: #000;
+    text-decoration: none;
+}
+.dk_options li:last-child a {
+    border-bottom: none; }
+.dk_options .disabled {
+    cursor: default; }
+.dk_options .disabled a {
+    color: #aaa; }
+.dk_options .disabled:hover, .dk_options .disabled:hover a
+.dk_options .disabled:focus, .dk_options .disabled:focus a {
+    cursor: default;
+    background-color: #fff;
+    border-bottom-color: #DB007B;
+    text-shadow: none; }
+
+.dk_options_inner {
+    border: 0px solid #DB007B;
+    border-bottom-width: 0px;
+    border-bottom-color: #DB007B;
+    color: #333;
+    padding-left:0;
+    text-shadow: #fff 0 1px 0;
+    border-radius: 0 0 5px 5px;
+    -moz-border-radius: 0 0 5px 5px;
+    -webkit-border-radius: 0 0 5px 5px;
+    list-style-type: none;}
+
+.dk_container {
+    display: none;
+    float: left; }
+.dk_container a {
+    outline: 0; }
+
+.dk_toggle {
+    display: -moz-inline-stack;
+    display: inline-block;
+    *display: inline;
+    position: relative;
+    zoom: 1; }
+
+.dk_open {
+    position: relative; }
+.dk_open .dk_options {
+    display: block; }
+.dk_open .dk_label {
+    color: inherit; }
+
+.dk_options {
+    display: none;
+    margin-top: -1px;
+    position: absolute;
+    right: 0;
+    width: 100%; }
+.dk_options a, .dk_options a:link, .dk_options a:visited {
+    display: block; }
+
+.dk_options_inner {
+    overflow: auto;
+    position: relative;
+    -webkit-overflow-scrolling: touch; }
+
+.dk_container select {
+    position: absolute;
+    top: -99999em;
+    visibility: hidden; }
+
+.dk_mobile {
+    position: relative; }
+.dk_mobile select {
+    display: block;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    visibility: visible;
+    opacity: 0;
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none; }

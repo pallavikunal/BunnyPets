@@ -1,0 +1,123 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Tour Package Images
+        <small>Add new Images.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>">Tours</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Tour Package Images</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($tour,['route' => ['admin.saveimages',$tour->id],'method' => 'post','files'=> true]); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="fileUpload"><?php echo trans('frontend.images'); ?></label>
+                        <input type="file" name="files[]" class="" id="fileUpload" multiple/>
+                    </div>
+                    <div id="loaddata"></div>
+                    <div class='clearfix'></div>
+                    <hr/>
+                    <div class='clearfix'></div>
+                    <?php if($images): ?>
+                        <?php foreach($images as $key => $image): ?>
+                    <div class="pull-left col-md-5" id="img<?php echo $image['id']; ?>">
+                        <div class="tourImage">
+                            <img src="<?php echo asset('uploads/tours'); ?>/<?php echo $tour->user->id; ?>/<?php echo $tour->id; ?>/<?php echo $image['image_name']; ?>"  />
+                        </div>
+                        <div class="form-group tourImageInputs">
+                            <?php echo Form::hidden('previmages[]',$image['image_name'], array('class' => 'control')); ?>
+
+                            <?php echo Form::hidden('previds[]',$image['id'], array('class' => 'control')); ?>
+
+                            <label for="title" class="label-width70"><?php echo trans('frontend.title'); ?></label>
+                            <?php echo Form::text('prevtitle[]',$image['title'], array('class' => 'control')); ?>
+
+                            <?php echo $errors->first('prevtitle[]'); ?>
+
+                        </div>
+                        <div class="form-group tourImageInputs">
+                            <label for="caption" class="label-width70"><?php echo trans('frontend.agent.tour.caption'); ?></label>
+                            <?php echo Form::text('prevcaption[]', $image['caption'],array('class' => 'control')); ?>
+
+                            <?php echo $errors->first('prevcaption[]'); ?>
+
+                        </div>
+                        <div class="form-group tourImageInputs">
+                            <label for="mark-as-featured"><?php echo trans('frontend.agent.tour.mark_as_featured'); ?></label>
+                            <?php echo Form::checkbox('prevfeatured[]',$image['id'],$image['is_featured'],array('class' => 'control')); ?>
+
+                        </div>
+                        <div class="remove-image">
+                            <a href="javascript:void(0)" class="removeImage" data-name="<?php echo $image['id']; ?>" data-temp="0"><i class="fa fa-minus-circle"></i></a>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                 <?php endif; ?>   
+                    
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <?php echo Form::submit('Submit', array('class' => 'btn btn-primary')); ?>
+
+                </div>
+
+                <?php echo Form::close(); ?>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+    <?php $__env->startSection('page-script'); ?>
+    <?php echo HTML::script('packages/agent/assets/js/plugins/fileupload/jquery.ui.widget.js'); ?>
+
+    <?php echo HTML::script('packages/agent/assets/js/plugins/fileupload/jquery.iframe-transport.js'); ?>
+
+    <?php echo HTML::script('packages/agent/assets/js/plugins/fileupload/jquery.fileupload.js'); ?>
+
+    <script type="text/javascript">
+        $(function() {
+            $('#fileUpload').fileupload({
+                dataType: 'json',
+                url: "<?php echo route('admin.uploadimage'); ?>",
+                limitMultiFileUploads: CONFIG.get('MAX_FILE_UPLOAD_NUMBER'),
+                sequentialUploads: true,
+                done: function(e, data) {
+                    $("#loaddata").append(data.result.view);
+                }
+            });
+            
+            $(document).on('click','.removeImage',function() {
+                if (confirm('Are you sure do you want to remove?')) {
+                    var name = $(this).attr('data-name');
+                    var temp = $(this).attr('data-temp');
+                    var data= {'img':name,'temp':temp,'type':'tour_admin_remove_image'};
+                    var response = executeAjaxRequest('',data,false);
+                    var res = $.parseJSON(response);
+                    if (typeof res.img != 'undefined' && res.valid == '1') {
+                        $("#"+res.img).remove();
+                    }
+                    
+                }
+            });            
+        });
+    </script>
+    <?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

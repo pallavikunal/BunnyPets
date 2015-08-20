@@ -1,0 +1,73 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.category.edit_update_category' ); ?>
+
+        <small><?php echo trans('backend.category.edit_update_categories_info' ); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo URL::route('admin.category.index'); ?>"><?php echo trans('backend.category.categories' ); ?></a></li>
+        <li class="active"><?php echo trans('backend.update' ); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('backend.update_info' ); ?></h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($category, ['route' => ['admin.category.update', $category->id ], 'method' => 'patch', 'files' => 'true']); ?>
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name"><?php echo trans('backend.name'); ?></label>
+                            <?php echo Form::text('name', $category->name, ['class' => 'form-control', 'id'=> 'name','placeholder' => trans('backend.category.enter_category_name')]); ?>
+
+                            <p class='text-red'><?php echo $errors->first('name'); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="description"><?php echo trans('backend.description'); ?></label>
+                            <?php echo Form::textarea('description', $category->description, ['class' => 'form-control',
+                            'id'=> 'description','rows' => '5', 'cols' => '10']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('description'); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="email"><?php echo trans('backend.category.category_image'); ?></label>
+                            <?php echo Form::file('image',null ,['class' => 'form-control', 'id'=> 'image_name']); ?>
+
+                            <p>For better quality please upload an image size least 360px by 261px</p>
+                            <p class='text-red'><?php echo $errors->first('image'); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <p>
+                            <?php if($category->image_name): ?>
+                                <img src="<?php echo asset('/uploads/categories'); ?>/<?php echo $category->image_name; ?>"
+                                width="100px;" height="100px;">
+                            <?php else: ?>
+                                <img src="<?php echo asset('/uploads/categories'); ?>/default.jpg"
+                                width="100px;" height="100px;">
+                            <?php endif; ?>
+                            </p>
+                        </div>
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <?php echo Form::submit( trans('backend.save'), array('class' => 'btn btn-primary')); ?>
+
+                    </div>
+            <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

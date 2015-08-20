@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+        <div> Hi,</div>
+		<h2>Here is a reply for your query:</h2>
+       <div class="col-lg-6">
+            <p>Question Id: <span><?php echo $ticketId; ?></span></p>
+            <p>Answer:</p>
+            <p><?php echo $answer; ?></p>
+       </div>
+		<div>Regards,</div>
+        <div>The Trailwala Team</div>
+	</body>
+</html>

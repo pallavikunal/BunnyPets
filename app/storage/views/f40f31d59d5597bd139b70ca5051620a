@@ -1,0 +1,227 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.tours.show_tour_details'); ?>
+
+        <small><?php echo trans('backend.tours.show_tour_details_of_tour'); ?>.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i><?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.tour.index'); ?>"><?php echo trans('backend.tours.index_tour'); ?></a></li>
+        <li class="active"><?php echo trans('backend.tours.details'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">
+                <div class="box-header">           
+                    <h3 class="box-title"><?php echo ucfirst($tour->title); ?><?php echo trans('backend.tours.sdetails'); ?></h3>                    
+                    <?php if(Request::segment(5) != ''): ?>                    
+                    <div class='pull-right margin'>
+                        <a href="<?php echo URL::route('admin.tour.index',['uid' => Request::segment(5) ]); ?>" class='btn btn-primary'> << <?php echo ucfirst($tour->user->firstName); ?><?php echo trans('backend.tours.show_stour_listing'); ?></a>
+                    </div>                    
+                    <?php endif; ?>                    
+                    <div class='pull-right margin'>
+                        <a href="" onclick="window.history.go(-1); return false;" class='btn btn-primary'>Back</a>
+                    </div>
+                </div><!-- /.box-header -->                
+                
+
+                <!-- form start -->
+                <div class="box-body">
+                    <?php if($tour === NULL): ?>
+                    <div class="alert alert-info">                        
+                        <b><?php echo trans('backend.tours.show_record_not_found'); ?></b>                                
+                    </div>
+                    <?php else: ?>
+                    <dl class="dl-horizontal">
+                        <dt><?php echo trans('backend.tours.show_name'); ?></dt>
+                        <dd><p><strong><?php echo ucfirst($tour->title); ?></strong></p></dd>
+                        <dt><?php echo trans('backend.tours.show_category'); ?></dt>
+                        <dd><p><?php echo $tour->category->name; ?></p></dd>
+                        <dt><?php echo trans('backend.tours.show_agent_name'); ?></dt>
+                        <dd><p><?php echo ucfirst($tour->user->firstName); ?> <?php echo ucfirst($tour->user->lastName); ?></p></dd>
+                        <dt><?php echo trans('backend.tours.show_details'); ?></dt>
+                        <dd><p><?php echo $tour->details; ?></p></dd>
+                        <dt><?php echo trans('backend.tours.show_charge_per_adult'); ?></dt>
+                        <dd><p><?php echo $tour->charge_per_adult; ?> INR.</p></dd>
+                        <dt><?php echo trans('backend.tours.show_charge_per_child'); ?></dt>
+                        <dd><p><?php echo $tour->charge_per_child; ?> INR.</p></dd>
+                        <dt><?php echo trans('backend.tours.show_activity_duration'); ?></dt>
+                        <dd>
+                            <p><?php echo ($metadata['activity_duration'])?$metadata['activity_duration'][0]." Days ".$metadata['activity_duration'][1]." Hours ".$metadata['activity_duration'][2]." Minutes " :'NA'; ?></p>
+                        </dd>
+<!--                        <dt><?php echo trans('backend.tours.show_availability'); ?></dt>
+                        <dd><p><?php echo $tour->availability; ?></p></dd>
+                        <dd><p><?php echo $tour->activity_timing; ?></p></dd>-->
+                        <dt><?php echo trans('frontend.agent.tour.street_address' ); ?></dt>                        
+                        
+                        <dd>
+                            <p> <?php echo $tour->street_address; ?>
+
+                                <?php echo $tour->country->name; ?>,
+                                <?php echo $tour->state->name; ?>, 
+                            </p>
+                            <p> <?php echo $tour->region->name; ?>,<?php echo $tour->pincode; ?></p>
+                        </dd>
+                        <dt><?php echo trans('backend.tours.fitness_level'); ?></dt>
+                        <dd>
+                            <p>
+                                <?php if($tour->fitness_level == 1): ?><?php echo trans('frontend.agent.tour.low'); ?>
+
+                                <?php elseif($tour->fitness_level == 2): ?><?php echo trans('frontend.agent.tour.moderate'); ?>
+
+                                <?php elseif($tour->fitness_level == 3): ?><?php echo trans('frontend.agent.tour.high'); ?>
+
+                                <?php else: ?> <?php echo trans('frontend.agent.tour.higher'); ?>
+
+                                <?php endif; ?>
+                            </p>
+                        </dd>
+                        <dt>Age Group</dt>
+                        <dd>
+                            <p>
+                                <?php if($tour->age_group == 1): ?><?php echo trans('frontend.agent.tour.no_age_limit'); ?>
+
+                                <?php elseif($tour->age_group == 2): ?><?php echo trans('frontend.agent.tour.only_for_adult'); ?>
+
+                                <?php elseif($tour->age_group == 3): ?><?php echo trans('frontend.agent.tour.only_for_kids'); ?>                              
+                                <?php endif; ?>
+                            </p>
+                        </dd>
+                        <?php if(isset($metadata['tour_info'])): ?>
+                        <dt><?php echo trans('backend.tours.show_pricing'); ?></dt>
+                        <dd>
+                            <p> <?php echo isset($metadata['tour_info']['pricing'])?$metadata['tour_info']['pricing']:'NA'; ?></p>
+                        </dd>
+                        <dt><?php echo trans('backend.tours.show_activity_other_rules'); ?></dt>
+                        <dd>
+                            <p> <?php echo isset($metadata['tour_info']['other_rules'])?$metadata['tour_info']['other_rules']:'NA'; ?></p>
+                        </dd>
+                        <dt><?php echo trans('backend.tours.show_cancellation_policy'); ?></dt>
+                        <dd>
+                            <p><?php echo isset($metadata['tour_info']['cancellation_policy'])?$metadata['tour_info']['cancellation_policy']:'NA'; ?></p>
+                        </dd>
+                        <dt><?php echo trans('backend.tours.whatsincluded'); ?></dt>
+                        <dd>
+                            <p><?php echo isset($metadata['tour_info']['whats_included'])?$metadata['tour_info']['whats_included']:'NA'; ?></p>
+                        </dd>
+                        <dt><?php echo trans('backend.tours.show_what_to_bring'); ?></dt>
+                        <dd>
+                            <p><?php echo isset($metadata['tour_info']['whattobring'])?$metadata['tour_info']['whattobring']:'NA'; ?></p>
+                        </dd>                                
+
+                        <?php endif; ?>
+                        <dt><?php echo trans('backend.tours.show_status'); ?></dt>
+                        <dd>
+                            <?php if($tour->status): ?>
+                            <p class='text-green'>
+                                <a href='javascript:void(0);'
+                                   data-id="<?php echo $tour->id; ?>"
+                                   data-status="<?php echo $tour->status; ?>"
+                                   class='btn btn-success btn-sm change-status' title='<?php echo trans('backend.tours.show_unpublish_this'); ?>'><?php echo trans('backend.tours.show_publish'); ?></a>
+                            </p>
+                            <?php else: ?>
+                            <p>
+                                <a href='javascript:void(0);'
+                                   data-id="<?php echo $tour->id; ?>"
+                                   data-status="<?php echo $tour->status; ?>"
+                                   class='btn-danger btn-sm change-status' title='<?php echo trans('backend.tours.show_publish_this'); ?>'><?php echo trans('backend.tours.show_unpublish'); ?></a>
+                            </p>
+                            <?php endif; ?>
+                        </dd>
+                        <dt><?php echo trans('backend.tours.show_dates'); ?></dt>                            
+                        <dd>
+                            <p>
+                            <div id="selectedDates"></div>
+                            </p>                                
+                        </dd>
+                        <dt><?php echo trans('backend.tours.show_created_at'); ?></dt>
+                        <dd><p><?php echo date('d M, Y', strtotime($tour->created_at)); ?></p></dd>
+                        <dt><?php echo trans('backend.tours.show_modified_at'); ?></dt>
+                        <dd><p><?php echo date('d M, Y', strtotime($tour->updated_at)); ?></p></dd>
+                        <?php if($tourImages): ?>
+                        <dt><?php echo trans('backend.tours.show_images'); ?></dt>
+                        <dd>
+                            <?php foreach($tourImages as $key => $image): ?>
+                            <p class='pull-left pad'>
+                                <img src="<?php echo asset('uploads/tours'); ?>/<?php echo $tour->user_id; ?>/<?php echo $tour->id; ?>/thumb_150X133_<?php echo $image['image_name']; ?>" width='100px' height='100px' title='<?php echo $image["title"]; ?>'/>
+                            </p>
+                            <?php endforeach; ?>
+                        </dd>
+                        <?php endif; ?>
+                    </dl>
+                    <?php endif; ?>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::style('packages/admin/assets/css/datepicker/multidatepicker.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-multi-datepicker.js'); ?>
+
+
+<?php echo HTML::style('packages/admin/assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $(document).on('click', '.change-status', function() {
+            var self = $(this);
+            var status = parseInt(self.attr('data-status'));
+            var data = {'id': self.attr('data-id'),
+                'status': status,
+                'type': CONFIG.get('TOUR_CHANGE_STATUS')};
+            var res = executeAjaxRequest(self, data, true);
+            $("#message").html(res.str);
+            if (res.valid) {
+                if (status) {
+                    $("#loader").replaceWith('<a href="javascript:void(0);" class="btn-danger btn-sm change-status" data-id="' + self.attr('data-id') + '" data-status="0" title="Publish This">Unpublished</a>');
+                    return false;
+                }
+
+                $("#loader").replaceWith('<a href="javascript:void(0);" class="btn btn-success btn-sm change-status" data-id="' + self.attr('data-id') + '" data-status="1" title="Unpublish This">Published</a>');
+            }
+
+            // if some error occurrs then loader will again changed to element
+            $("#loader").replaceWith(self);
+        });
+
+        var availableDates = new Array();
+        var setDate = new Date();
+        availableDates = $.parseJSON('<?php echo json_encode($dates); ?>');
+        if (availableDates.length > 0) {
+            setDate = new Date(availableDates[0]);
+        }
+
+        $('#selectedDates').multidatepicker({
+            dateFormat: 'yyyy,mm,dd',
+            startDate: setDate,
+            endDate: new Date(date.getFullYear(), 11, 30),
+            beforeShowDay: function(date) {
+                var dmy = date.getFullYear() + "-" + (date.toLocaleDateString('en-US', {month: '2-digit'})) + "-" + date.toLocaleDateString('en-US', {day: '2-digit'});
+                dmy = dmy.toString();
+                if ($.inArray(dmy, availableDates) !== -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

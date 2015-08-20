@@ -1,0 +1,55 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.regions.state.edit_update_state'); ?>
+
+        <small><?php echo trans('backend.regions.state.edit_update_state_information'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.state.index'); ?>"><?php echo trans('backend.regions.state.states'); ?></a></li>
+        <li class="active"><?php echo trans('backend.update'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('backend.regions.state.edit_update_information'); ?></h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($state, ['route' => ['admin.state.update', $state->id ], 'method' => 'patch']); ?>
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="name"><?php echo trans('backend.name'); ?></label>
+                            <?php echo Form::text('name', $state->name, ['class' => 'form-control', 'id'=> 'name','placeholder' => trans('backend.regions.state.enter_state_name') ]); ?>
+
+                            <p class='text-red'><?php echo $errors->first('name'); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="country"><?php echo trans('backend.regions.state.edit_country'); ?></label>
+                            <?php echo Form::select('country',$countries,$state->country->id,['class' => 'form-control', 'id'=> 'country']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('country'); ?></p>
+                        </div>
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <?php echo Form::submit(trans('backend.submit'), array('class' => 'btn btn-primary')); ?>
+
+                    </div>
+            <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,45 @@
+<header class="header">  
+    <a href="<?php echo url('agent'); ?>" class="logo" ><img src="<?php echo asset('/packages/images/badge137-x-71.png'); ?>" class="logo-trail"/></a>
+    <!-- Header Navbar: style can be found in header.less -->
+    <nav class="navbar navbar-static-top" role="navigation">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="navbar-btn sidebar-toggle" data-toggle="offcanvas" role="button">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+        </a>
+        <?php if(Auth ::id()): ?>
+        <div class="navbar-right">
+            <ul class="nav navbar-nav">
+                <li class="dropdown user user-menu">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                        <i class="glyphicon glyphicon-user"></i>
+                        <span><?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?> <i class="caret"></i></span>
+                    </a>
+                    <ul class="dropdown-menu">
+                        <li class="user-header bg-light-blue">
+                            <?php if(!empty(Auth::user()->avtar)): ?>
+                            <img src="<?php echo asset('/uploads/avtar/'); ?>/<?php echo Auth::user()->avtar; ?>" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'>
+                            <?php else: ?>
+                            <img src="<?php echo asset('/packages/images/'); ?>/user-pic-.png" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'>
+                            <?php endif; ?>
+                            <p>
+                                <?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>
+
+                                <small>Tour Oprator</small>
+                            </p>
+                        </li>                    
+                        <!-- Menu Footer-->
+                        <li class="user-footer">
+                            <div class="pull-right">
+                                <a href="<?php echo URL::route('agent-logout'); ?>" class="btn btn-default btn-flat">Sign out</a>
+                            </div>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+        <?php endif; ?>
+    </nav>
+</header>

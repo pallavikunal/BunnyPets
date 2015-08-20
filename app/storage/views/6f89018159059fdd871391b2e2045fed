@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php echo $__env->make('includes.admin.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </head>
+    <body class="skin-blue">
+        <header class="header">
+            <?php echo $__env->make('includes.admin.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </header>
+
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+            <aside class="left-side sidebar-offcanvas" style="min-height: 2014px;">
+                <?php echo $__env->make('includes.admin.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </aside>
+
+            <aside class="right-side">
+                <?php echo $__env->yieldContent('content'); ?>
+            </aside>
+        </div>
+
+        <footer>
+            <?php echo $__env->make('includes.admin.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </footer>
+    </body>
+</html>

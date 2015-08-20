@@ -1,0 +1,92 @@
+<?php $__env->startSection('content'); ?>
+<!-- Carousel
+================================================== -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <!--<ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+      <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+    </ol>-->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <!--<div style="background-image:url(/packages/images/triangle.png); background-repeat:repeat; position:absolute; bottom:-4px; width:100%; height:18px; z-index:2;"></div>-->
+            <div class="banner-triangle"></div>
+            <img src="<?php echo asset('/packages/images/patner-banner-bg.png'); ?>" alt="First slide">          
+        </div>
+
+        <div class="container">
+            <div class="carousel-caption3"> 
+                <h2 class="MuseoSlab100">Do you conduct adventure activities in India or Nepal? List with us.</h2>
+            </div>            
+            <?php echo Form::open(['route' => 'agent.login','method' => 'post']); ?>
+
+            <div class="carousel-caption4"> 
+                <span id="errrorMessageLogin" class="color-red fontSize12"><?php echo Session::get('message'); ?>&nbsp;</span>
+                <h3>Partner Log In</h3>               
+                <div class="input-group width40 floatL marginLeft5">
+                    <?php echo Form::text('email',null,['class' => 'form-control', 'id'=> 'email','placeholder' => 'Email']); ?>
+
+                    <span class="color-red fontSize12"><?php echo $errors->first('email'); ?></span>
+                </div>
+                <div class="input-group width40 floatL marginLeft5">
+                    <?php echo Form::Input('password','password',null,['class' => 'form-control', 'id'=> 'password','placeholder' => 'Password']); ?>
+
+                    <span class="color-red fontSize12"><?php echo $errors->first('password'); ?></span>
+                </div>
+                <?php echo Form::submit('Log In', array('class' => 'btn btn-search1 font-sz-bold fontSize15 MuseoSans300 floatR marginLeft5')); ?>                
+            </div>
+            <?php echo Form::close(); ?>
+
+
+            <div class="carousel-caption5">
+                <span class="floatL"><a href="#" class="color-yellow" data-toggle="modal" id="partnerForgotPassword">Forgot Password?</a></span>
+                <span class="floatR">Not yet a member? <a href="#" class="color-yellow" data-toggle="modal" id="partnerRegister">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div><!-- /.carousel -->
+
+
+
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+
+<div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginBottom-5">
+        <div class="col-lg-12 alignCenter marginBottom40"><h2 class="MuseoSlab500 color-maroon">How it works</h2></div>
+        <div class="clearfix"></div>
+        <div class="col-lg-4">
+            <img class="img-circle" src="<?php echo asset('/packages/images/Register-with-us.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Register with us</h3>
+            <div class="col-lg-11 marginLeft10 MuseoSans300 fontSize16"><p>Enter some basic information and sign up.</p></div>
+            <!--<p><a class="btn btn-default" href="http://getbootstrap.com/examples/carousel/#" role="button">View details »</a></p>-->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <img class="img-circle" src="<?php echo asset('/packages/images/List-your-tours.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">List your tours</h3>
+            <div class="col-lg-11 marginLeft10 MuseoSans300 fontSize16"><p>Create free listings for your trips; we will review and publish.</p></div>
+            <!--<p><a class="btn btn-default" href="http://getbootstrap.com/examples/carousel/#" role="button">View details »</a></p>-->
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-4">
+            <img class="img-circle" src="<?php echo asset('/packages/images/Get-New-Customers.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Get New Customers</h3>
+            <div class="col-lg-11 marginLeft10 MuseoSans300 fontSize16"><p>Become more visible and grow your business.</p></div>
+           <!-- <p><a class="btn btn-default" href="http://getbootstrap.com/examples/carousel/#" role="button">View details »</a></p>-->
+        </div><!-- /.col-lg-4 -->
+
+        <div class="clearfix"></div>
+        <div class="col-lg-12 alignCenter marginTop30"><h4 class="MuseoSlab500 color-maroon">Got Questions?  Email us: <a href="mailto:ask@trailwala.com" class="color-yellow">ask@trailwala.com</a></h4></div>
+
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<!-- /END THE FEATURETTES -->
+<div class="clearfix"></div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.agentfront', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

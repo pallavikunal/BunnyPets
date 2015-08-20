@@ -1,0 +1,213 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.tour.index_tour_management'); ?>
+
+        <small><?php echo trans('frontend.agent.tour.details_of_tour'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('frontend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>"><?php echo trans('frontend.tours'); ?></a></li>
+        <li class="active"><?php echo trans('frontend.details'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">
+                <?php if((!$tour->status) || ($tour->status == '3')): ?><div class="margin alert alert-warning"> <?php echo trans('frontend.agent.tour.waiting_to_publish'); ?></div><?php endif; ?>
+                <div class="box-header">
+                    <?php if($tour !== NULL): ?>
+                    <h3 class="box-title"><?php echo ucfirst($tour->title); ?>'<?php echo trans('frontend.sdetails'); ?></h3>
+
+                    <div class='pull-right margin '>
+                        <a href="<?php echo URL::route('agent.tour.edit',['id' => $tour->id ]); ?>" class='btn btn-primary'><?php echo trans('frontend.edit_details'); ?></a>
+                    </div>
+                    <?php endif; ?>
+                    <div class='pull-right margin'>
+                        <a href="" onclick="window.history.go(-1);
+                                return false;" class='btn btn-primary'>Back</a>
+                    </div>
+                </div><!-- /.box-header -->
+
+                <!-- form start -->
+                <div class="box-body">
+                    <?php if($tour === NULL): ?>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="alert alert-info">                                
+                                <b><?php echo trans('frontend.agent.tour.tour_record_not_found'); ?></b>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <?php else: ?>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <td class="color-marhun" width="140"><strong><?php echo trans('frontend.category' ); ?></strong></td>
+                                        <td><?php echo isset($tour->category->name)?$tour->category->name:''; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.title' ); ?></strong></td>
+                                        <td><?php echo ucfirst($tour->title); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.details' ); ?></strong></td>
+                                        <td><?php echo isset($tour->details)?$tour->details:''; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.rate_per_adult' ); ?></strong></td>
+                                        <td><?php echo isset($tour->charge_per_adult)?$tour->charge_per_adult:'-'; ?> INR.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.rate_per_child' ); ?></strong></td>
+                                        <td><?php echo isset($tour->charge_per_child)?$tour->charge_per_child:'-'; ?> INR.</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.street_address'); ?></strong></td>
+                                        <td>
+                                            <?php echo isset($tour->street_address)?$tour->street_address:''; ?>
+
+                                            <?php echo isset($tour->country->name)?','.$tour->country->name:''; ?>
+
+                                            <?php echo isset($tour->state->name)?','.$tour->state->name:''; ?>
+
+                                            <br>
+                                            <?php echo isset($tour->region->name)?','.$tour->region->name:''; ?><?php echo !empty($tour->pincode)?'-'.$tour->pincode:''; ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.fitness_level' ); ?></strong></td>
+                                        <td>
+                                            <?php if($tour->fitness_level == 1): ?><?php echo trans('frontend.agent.tour.low'); ?>
+
+                                            <?php elseif($tour->fitness_level == 2): ?><?php echo trans('frontend.agent.tour.moderate'); ?>
+
+                                            <?php elseif($tour->fitness_level == 3): ?><?php echo trans('frontend.agent.tour.high'); ?>
+
+                                            <?php else: ?> <?php echo trans('frontend.agent.tour.higher'); ?>
+
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong>Age Group</strong></td>
+                                        <td>
+                                            <?php if($tour->age_group == 1): ?><?php echo trans('frontend.agent.tour.no_age_limit'); ?>
+
+                                            <?php elseif($tour->age_group == 2): ?><?php echo trans('frontend.agent.tour.only_for_adult'); ?>
+
+                                            <?php elseif($tour->age_group == 3): ?><?php echo trans('frontend.agent.tour.only_for_kids'); ?>                              
+                                            <?php endif; ?>
+                                        </td>
+                                    </tr>                          
+                                    <?php if(isset($metadata['tour_info'])): ?>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.pricing'); ?></strong></td>
+                                        <td><?php echo (isset($metadata['tour_info']['pricing']))?$metadata['tour_info']['pricing']:'NA'; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.activity_duration'); ?></strong></td>
+                                        <td>
+                                            <?php echo isset($metadata['activity_duration'])?$metadata['activity_duration'][0]." Days ".$metadata['activity_duration'][1]." Hours ".$metadata['activity_duration'][2]." Minutes " :'NA'; ?>
+
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.other_rules'); ?></strong></td>
+                                        <td><?php echo isset($metadata['tour_info']['other_rules'])?$metadata['tour_info']['other_rules']:'NA'; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.agent.tour.cancellation_policy'); ?></strong></td>
+                                        <td><?php echo isset($metadata['tour_info']['cancellation_policy'])?$metadata['tour_info']['cancellation_policy']:'NA'; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('backend.tours.whatsincluded'); ?></strong></td>
+                                        <td><?php echo isset($metadata['tour_info']['whats_included'])?$metadata['tour_info']['whats_included']:'NA'; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('backend.tours.show_what_to_bring'); ?></strong></td>
+                                        <td><?php echo isset($metadata['tour_info']['whattobring'])?$metadata['tour_info']['whattobring']:'NA'; ?></td>
+                                    </tr>
+                                    <!--<tr>
+                                        <td><?php echo trans('backend.tours.show_dates'); ?></td>
+                                        <td><div id="selectedDates"></div></td>
+                                    </tr> -->
+                                    <?php endif; ?>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.created_at'); ?></strong></td>
+                                        <td><?php echo date('d M, Y', strtotime($tour->created_at)); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="color-marhun"><strong><?php echo trans('frontend.modified_at'); ?></strong></td>
+                                        <td><?php echo date('d M, Y', strtotime($tour->updated_at)); ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-xs-12 col-sm-6 col-md-6 col-lg-6">
+                            <?php if($tourImages): ?>
+                            <?php foreach($tourImages as $image): ?>
+                            <p class='pull-left pad'>
+                                <img src="<?php echo asset('uploads/tours'); ?>/<?php echo Auth::id(); ?>/<?php echo $tour->id; ?>/thumb_150X133_<?php echo $image['image_name']; ?>" width='100px' height='100px' title='<?php echo $image["title"]; ?>'/>
+                            </p>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                </div><!-- /.box-body -->
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::style('packages/admin/assets/css/datepicker/multidatepicker.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-multi-datepicker.js'); ?>
+
+
+
+<?php echo HTML::style('packages/admin/assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        var availableDates = new Array();
+        var setDate = new Date();
+        availableDates = $.parseJSON('<?php echo json_encode($dates); ?>');
+        if (availableDates.length > 0) {
+            setDate = new Date(availableDates[0]);
+        }
+
+        $('#selectedDates').multidatepicker({
+            endDate: new Date(date.getFullYear(), 11, 30),
+            dateFormat: 'yyyy,mm,dd',
+            startDate: setDate,
+            beforeShowDay: function(date) {
+                var dmy = date.getFullYear() + "-" + (date.toLocaleDateString('en-US', {month: '2-digit'})) + "-" + date.toLocaleDateString('en-US', {day: '2-digit'});
+                dmy = dmy.toString();
+                if ($.inArray(dmy, availableDates) != -1) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

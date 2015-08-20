@@ -1,0 +1,92 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.dashboard.dashboard'); ?>
+
+    </h1>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-12">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">                
+                <!-- form start -->
+                <div class="box-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3  pull-right margin" style="margin-top:-7px;">
+							<a href="<?php echo URL::route('agent.tour.create'); ?>" class="col-xs-8 col-sm-12 col-md-12 col-lg-12 btn btn-success pull-right">
+								<i class="fa fa-plus"></i><?php echo trans('frontend.agent.tour.index_create_tour'); ?>
+
+							</a>
+							<div class="clear"></div>
+						</div>
+						<div class="clearfix visible-xs"></div>
+						<div class="col-xs-12 col-sm-4 col-md-3 col-lg-3  pull-right margin" style="margin-top:-7px;">
+							<a href="<?php echo URL::route('agent.updateProfile'); ?>" class="col-xs-8 col-sm-12 col-md-12 col-lg-12 btn btn-success pull-right">
+								<i class="fa fa-plus"></i><?php echo trans('frontend.agent.sidebar.update_profile'); ?>
+
+							</a>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<h3 class="color-maroon"><?php echo ucfirst($user->firstName); ?>&nbsp;<?php echo ucfirst($user->lastName); ?></h3>
+							<hr>
+							<div class="row">
+								<div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+									<div class="search-grid-img1">
+										<?php if($user->avtar): ?>
+										<a href="#" onclick="return false"><img class="img-rounded" src="<?php echo asset('/uploads/avtar/'); ?>/<?php echo $user->avtar; ?>" width="70%" ></a>
+										<?php else: ?>
+										<a href="#" onclick="return false"><img class="img-rounded" src="<?php echo asset('/packages/images/'); ?>/user-pic-.png" width="70%" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'></a>
+										<?php endif; ?>
+									</div>
+								</div>
+								<div class="clearfix visible-xs"></div>
+								<div class="visible-xs"><hr></div>
+								<div class="col-xs-12 col-sm-8 col-md-8 col-lg-8 hidden-xs">
+									<table class="table table-condensed">
+                                        <tr>
+											<td width="140"><label class="color-maroon" for="agencyEmail"><strong>Email:</strong></label></td>
+											<td><?php if($user->email): ?><?php echo $user->email; ?> <?php else: ?> Not available <?php endif; ?></td>
+										</tr>
+										<tr>
+											<td width="140"><label class="color-maroon" for="agencyName"><strong><?php echo trans('frontend.agent.profile.agency_name'); ?>:</strong></label></td>
+											<td><?php if($user->agencyName): ?><?php echo ucfirst($user->agencyName); ?> <?php else: ?> Not available <?php endif; ?></td>
+										</tr>
+										<tr>
+											<td><label class="color-maroon" for="contactNumber"><strong><?php echo trans('frontend.agent.profile.contact_number'); ?>:</strong></label></td>
+											<td><?php if($user->contactNumber): ?><?php echo $user->contactNumber; ?> <?php else: ?> Not available <?php endif; ?></td>
+										</tr>
+										<tr>
+											<td><label class="color-maroon" for="agencyAddress"><strong><?php echo trans('frontend.agent.profile.agency_address'); ?>:</strong></label></td>
+											<td><?php if($user->agencyAddress): ?><?php echo $user->agencyAddress; ?> <?php else: ?> Not available <?php endif; ?></td>
+										</tr>
+										<tr>
+											<td><label class="color-maroon" for="aboutMe"><strong><?php echo trans('frontend.agent.profile.about_me'); ?>:</strong></label></td>
+											<td><?php if($user->about_me): ?><?php echo ucfirst($user->about_me); ?> <?php else: ?> Not available <?php endif; ?></td>
+										</tr>
+									</table>
+								</div>								
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

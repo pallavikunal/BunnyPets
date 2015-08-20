@@ -1,0 +1,78 @@
+<?php $__env->startSection('content'); ?>
+
+<!--Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.pay_in_details.pay_in_details'); ?>
+
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('frontend.home' ); ?></a></li>
+        <li><a href="#">Personal Details</a></li>
+        <li class="active">Pay In Details</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="box box-primary"> 
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+                <!-- form start -->
+                <?php echo Form::model($payDetails, ['route' => ['agent.payInDetails'], 'method' => 'post', 'files' => 'true']); ?>
+
+                <div class="box-body">
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="accountHolderName"><?php echo trans('frontend.agent.pay_in_details.account_holder_name'); ?></label>
+								<?php echo Form::text('accountHolderName',isset($payDetails->account_holder_name)?$payDetails->account_holder_name:'',['class' => 'form-control', 'id'=> 'accountHolderName','placeholder' => trans('frontend.agent.pay_in_details.enter_account_holder_name') ]); ?>
+
+								<span class="color-red fontSize12"><?php echo $errors->first('accountHolderName'); ?></span>                            
+							</div>
+							<div class="form-group">
+								<label for="accountNumber"><?php echo trans('frontend.agent.pay_in_details.account_number'); ?></label>
+								<?php echo Form::text('accountNumber', isset($payDetails->account_number)?$payDetails->account_number:'', ['class' => 'form-control', 'id'=> 'accountNumber','placeholder' => trans('frontend.agent.pay_in_details.enter_account_number')]); ?>
+
+								<span class="color-red fontSize12"><?php echo $errors->first('accountNumber'); ?></span>                            
+							</div>
+							<div class="form-group">
+								<label for="bankName"><?php echo trans('frontend.agent.pay_in_details.bank_name'); ?></label>
+								<?php echo Form::text('bankName',isset($payDetails->bank_name)?$payDetails->bank_name:'',['class' => 'form-control', 'id'=> 'bankName','placeholder' => trans('frontend.agent.pay_in_details.enter_bank_name')]); ?>
+
+								<span class="color-red fontSize12"><?php echo $errors->first('bankName'); ?></span>
+							</div>
+							<div class="form-group">
+								<label for="branch"><?php echo trans('frontend.agent.pay_in_details.branch'); ?></label>
+								<?php echo Form::text('branch',isset($payDetails->branch)?$payDetails->branch:'',['class' => 'form-control', 'id'=> 'branch','placeholder' => trans('frontend.agent.pay_in_details.enter_branch')]); ?>
+
+								<span class="color-red fontSize12"><?php echo $errors->first('branch'); ?></span>
+							</div>
+							<div class="form-group">
+								<label for="ifscCode"><?php echo trans('frontend.agent.pay_in_details.ifscCode'); ?></label>
+								<?php echo Form::text('ifscCode',isset($payDetails->IFSC_code)?$payDetails->IFSC_code:'',['class' => 'form-control', 'id'=> 'ifscCode','placeholder' => trans('frontend.agent.pay_in_details.enter_ifscCode')]); ?>
+
+								<span class="color-red fontSize12"><?php echo $errors->first('ifscCode'); ?></span>  
+							</div>   
+						
+
+							<div class="box-foote">
+								<?php echo Form::hidden('id',isset($payDetails->id)?$payDetails->id:0, array('class' => 'control')); ?>                                  
+								<?php echo Form::submit(trans('frontend.save'), array('class' => 'btn btn-primary')); ?>
+
+							</div>
+						</div>
+					</div>
+				</div><!-- /.box-body -->
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

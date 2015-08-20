@@ -1,0 +1,30 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.dashboard.dashboard'); ?>
+
+    </h1>
+
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">                
+                <!-- form start -->
+                Welcome To Trailwala
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

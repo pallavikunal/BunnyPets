@@ -1,0 +1,11 @@
+<div class="inner-banner">
+    <div class="banner-col1">
+        <div class="item1">
+            <?php if($bgimage->image_name): ?>
+                <img src="<?php echo asset('packages/images/inner-banner1.png'); ?>" alt="Trailwala">
+            <?php else: ?>
+                <img src="<?php echo asset('packages/images/inner-banner1.png'); ?>" alt="Trailwala">
+            <?php endif; ?>
+        </div>        
+    </div>
+</div>

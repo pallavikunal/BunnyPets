@@ -1,0 +1,54 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Create State
+        <small>Create new State.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo URL::route('admin.state.index'); ?>">States</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">State Creation Form</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::open(['route' => 'admin.state.store']); ?>
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="country">Country</label>
+                            <?php echo Form::select('country',$countries,null,['class' => 'form-control', 'id'=> 'country']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('country'); ?></p>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="name"><?php echo trans('backend.name'); ?></label>
+                            <?php echo Form::text('name',null,['class' => 'form-control', 'id'=> 'name','placeholder' => trans('backend.name')]); ?>
+
+                            <p class='text-red'><?php echo $errors->first('name'); ?></p>
+                        </div>
+                    </div><!-- /.box-body -->
+                    <div class="box-footer">
+                        <?php echo Form::submit('Submit', array('class' => 'btn btn-primary')); ?>
+
+                    </div>
+            <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

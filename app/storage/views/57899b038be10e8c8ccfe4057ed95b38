@@ -1,0 +1,118 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.tours.index_tour_management'); ?>
+
+        <small><?php echo trans('backend.admin.review.review_listing'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>"><?php echo trans('backend.tour'); ?></a></li>
+        <li class="active"><?php echo trans('backend.reviews'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="message">
+                <?php if(Session::has('message')): ?>
+                    <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+            </div>            
+            <div class="box">
+                <div class="box-header">
+                    <?php if(! $reviews->isEmpty()): ?>
+                    <h3 class="box-title">
+                        <strong><?php echo $tour->title; ?></strong> 
+                        <?php echo trans('backend.admin.review.review_listing'); ?>
+
+                        <span class="pull-right star-strip star-strip<?php echo $reviewAverage; ?>">&nbsp;</span>
+                    </h3>                    
+                    <?php endif; ?>
+                </div>
+                <?php if(!$reviews->isEmpty()): ?>
+                <div class="box-body table-responsive">
+                 <table id="example2" class="table table-bordered table-striped data-table">
+                    <thead>
+                        <tr>
+                            <th>Reviewed by</th>
+                            <th>Review</th>
+                            <th>Ratings</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>                    
+                    <tbody>
+                    <?php foreach($reviews as $review): ?>
+                    <tr>
+                        <td><?php echo $review->reviewer->firstName; ?>&nbsp;<?php echo $review->reviewer->lastName; ?></td>
+                        <td><?php echo $review->review; ?></td>
+                        <td><span class='star-strip star-strip<?php echo $review->rating; ?>'>&nbsp;</span></td>
+                        <td>
+                            <?php if($review->status): ?>
+                            <a href="javascript:void(0);" class="fa fa-unlock-alt change-status" data-id="<?php echo $review->id; ?>"
+                               data-status="<?php echo $review->status; ?>" title="<?php echo trans('backend.tours.show_unpublish_this'); ?>">&nbsp;</a>
+                            <?php else: ?>
+                            <a href="javascript:void(0);" class="fa fa-lock change-status"
+                               data-id="<?php echo $review->id; ?>" data-status="<?php echo $review->status; ?>" title="<?php echo trans('backend.tours.show_publish_this'); ?>">&nbsp;</a>
+                            <?php endif; ?> 
+                        </td>
+                    </tr>
+                    </tbody>
+                    <?php endforeach; ?>
+                    <tfoot>
+                        <tr>
+                            <th>Reviewed by</th>
+                            <th>Review</th>
+                            <th>Ratings</th>
+                            <th>Action</th>
+                        </tr>
+                    </tfoot>                    
+                </table>
+                </div>
+                <?php else: ?>
+                <div class="alert alert-info">                    
+                    <b><?php echo trans('backend.admin.review.record_not_found'); ?></b>
+                </div>  
+                <?php endif; ?>                
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+</div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/jquery.dataTables.js'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/dataTables.bootstrap.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#example2').dataTable();
+        $(document).on('click', '.change-status', function() {
+            var self = $(this);
+            var status = parseInt(self.attr('data-status'));
+            var data = {'id': self.attr('data-id'),
+                'status': status,
+                'type': CONFIG.get('REVIEW_CHANGE_STATUS')};
+            var res = executeAjaxRequest(self, data, true);
+            $("#message").html(res.str);
+            if (res.valid) {
+                if (status) {
+                    $("#loader").replaceWith('<a href="javascript:void(0);" class="fa fa-lock change-status" data-id="' + self.attr('data-id') + '" data-status="0" title="Make Publish">&nbsp;</a>');
+                    return false;
+                }
+                $("#loader").replaceWith('<a href="javascript:void(0);" class="fa fa-unlock-alt change-status" data-id="' + self.attr('data-id') + '" data-status="1" title="Make Unpublish">&nbsp;</a>');
+            }
+
+            // if some error occurrs then loader will again changed to element
+            $("#loader").replaceWith(self);
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

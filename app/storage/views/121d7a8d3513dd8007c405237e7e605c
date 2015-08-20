@@ -1,0 +1,271 @@
+<!-- FOOTER -->
+<footer class="footerBG">
+    <div class="container">
+        <div class="row">
+            <div><br></div>
+            <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 borderRight footerblock footerblock1" style="text-align:center">
+                <img alt="logo" src="<?php echo asset('packages/images/footer-logo.png'); ?>">
+                <ul class="footer_menu">
+                    <li><a href="<?php echo URL::to('/'); ?>/about-us">About Us</a></li>
+                    <li><a href="<?php echo URL::to('/'); ?>/contact">Contact</a></li>
+                    <li><a href="<?php echo URL::to('/'); ?>/acceptance-of-the-terms-of-use">Terms of Use</a></li>
+                    <li><a href="<?php echo URL::to('/'); ?>/privacy-policy">Privacy Policy</a></li>
+                    <li><a href="http://www.trailwala.com/blog/badges/" target="_blank">Trailwala Badges</a></li>
+                    <li><a href="<?php echo URL::to('/'); ?>/vendor-agreement">Vendor Agreement</a></li>
+                </ul>
+            </div>
+            <div class="clearfix visible-xs"></div>
+            <hr class="visible-xs">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 borderRight footerblock footerblock2 subscribenewslttr">
+                <h4 class="MuseoSlab100 fontSize16 alignCenter marginBottom25 m-margin-t-6">Subscribe to Our Newsletter</h4>
+                <div class="btn-group col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<input type="text" name="email-subscribe" id="email-subscribe" class="form-control1 col-xs-10 col-sm-10 col-md-10 col-lg-10" placeholder="Email Address">
+                    <button class="btn btn-search1 floatL fontSize14 MuseoSans300 col-xs-2 col-sm-2 col-md-2 col-lg-2" type="button" name="subscribe" id="subscribe"><b>Go</b></button>
+                    <div id="message">
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix visible-xs visible-sm"></div>
+            <hr class="visible-xs visible-sm">
+            <div class="col-xs-12 col-sm-6 col-md-3 col-lg-3 borderRight  footerblock footerblock3">
+                <h4 class="MuseoSlab100 fontSize16 alignCenter marginBottom25 m-margin-t-6">Site map</h4>
+                <?php if(isset($siteMapLinks) && $siteMapLinks->count() > 0): ?>
+                <div class="footer-link MuseoSans300 fontSize12 alignCenter">
+                    <?php foreach($siteMapLinks as $siteMap): ?>
+                    <span class="alignCenter color-whiite width100 floatL"><a href="<?php echo $siteMap->link; ?>" target="_blank" class="color-whiite line-height20"><?php echo $siteMap->name; ?></a></span>
+                    <span class="clearfix"></span>
+                    <?php endforeach; ?>
+                </div>
+                <?php endif; ?>
+            </div>
+            <div class="clearfix visible-xs"></div>
+            <hr class="visible-xs">
+            <div class="col-xs-12 col-sm-6 col-md-2 col-lg-3 footerblock footerblock4">
+                <h4 class="MuseoSlab100 fontSize16 alignCenter marginBottom25 m-margin-t-6">Connect with us</h4>
+                <div class="social-icon">
+                    <span><a href="https://www.facebook.com/trailwalainc" target="_blank"><img alt="facebook" src="<?php echo asset('packages/images/FB-icon.png'); ?>" width="27" height="26"></a></span>
+                    <span><a href="https://twitter.com/trailwala" target="_blank"><img alt="twitter" src="<?php echo asset('packages/images/tw-icon.png'); ?>" width="27" height="26"></a></span>
+                    <span><a href="http://instagram.com/trailwala" target="_blank"><img alt="Instagram" src="<?php echo asset('packages/images/Instagram.png'); ?>" width="27" height="26"></a></span>
+                </div>
+            </div>
+            <div class="clearfix visible-xs visible-sm"></div>
+            <hr class="visible-xs visible-sm">
+            <div class="MuseoSans300 fontSize12  color-grey alignCenter col-xs-12 col-sm-12 col-md-12 col-lg-12"><br>© 2014-2015 UrbanLogue Pvt. Ltd. All rights reserved.</div>
+            <div class="clearfix"><br></div>
+        </div>
+    </div>
+</footer>
+<!-- END footer -->
+<script src="<?php echo asset('packages/js/jquery.min.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/ie10-viewport-bug-workaround.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/common.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/jquery-ui.min.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/partner.popup.script.js'); ?>"></script>
+<script type="text/javascript">
+var BASE_URL = '<?php echo url("/"); ?>';
+
+function openPopUp(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $('#basic-modal-content').html(response.view);
+    $('#basic-modal-content').modal();
+
+    return false;
+}
+
+function openLoginPopUp(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $('#load-content').html(response.view);
+    $('#showUserLogin').modal();
+
+    return false;
+}
+
+function loginRegister(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $("span[id^='error_']").html("");
+    $("#successMessage").html("");
+    $("#errorMessage").html("");
+
+    if (response.info.error_exists == '1') {
+        $.each(response.info.messages, function(index, value) {
+            if (index == '0') {
+                $("#errorMessage").css("display", "block").append(value);
+            } else {
+                $("#error_" + index).append(value);
+            }
+        });
+    } else {
+        $("#successMessage").css("display", "block").append(response.info.messages);
+    }
+
+    return response;
+}
+
+function userRegister(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $("span[id^='error_']").html("");
+    $("#successMessageRegistration").html("");
+
+    if (response.info.error_exists == '1') {
+        $.each(response.info.messages, function(index, value) {
+            if (index == "email") {
+                $("#error_email_registration").append(value);
+            } else if (index == "password") {
+                $("#error_password_registration").append(value);
+            } else {
+                $("#error_" + index).append(value);
+            }
+        });
+    } else {
+        $("#successMessageRegistration").css("display", "block").append(response.info.messages);
+    }
+
+    return response;
+}
+
+function callForgetPassword(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $("#error_email_forget").html("");
+    $("#successMessageForget").html("");
+
+    if (response.info.error_exists == '1') {
+        $.each(response.info.messages, function(index, value) {
+            $("#error_email_forget").append(value);
+        });
+    } else {
+        $("#successMessageForget").css("display", "block").append(response.info.messages);
+    }
+
+    return response;
+}
+
+function subscribeUser()
+{
+    var user = $("#email-subscribe").val();
+    if (typeof user != 'undefined') {
+        var data = {
+            'email': user,
+            'type': CONFIG.get('NEWSLETTER_SUBSCRIBE')
+        };
+        $("#message").html('');
+        $("#subscribe").html('<b>Go</b>');
+        var res = executeAjaxRequest($(this), data, false);
+        var result = $.parseJSON(res);
+        if (result.valid == 1) {
+            $("#message").html('<p class="alert alert-success">' + result.message + '</p>');
+            $("#email-subscribe").val('');
+        } else {
+            $("#message").html('<p class="alert alert-danger">' + result.message + '</p>');
+        }
+
+        $("#subscribe").html('<b>Go</b>');
+    }    
+}
+
+$(function() {
+
+    $('#myModal').on('hide.bs.modal', function() {
+        //alert('Hey, I heard you like modals...');
+    })
+
+// opening login modal box
+    $(document).on('click', ".open-login", function() {
+        openLoginPopUp({'type': CONFIG.get('HOME_LOGIN_PAGE')});
+    });
+
+    $(document).on('submit', "#login", function(event) {
+        var loginBtn = $("#login-button");
+        var data = $("#login").serialize() + "&type=" + CONFIG.get('DO_LOGIN');
+        loginBtn.val('Logging...');
+        var response = loginRegister(data);
+        var redirect = $("#url").val();
+        var redirectBuyNowLogin = $("#redirectBuyNowLogin").val();
+        if ((redirectBuyNowLogin) && (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1)) {
+            $("#frmBuyNow").submit();
+            return false;
+        }
+        if (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1) {
+            var redirect = (!$("#url").val()) ? response.info.url : $("#url").val();
+            window.location.href = redirect;
+            return false;
+        }
+
+        loginBtn.val('Log In');
+        $("#email").focus();
+        event.preventDefault();
+    });
+
+    $(document).on('submit', "#signup", function(event) {
+        var registrBtn = $("#register-button");
+        var data = $("#signup").serialize() + "&type=" + CONFIG.get('DO_REGISTER');
+        registrBtn.val('Signing up..');
+        var response = userRegister(data);
+        var redirect = $("#url").val();
+        var redirectBuyNowLogin = $("#redirectBuyNowLogin").val();
+        if ((redirectBuyNowLogin) && (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1)) {
+            $("#frmBuyNow").submit();
+            return false;
+        }
+        if (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1) {
+            var redirect = (!$("#url").val()) ? response.info.url : $("#url").val();
+            window.location.href = redirect;
+            return false;
+        }
+        registrBtn.val('Sign Up');
+        $("#firstName").focus();
+        event.preventDefault();
+    });
+    //$(document).on('submit', "#signup", function(event) {
+//        var registrBtn = $("#register-button");
+//        var data = $("#signup").serialize() + "&type=" + CONFIG.get('DO_REGISTER');
+//        registrBtn.val('Signning...');
+//        var response = userRegister(data);
+//        registrBtn.val('Sing Up');
+//        if (parseInt(response.info.error_exists) == 0) {
+//            $("#signup")[0].reset();
+//            $("#firstName").focus();
+//        }
+//        event.preventDefault();
+//    });
+
+    $(document).on('submit', "#forgotpassword", function(event) {
+        var forgetBtn = $("#forget-password-button");
+        var data = $("#forgotpassword").serialize() + "&type=" + CONFIG.get('POST_USER_FORGET_PASSWORD');
+        forgetBtn.val('Submitting...');
+        var response = callForgetPassword(data);
+        forgetBtn.val('Submit');
+        if (parseInt(response.info.error_exists) == 0) {
+            $("#forgotpassword")[0].reset();
+            $("#email").focus();
+        }
+        event.preventDefault();
+    });
+
+    $(document).on('click', "#subscribe", function() {
+        subscribeUser();
+    });
+
+    $(document).on('keyup', "#email-subscribe", function(event) {
+        if (event.keyCode == 13 || event.which == 13) {
+            subscribeUser();
+        }
+    });
+    $(document).on('click', ".userLogout", function() {
+        $.removeCookie('bookingInfo');
+    });    
+
+
+});
+</script>
+<?php echo $__env->yieldContent('page-script'); ?>

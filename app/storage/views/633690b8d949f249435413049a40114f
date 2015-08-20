@@ -1,0 +1,120 @@
+<?php $__env->startSection('content'); ?>
+<!-- Carousel
+================================================== -->
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <!-- Indicators -->
+    <!--<ol class="carousel-indicators">
+      <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+      <li data-target="#myCarousel" data-slide-to="1" class=""></li>
+      <li data-target="#myCarousel" data-slide-to="2" class=""></li>
+    </ol>-->
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+			<div class="banner-triangle hidden-xs"></div>
+            <div class="banner-triangle-mob visible-xs"></div>
+            <div class="home-banner-block visible-xs" style="background:url(<?php echo asset('/packages/images/patner-banner-bg.png'); ?>)"></div>
+            <img class="hidden-xs" src="<?php echo asset('/packages/images/patner-banner-bg.png'); ?>" alt="First slide"> 
+        </div>
+
+        <div class="container">
+            <div class="carousel-caption3"> 
+                <h2 class="MuseoSlab100">Do you conduct adventure activities in India or Nepal? List with us.</h2>
+            </div>
+			<?php echo Form::open(['route' => 'agent.login','method' => 'post']); ?>
+
+            <div class="carousel-caption4"> 
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+							<span id="errrorMessageLogin" class="color-red fontSize12"><?php echo Session::get('message'); ?>&nbsp;</span>
+							<h3>Partner Log In</h3> 
+						</div>
+					</div>
+					<div class="btn-group col-xs-12 col-sm-10 col-md-10 col-lg-9 search-block1">
+						<div class="input-grou width2 col-xs-12 col-sm-6 col-md-6 col-lg-6 floatL marginLeft paddingR5">
+							<?php echo Form::text('email',null,['class' => 'form-control', 'id'=> 'email','placeholder' => 'Email']); ?>
+
+							<span class="color-red fontSize12"><?php echo $errors->first('email'); ?></span>
+						</div>
+						<div class="clearfix visible-xs lineHeight70"><br></div>
+						<div class="input-grou width2 col-xs-12 col-sm-6 col-md-6 col-lg-6 floatL marginLeft paddingR5">
+						   <?php echo Form::Input('password','password',null,['class' => 'form-control', 'id'=> 'password','placeholder' => 'Password']); ?>
+
+							<span class="color-red fontSize12"><?php echo $errors->first('password'); ?></span>
+						</div>
+						<div class="clearfix visible-xs lineHeight70"><br></div>
+						<!-- <div class="col-xs-12 visible-xs">
+							<?php echo Form::submit('Search',['class' => 'btn btn-search1 font-sz-bold fontSize15 MuseoSans300 floatR marginLeft col-xs-12', 'onClick' => "ga('send', 'event', 'search', 'Click', 'search')"]); ?>
+
+							<?php echo Form::close(); ?>	
+						</div> -->
+					</div>
+					<div class="col-xs-12 col-sm-2 col-md-2 col-lg-3 search-block2">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding0">
+							<?php echo Form::submit('Log In', array('class' => 'btn-log-in-agent btn btn-search1 font-sz-bold fontSize15 MuseoSans300 floatR marginLeft col-xs-12 col-sm-12 col-md-12 col-lg-12')); ?>
+
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+			<?php echo Form::close(); ?>
+
+			<div class="carousel-caption5">
+                <span class="floatL"><a href="#" class="color-yellow" data-toggle="modal" id="partnerForgotPassword">Forgot Password?</a></span>
+                <span class="floatR">Not yet a member? <a href="#" class="color-yellow" data-toggle="modal" id="partnerRegister">Sign Up</a></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- /.carousel -->
+
+
+
+<!-- Marketing messaging and featurettes
+================================================== -->
+<!-- Wrap the rest of the page in another container to center all the content. -->
+
+<div class="container marketing">
+
+<div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignCenter marginBottom20">
+            <h1 class="MuseoSlab500 color-maroon">How it works</h1>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <img class="img-circle" src="<?php echo asset('/packages/images/Register-with-us.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Register with us</h3>
+            <div class="MuseoSans300 fontSize16">
+                <p>Enter some basic information and sign up.</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <img class="img-circle" src="<?php echo asset('/packages/images/List-your-tours.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">List your tours</h3>
+            <div class="MuseoSans300 fontSize16">
+                <p>Create free listings for your trips; we will review and publish.</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <img class="img-circle" src="<?php echo asset('/packages/images/Get-New-Customers.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Get New Customers</h3>
+            <div class="MuseoSans300 fontSize16">
+                <p>Become more visible and grow your business.</p>
+            </div>
+        </div>
+		<div class="clearfix"></div>
+		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-center">
+            <h4 class="MuseoSlab500 color-maroon">Got Questions?  Email us: <a href="mailto:ask@trailwala.com" class="color-yellow">ask@trailwala.com</a></h4>
+        </div>
+    </div>
+</div><!-- /.container -->
+<!-- /END THE FEATURETTES -->
+<div class="clearfix"></div>
+<hr>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agentfront', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

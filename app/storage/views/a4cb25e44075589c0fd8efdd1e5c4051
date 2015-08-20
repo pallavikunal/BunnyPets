@@ -1,0 +1,89 @@
+
+
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<?php echo $__env->make('search.top', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="container marketing">
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">
+        <?php echo $__env->make('search.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <div class="col-sm-9">
+            <div class="sub-right" id="load-data">
+                <?php echo $__env->make('search.pagination', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                <div class="clearfix"></div>
+                <?php if(isset($tours) && $tours->count() >= 1): ?>
+                <?php foreach($tours as $tour): ?>
+                <div class="clearfix"></div>
+                <div class="sub-right-colm marginBottom10">
+                    <div class="floatL">
+                        <a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>">
+                            <?php if(!empty($tour->image_name) && $tour->image_name != NULL): ?>
+                            <img src="<?php echo asset('uploads/tours'); ?>/<?php echo $tour->user_id; ?>/<?php echo $tour->TourId; ?>/<?php echo $tour->image_name; ?>"
+                                 alt="<?php echo $tour->ImageTitle; ?>"  title="<?php echo $tour->ImageTitle; ?>"
+                                 width="225" height="225">
+                            <?php else: ?>
+                            <img src="<?php echo asset('packages/images/trave-list-img.png'); ?>" width="225" height="225">
+                            <?php endif; ?>
+                        </a>
+                    </div>
+
+                    <div class="floatL marginLeft35 width60">
+                        <a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>">
+                            <h4 class="MuseoSlab500 color-maroon">
+                                <?php echo ucfirst($tour->title); ?>
+
+                            </h4>
+                        </a>
+                        <span class="star-strip star-strip<?php echo (int)$tour->rating; ?>"></span>
+                        <?php if((int)$tour->rating): ?>
+                        <span class="floatL marginTop2 marginLeft5">
+                            <a href="<?php echo URL::to('review'); ?>/<?php echo $tour->slug; ?>" target="_blank" class="color-yellow">(<?php echo $tour->review->count(); ?> Reviews)</a>
+                        </span>
+                        <?php endif; ?>
+                        <span class="floatL marginTop2 marginLeft35"> <?php echo $tour->category->name; ?></span>
+                        <div class="clearfix"></div>
+
+                        <span class="paddingTop10 floatL">Location: </span>
+                        <span class="paddingTop10 floatL marginLeft5"><?php echo ucfirst($tour->region->name); ?>, <?php echo ucfirst($tour->state->name); ?></span>
+                        <div class="clearfix"></div>
+
+                        <span class="floatL">Timing: </span>
+                        <span class="floatL marginLeft5"><?php echo $tour->activity_timing; ?></span>
+                        <div class="clearfix"></div>
+                        
+                        <span class="floatL">Operated by: <a href="javascript:void(0)"  data-ref="<?php echo $tour->user->id; ?>" class="color-yellow operator_profile"> <?php if($tour->user->agencyName ): ?> <?php echo ucfirst($tour->user->agencyName ); ?> <?php else: ?> <?php echo $tour->user->firstName; ?> <?php echo $tour->user->lastName; ?> <?php endif; ?></a></span>
+                        <div class="clearfix"></div>
+
+                        <span class="floatL">Description: </span>
+                        <span class="floatL width80">&nbsp;<?php echo substr(strip_tags($tour->details),0,98); ?> <?php if(strlen($tour->details) > 98): ?><a href="javascript:void(0)" class="tour-details color-yellow" data-ref="<?php echo $tour->id; ?>">Read More</a><?php endif; ?></span>
+                        <input type="hidden" name="description" id="description<?php echo $tour->id; ?>" value="<?php echo strip_tags($tour->details); ?>"/>
+                        <div class="clearfix"></div>
+                        
+                        <div class="btn-book-position marginTop10">
+                            <a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>" class="color-whiite">
+                                <span class="text-center width100 floatL btn-book fontSize16 MuseoSlab100">
+                                <span><img src="<?php echo asset('packages/images/ruppes-icon.png'); ?>"></span>
+                                <span class="color-light-maroon"><?php echo $tour->charge_per_adult; ?>/-</span> View Details</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <?php endforeach; ?>
+                <div class="clearfix"></div>
+                <?php echo $__env->make('search.pagination', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+                <?php else: ?>
+                <div class="col-sm-12">
+                    <div class="sub-right">
+                        <div class="alert alert-warning">Woops! No Tours found. Please try with different options.</div>
+                    </div>
+                </div>
+                <?php endif; ?>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div><!-- /.row -->
+</div>
+<div id="loadContent"></div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

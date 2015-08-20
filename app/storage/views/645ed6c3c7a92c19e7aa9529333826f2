@@ -1,0 +1,79 @@
+
+<?php echo Form::open(['name' => 'frmUserLogin','id' => 'login']); ?>
+
+<div class="modal-content">    
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">
+            <span aria-hidden="true">&times;</span>
+            <span class="sr-only">Close</span></button>
+        <h4 class="modal-title color-yellow MuseoSlab500" id="myModalLabel">Log In</h4>
+    </div>
+
+    <div class="modal-body">
+        <div id="successMessage" class="color-green fontSize12" style="display:none;">&nbsp;</div>
+        <div id="errorMessage" class="color-red fontSize12" style="display:none;">&nbsp;</div>        
+        <?php echo Form::text('email',null,['class' => 'popup-input', 'id'=> 'email','placeholder' => 'Email Address']); ?><span id="error_email" class="color-red fontSize12"></span>
+        <div class="clearfix"></div>
+        <?php echo Form::Input('password','password',null,['class' => 'popup-input marginTop5', 'id'=> 'password','placeholder' => 'Password']); ?><span id="error_password" class="color-red fontSize12"></span>            
+        <div class="clearfix"></div>
+        <span class="floatL marginTop10 marginLeft20"><?php echo Form::Checkbox('rememberMe','rememberMe',null,['id'=> 'rememberMe']); ?>Remember me</span> 
+        <span class="floatR marginTop10"><a href="" id="flipToRecover" class="color-yellow flipLink"><b>Forgot Password?</b></a></span>
+        <?php echo Form::submit('Log In', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100','id' => 'login-button')); ?>        
+        <div class="clearfix"></div>
+        <hr style="border-bottom:1px solid #E6E6E6; height:2px; width:100%; margin-top:20px;">
+        <div class="clearfix"></div>
+        <span>Don't have an account? <a href="" id="signupid" class="color-yellow"><b>Sign Up</b></a></span>
+    </div>      
+</div>
+<?php echo Form::close(); ?>
+
+
+<?php echo Form::open(['id' => 'forgotpassword']); ?>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title color-yellow MuseoSlab500" id="myModalLabel">Forgot Password</h4>
+    </div>
+
+    <div class="modal-body">
+        <div id="successMessageForget" class="color-green fontSize12" style="display:none;">&nbsp;</div>
+        <?php echo Form::text('email',null,['class' => 'popup-input', 'id'=> 'email','placeholder' => 'Email Address*']); ?>  <span id="error_email_forget" class="color-red fontSize12"></span>
+        <?php echo Form::submit('Submit', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100','id' => 'forget-password-button')); ?>            
+        <div class="clearfix"></div>
+        <hr style="border-bottom:1px solid #E6E6E6; height:2px; width:100%; margin-top:20px;">
+        <div class="clearfix"></div>
+        <span>Have an account? <a href="" id="flipToLogin" class="flipLink color-yellow"><b>Log In</b></a></span>
+    </div>      
+</div>
+<?php echo Form::close(); ?>
+
+
+<?php echo Form::open(['name' => 'frmRegister','id' => 'signup']); ?>
+
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+        <h4 class="modal-title color-yellow MuseoSlab500" id="myModalLabel">Sign Up</h4>
+    </div>
+
+    <div class="modal-body">
+        <div id="successMessageRegistration" class="color-green fontSize12" style="display:none;">&nbsp;</div>
+        <?php echo Form::text('firstName',null,['class' => 'popup-input marginTop10', 'id'=> 'firstName','placeholder' => 'First Name*']); ?><span id="error_firstName" class="color-red fontSize12"></span>
+        <div class="clearfix"></div>
+        <?php echo Form::text('lastName',null,['class' => 'popup-input marginTop10', 'id'=> 'lastName','placeholder' => 'Last Name*']); ?><span id="error_lastName" class="color-red fontSize12"></span>
+        <div class="clearfix"></div>
+        <?php echo Form::text('email',null,['class' => 'popup-input marginTop10', 'id'=> 'email','placeholder' => 'Email Address*']); ?><span id="error_email_registration" class="color-red fontSize12"></span>
+        <div class="clearfix"></div>
+        <?php echo Form::Input('password','password',null,['class' => 'popup-input marginTop10', 'id'=> 'password','placeholder' => 'Password*']); ?><span id="error_password_registration" class="color-red fontSize12"></span>
+        <div class="clearfix"></div>
+        <?php echo Form::Input('password','password_confirmation',null,['class' => 'popup-input marginTop10', 'id'=> 'password_confirmation','placeholder' => 'Confirm Password*']); ?><span id="error_password_confirmation" class="color-red fontSize12"></span>            
+        <div class="clearfix"></div>
+        <?php echo Form::submit('Sign Up', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100','id' => 'register-button')); ?>            
+        <div class="clearfix"></div>
+        <hr style="border-bottom:1px solid #E6E6E6; height:2px; width:100%; margin-top:20px;">
+        <div class="clearfix"></div>
+        <span>Have an account? <a href="" id="flipToSignup" class="signFlipped color-yellow"><b>Log In</b></a></span>
+    </div>      
+</div>
+<?php echo Form::close(); ?>

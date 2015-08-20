@@ -1,0 +1,78 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+        <div class="pull-left image">
+            <?php if(!empty(Auth::user()->avtar)): ?>
+            <img src="<?php echo asset('/uploads/avtar/'); ?>/<?php echo Auth::user()->avtar; ?>" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'>
+            <?php else: ?>
+            <img src="<?php echo asset('/packages/images/'); ?>/user-pic-.png" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'>
+            <?php endif; ?>
+
+        </div>
+        <div class="pull-left info">
+            <p>Hello, <?php echo ucwords(Auth::user()->firstName); ?></p>
+        </div>
+    </div>    
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <li class="active">
+            <a href="<?php echo url('/agent'); ?>">
+                <i class="fa fa-dashboard"></i> <span><?php echo trans('frontend.agent.sidebar.dashboard'); ?></span>
+            </a>
+        </li>
+        <li class="<?php if(Session::get('parent_menu') == 'requests'): ?> active  <?php endif; ?>">
+            <a href="<?php echo URL::route('agent.bookings.index'); ?>">
+                <i class="fa fa-barcode"></i> <span><?php echo trans('frontend.agent.sidebar.tourrequest'); ?></span>
+            </a>
+        </li>
+        <li class="<?php if(Session::get('parent_menu') == 'questions'): ?> active  <?php endif; ?>">
+            <a href="<?php echo URL::route('agent.questions.index'); ?>">
+                <i class="fa fa-barcode"></i> <span><?php echo trans('frontend.agent.sidebar.questions'); ?></span>
+            </a>
+        </li>
+        <li class="treeview <?php if(Session::get('parent_menu') == 'tours'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-barcode"></i>
+                <span>Tours</span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'tour_index'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('agent.tour.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('frontend.agent.sidebar.manage_tours'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <li class="treeview <?php if(Session::get('parent_menu') == 'profile'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span><?php echo trans('frontend.agent.sidebar.personal_details'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'update_profile'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('agent.updateProfile'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('frontend.agent.sidebar.update_profile'); ?></span>
+                    </a>
+                </li>
+                <li class="<?php if(Session::get('sub_menu') == 'pay_in_details'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('agent.payInDetails'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('frontend.agent.sidebar.pay_in_details'); ?></span>
+                    </a>
+                </li>
+                <li class="<?php if(Session::get('sub_menu') == 'change_password'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('agent.changePassword'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('frontend.agent.sidebar.change_password'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+    </ul>
+</section>
+<!-- /.sidebar -->

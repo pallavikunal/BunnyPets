@@ -1,0 +1,40 @@
+<?php if($user === NULL): ?>
+<div class="alert alert-info">
+    <i class="fa fa-info"></i>
+    <b>Woops!</b> We are not able find any details for this user.
+</div>
+<?php else: ?>
+<dl class="dl-horizontal">
+    <dt>First Name</dt>
+    <dd><p><?php echo $user->firstName; ?></p></dd>
+    <dt>Last Name</dt>
+    <dd><p><?php echo $user->lastName; ?></p></dd>
+    <dt>Email</dt>
+    <dd><p><?php echo $user->email; ?></p></dd>                            
+    <dt>Status</dt>
+    <dd>                                                                  
+        <?php if($user->status == '1'): ?>
+        <p class='text-green'>Active</p>
+        <?php elseif($user->status == '2'): ?>
+        <p class='text-green'>Blocked</p>
+        <?php else: ?>
+        Inactive
+        <?php endif; ?>
+
+    </dd>
+    <dt>Avtar</dt>
+    <dd><p>
+            <?php if($user->avtar): ?>
+            <img src="<?php echo URL::to('/'); ?>/uploads/avatar/160x152/<?php echo $user->avtar; ?>"
+                 width="160" height="152">
+            <?php else: ?>
+            <img src="<?php echo asset('packages/images/user-pic-.png'); ?>" width="160" height="152">  
+            <?php endif; ?>
+        </p>
+    </dd>   
+    <dt>Created At</dt>
+    <dd><p><?php echo date('d M, Y', strtotime($user->created_at)); ?></p></dd>
+    <dt>Modified At</dt>
+    <dd><p><?php echo date('d M, Y', strtotime($user->updated_at)); ?></p></dd>
+</dl>
+<?php endif; ?>

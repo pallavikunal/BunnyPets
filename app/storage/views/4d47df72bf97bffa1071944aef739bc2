@@ -1,0 +1,403 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Tour Package
+        <small>Update Package.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>">tours</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Tour Package Form</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($tour,['route' => ['admin.tour.update',$tour->id ],'method' => 'patch','files'=> true]); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="category">Category</label>
+                        <?php echo Form::select('category',$categories,$tour->category_id,['class' => 'form-control', 'id'=> 'category']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('category'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="title">Title</label>
+                        <?php echo Form::text('title',$tour->title,['class' => 'form-control', 'id'=> 'name','placeholder' => 'Enter Title']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('title'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="details">Details</label>
+                        <?php echo Form::textarea('details',$tour->details,['class' => 'form-control textarea textarea-editor', 'id'=> 'details']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('details'); ?></p>
+                    </div>
+                    <div class="clear"></div>
+                    <label for="addDate"><a id="addScnt">Add More Dates +</a></label>
+                    <div class='text-red' id="maxAddDateError" style="display: none;">You can not add more then 10 rows.</div>
+                    <!----Select Date---->
+                    <div id="section_scents">
+                        <section>
+                            <div class="selectRangeDates">
+                                <div style="width:120px; float:left;">
+                                    <input type="radio" name="dateType_0" checked="checked" id="markupText_0" value="text" data-type="0" />
+                                    <label for="randomDate">Random Date</label>
+                                </div>
+                                <div style="width:120px; float:left;">
+                                    <input type="radio" name="dateType_0" id="markupRange_0" value="range" data-type="1" />
+                                    <label for="range">Date Range</label>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                            <div class="selectRangeDates" id="selectRandomDates_0">                                
+                                <?php echo Form::text('dates_0',$dates,['class' => 'form-control', 'id'=> 'dates_0','placeholder' => trans('frontend.agent.tour.select_dates')]); ?>
+
+                            </div>
+                            <div class="clear"></div>
+                            <div class="selectRangeDates" id="selectRangeDates_0" style="display:none">
+                                <div class="date-range-div">
+                                    <?php echo Form::text('startDate_0',$dates,['class' => 'form-control', 'id'=> 'startDates_0','placeholder' => "Start Date"]); ?>
+
+                                </div>
+                                <div for="to" class="floatL date-range-to">to</div>
+                                <div class="date-range-div">                                    
+                                    <?php echo Form::text('endDate_0',$dates,['class' => 'form-control floatL', 'id'=> 'endDate_0','placeholder' => "End Date"]); ?>
+
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </section>
+                    </div>
+                    <p class='text-red'><?php echo $errors->first('dates_0'); ?></p>
+                    <p class='text-red'><?php echo $errors->first('endDate_0'); ?></p>                    
+                    <div class="clear"></div>
+                    <!----End Select Date---->
+
+                    <div class="form-group">
+                        <label for="adult_rate">Rate Per Adult</label>
+                        <?php echo Form::text('adult_rate',$tour->charge_per_adult ,['class' => 'form-control', 'id'=> 'adult_rate','placeholder' => 'Enter rate per adult','maxlength' => 12]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('adult_rate'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="child_rate">Rate Per Child</label>
+                        <?php echo Form::text('child_rate',$tour->charge_per_child,['class' => 'form-control', 'id'=> 'child_rate','placeholder' => 'Enter rate per child','maxlength' => 12]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('child_rate'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="country">Country</label>
+                        <?php echo Form::select('country',$countries,$tour->country_id,['class' => 'form-control', 'id'=> 'country']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('country'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="state">State</label>
+                        <?php echo Form::select('state',$states,$tour->state_id,['class' => 'form-control', 'id'=> 'state']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('state'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="region">Region</label>
+                        <span>( Please select "Other" if your region is not available in List )</span>
+                        <?php echo Form::select('region',$regions,$tour->region_id,['class' => 'form-control', 'id'=> 'region']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('region'); ?></p>
+                    </div>
+                    <div id="otherCity" style="display: none">
+                        <div class="form-group">
+                            <label for="city">City</label>
+                            <?php echo Form::text('city',null,['class' => 'form-control', 'id'=> 'city','placeholder' => 'Enter city']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('city'); ?></p>
+                        </div>                    
+                    </div>                    
+                    <div class="form-group">
+                        <label for="street_address">Meet Location</label>
+                        <?php echo Form::textarea('street_address',$tour->street_address,['class' => 'form-control', 'id'=> 'street_address','rows' => 5,'cols' => 3]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('street_address'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="pin_code">Pin Code</label>
+                        <?php echo Form::text('pin_code',$tour->pincode,['class' => 'form-control', 'id'=> 'pin_code','placeholder' => 'Enter Pincode']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('pin_code'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="activity_duration" class='pull-left'><?php echo trans('frontend.agent.tour.activity_duration'); ?></label>
+                        <span class='clearfix'></span>
+                        <?php echo Form::selectRange('activity_duration_day', 0, 50, isset($metadata['activity_duration'][0])?$metadata['activity_duration'][0]:1, ['class' => 'form-control pull-left', 'style' => 'width:15%', 'id'=> 'activity_duration_day']);; ?>
+
+                        <span class='pull-left margin'>Days</span>
+                        <?php echo Form::selectRange('activity_duration_hours', 0, 23, isset($metadata['activity_duration'][1])?$metadata['activity_duration'][1]:0, ['class' => 'form-control pull-left', 'style' => 'width:15%', 'id'=> 'activity_duration_hour']);; ?>
+
+                        <span class='pull-left margin'>Hours</span>
+                        <?php echo Form::selectRange('activity_duration_miutes', 0, 55, isset($metadata['activity_duration'][2])?$metadata['activity_duration'][2]:0, ['class' => 'form-control pull-left', 'style' => 'width:15%', 'id'=> 'activity_duration_miutes']);; ?>
+
+                        <span class='pull-left margin'>Minutes</span>
+                        <span class='clearfix'></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="availability">Availability</label>
+                        <?php echo Form::select('availability',['Daily' => 'Daily','Alternate Day' => 'Alternate Day','Weekly' => 'Weekly'],$tour->availability,['class' => 'form-control', 'id'=> 'availability']); ?>                        
+                    </div>
+                    <div class="form-group">
+                        <label for="activity_timing">Activity Timing</label>                            
+                        <?php echo Form::text('activity_timing',$tour->activity_timing,['class' => 'form-control pull-left','id'=> 'activity_timing','placeholder' =>  trans('frontend.agent.tour.enter_activity_timing')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('activity_timing'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="fitness_level"><?php echo trans('frontend.agent.tour.fitness_level'); ?></label>
+                        <?php echo Form::select('fitness_level',['1' => trans('frontend.agent.tour.low'),
+                                        '2' =>  trans('frontend.agent.tour.moderate'),
+                                        '3' => trans('frontend.agent.tour.high'),
+                                        '4' => trans('frontend.agent.tour.higher')
+                            ],$tour->fitness_level,['class' => 'form-control', 'id'=> 'fitness_level']); ?>                        
+                    </div>                  
+                    <div class="form-group">
+                        <label for="pricing">More Details about Pricing (Optional)</label>
+                        <?php echo Form::textarea('pricing',isset($metadata['pricing'])?$metadata['pricing']:null,['class' => 'form-control textarea textarea-editor', 'id'=> 'pricing']); ?>
+
+                    </div>                
+                    <div class="form-group">
+                        <label for="cancellation_policy">Cancellation Policy</label>
+                        <?php echo Form::textarea('cancellation_policy',isset($metadata['cancellation_policy'])?$metadata['cancellation_policy']:'',['class' => 'form-control textarea textarea-editor', 'id'=> 'cancellation_policy']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('cancellation_policy'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="other_rules">Other Rules</label>
+                        <?php echo Form::textarea('other_rules',isset($metadata['other_rules'])?$metadata['other_rules']:'',['class' => 'form-control textarea textarea-editor', 'id'=> 'other_rules']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('other_rules'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="whats_included">What's Included</label>
+                        <?php echo Form::textarea('whats_included',isset($metadata['whats_included'])?$metadata['whats_included']:'',['class' => 'form-control textarea textarea-editor', 'id'=> 'whats_included']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('whats_included'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="whattobring">What To Bring</label>
+                        <?php echo Form::textarea('whattobring',isset($metadata['whattobring'])?$metadata['whattobring']:'',['class' => 'form-control textarea textarea-editor', 'id'=> 'whattobring']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('whattobring'); ?></p>
+
+                    </div>                        
+                    <div class="form-group">
+                        <label for="status">Status</label>
+                        <?php echo Form::select('status',['1' => 'Publish','0' => 'Unpublish'],$tour->status,['class' => 'form-control', 'id'=> 'status']); ?>                        
+                    </div>
+                    <?php echo Form::hidden('metaid',isset($metaid)?$metaid:0,['class' => 'form-control','id'=> 'metaid']); ?> 
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <?php echo Form::submit('Submit', array('class' => 'btn btn-primary')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::style('packages/admin/assets/css/datepicker/datepicker.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-datepicker.js'); ?>
+
+<?php echo HTML::style('packages/admin/assets/css/datepicker/bootstrap-timepicker.min.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-timepicker.min.js'); ?>
+
+
+
+<?php echo HTML::style('packages/admin/assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        var date = new Date();
+        date.setDate(date.getDate() + 1);
+
+        $('#activity_timing').timepicker({
+            defaultTime: false,
+            showMeridian: true
+        });
+
+        //bootstrap WYSIHTML5 - text editor
+        $(".textarea-editor").wysihtml5();
+
+        $(document).on('change', "#country", function() {
+            var _self = $(this);
+            var data = {"country": _self.val(),
+                "type": CONFIG.get('TOUR_COUNTRY_STATE')}
+            var res = executeAjaxRequest(_self, data);
+            $('#state').replaceWith(res);
+        });
+
+        $(document).on('change', "#state", function() {
+            var _self = $(this);
+            var data = {"state": _self.val(),
+                "type": CONFIG.get('TOUR_REGION_STATE')}
+            var res = executeAjaxRequest(_self, data);
+            $('#region').replaceWith(res);
+        });
+        $(document).on('change', "#region", function() {
+            var isOther = $("#region").val();
+            if (isOther == "other") {
+                $("#otherCity").css("display", "block")
+            } else {
+                $("#otherCity").css("display", "none")
+            }
+        });
+        var isOther = $("#region").val();
+        if (isOther == "other") {
+            $("#otherCity").css("display", "block")
+        }
+        /********Add more Dates**************/
+        var scntDiv = $('#section_scents');
+        var i = $('#section_scents div').size();
+        var startDate = date;
+        var FromEndDate = new Date();
+        var ToEndDate = new Date();
+        ToEndDate.setDate(ToEndDate.getDate() + 365);
+
+        $('#dates_0').datepicker({
+            multidate: true,
+            startDate: date
+        });            
+        $('#startDates_0').datepicker({
+            weekStart: 1,
+            startDate: date,
+            endDate: ToEndDate,
+            autoclose: true
+        }).on('changeDate', function(selected) {
+            startDate = new Date(selected.date.valueOf());
+            startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+            $('#endDate_0').datepicker('setStartDate', startDate);
+        });
+
+        $('#endDate_0').datepicker({
+            weekStart: 1,
+            startDate: startDate,
+            endDate: ToEndDate,
+            autoclose: true
+        }).on('changeDate', function(selected) {
+            FromEndDate = new Date(selected.date.valueOf());
+            FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
+            $('#startDates_0').datepicker('setEndDate', FromEndDate);
+        });
+            
+        $(document).on('click', "#addScnt", function() {
+            if (i >= 23) {
+                $("#maxAddDateError").css("display", "block");
+                return false;                
+            }
+            for ( var cnt = 0   ; cnt <= i; cnt++ ) {
+                $(document).on('change', 'input[id="markupText_' + cnt + '"]:radio', function() {
+                    var row = $(this).attr('id');
+                    var currentId = row.split('_');
+                    var id = currentId[1];
+                    $("#selectRandomDates_" + id).css("display", "block");
+                    $("#selectRangeDates_" + id).css("display", "none");
+                });
+                $(document).on('change', 'input[id="markupRange_' + cnt + '"]:radio', function() {
+                    var row = $(this).attr('id');
+                    var currentId = row.split('_');
+                    var id = currentId[1];                    
+                    $("#selectRangeDates_" + id).css("display", "block");
+                    $("#selectRandomDates_" + id).css("display", "none");
+                });
+            }
+            
+            $('<div id="div_' + i + '"><div class="addMoreBorder selectRangeDates">\n\
+        <div class="selectRangeDates">\n\
+<div style="width:120px; float:left;">\n\<input type="radio" name="dateType_' + i + '" checked="checked" id="markupText_' + i + '" class="radioClass" value="text" />\n\<label for="randomDate">Random Date</label>\n\</div>\n\
+<div style="width:120px; float:left;">\n\<input type="radio" name="dateType_' + i + '" id="markupRange_' + i + '" class="radioClass" value="range"/><label for="range">Date Range</label>\n\</div>\n\
+<div class="selectRangeDates" id="selectRandomDates_' + i + '">\n\<input type="text" name="dates_' + i + '" id="dates_' + i + '" value="" class ="form-control dates"  />\n\</div>\n\
+<div class="selectRangeDates" id="selectRangeDates_' + i + '" style="display:none">\n\<div class="date-range-div">\n\<input type="text" name="startDate_' + i + '" id="startDates_' + i + '" value="" class ="form-control"/>\n\</div>\n\
+<div for="to" class="floatL date-range-to">to</div>\n\
+<div style="width:190px; float:left;">\n\
+<div class="date-range-div">\n\<input type="text" name="endDate_' + i + '" id="endDate_' + i + '" value="" class ="form-control"/>\n\</div>\n\
+</div></div>\n\
+<div style="width:120px; float:left;"><a href="#" id="remScnt" data-id="' + i + '">Remove</a></div>\n\
+<div class="clear"></div></div></div>').appendTo(scntDiv);
+    
+            var startDate = date;
+            var FromEndDate = new Date();
+            var ToEndDate = new Date();
+            ToEndDate.setDate(ToEndDate.getDate() + 365);            
+            
+            $('#dates_' + i ).datepicker({
+                multidate: true,
+                startDate: date
+            });
+            $('#startDates_' + i).datepicker({
+                weekStart: 1,
+                startDate: date,
+                endDate: ToEndDate,
+                autoclose: true
+            }).on('changeDate', function(selected) {
+                startDate = new Date(selected.date.valueOf());
+                startDate.setDate(startDate.getDate(new Date(selected.date.valueOf())));
+                $('#endDate_' + i).datepicker('setStartDate', startDate);
+            });
+
+            $('#endDate_' + i).datepicker({
+                weekStart: 1,
+                startDate: startDate,
+                endDate: ToEndDate,
+                autoclose: true
+            }).on('changeDate', function(selected) {
+                FromEndDate = new Date(selected.date.valueOf());                
+                FromEndDate.setDate(FromEndDate.getDate(new Date(selected.date.valueOf())));
+                $('#startDates_' + i).datepicker('setEndDate', FromEndDate);
+            });            
+
+            i++;
+            return false;
+        });
+        
+        $(document).on('click', "#remScnt", function() {
+            var currentId = parseInt($(this).attr('data-id'));            
+            $('#div_' + currentId).remove();
+            i--;            
+            return false;
+        });
+        /********End more Dates**************/
+
+        $('.dates').datepicker({
+            multidate: true,
+            startDate: date
+        });
+
+        $(':radio[name="dateType_0"]').on('ifChecked', function() {
+            var type = parseInt($(this).attr('data-type'));
+            if (type == 1) {
+                $("#selectRangeDates_0").css("display", "block");
+                $("#selectRandomDates_0").css("display", "none");
+            } else {
+                $("#selectRandomDates_0").css("display", "block");
+                $("#selectRangeDates_0").css("display", "none");
+            }
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

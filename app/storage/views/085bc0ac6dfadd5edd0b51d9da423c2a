@@ -1,0 +1,97 @@
+<?php $__env->startSection('page-style'); ?>
+<!-- Star Rating -->
+<?php echo HTML::style('http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css'); ?>
+
+<?php echo HTML::style('packages/css/star-rating.css'); ?>
+
+<!-- end Star Rating -->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.tour.index_tour_management'); ?>
+
+        <small><?php echo trans('frontend.agent.review.review_listing'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('frontend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>"><?php echo trans('frontend.tours'); ?></a></li>
+        <li class="active"><?php echo trans('frontend.reviews'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <?php if(Session::has('message')): ?>            
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">
+				<div class='pull-right margin'>
+					<a href="<?php echo URL::route('agent.tour.index'); ?>" class='btn btn-primary'><?php echo trans('frontend.back'); ?></a>
+				</div>
+				<div class="clearfix"></div>
+				<div class="row">
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 box-header">
+						<?php if(! $reviews->isEmpty()): ?>
+						<h3 class="box-title"><?php echo $tour->title; ?> <!--<?php echo trans('frontend.agent.review.review_listing'); ?>--></h3>                    
+						<?php endif; ?>
+					</div>
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-6 text-right">
+						<?php echo Form::text('reviewAverage',$reviewAverage ,['class' => 'rating form-control', 'id'=> 'input-2a', 'data-min'=> '0', 'data-max'=> '5', 'data-step'=> '1' , 'data-readonly'=> 'true' ,'data-size' => 'xs']); ?>
+
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<hr>
+				<?php if( ! $reviews->isEmpty()): ?>
+				<div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 box-header">
+						<h4 class="color-maroon">User's Review >></h4>                    
+					</div>
+					<div class="clearfix"></div>
+				</div>
+				<div class="row">
+					<?php foreach($reviews as $review): ?>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<div class="review-rating text-right">
+							<?php echo Form::text('rating',$review->rating ,['class' => 'rating form-control', 'id'=> 'input-2a', 'data-min'=> '0', 'data-max'=> '5', 'data-step'=> '1' , 'data-readonly'=> 'true' ,'data-size' => ' xs']); ?>
+
+						</div>
+						<div class="review color-grey">
+							<blockquote>
+								<?php echo $review->review; ?>
+
+							</blockquote>
+						</div>
+						<div class="review-name text-right color-maroon">By:<i> <?php echo $review->reviewer->firstName; ?>&nbsp;<?php echo $review->reviewer->lastName; ?></i></div>
+					</div>
+					<div class="clearfix"></div>
+					<hr>
+					<?php endforeach; ?>
+					<?php else: ?>
+					<div class="alert alert-info">						
+						<b><?php echo trans('frontend.agent.review.record_not_found'); ?></b>
+					</div>  
+					<?php endif; ?>    
+				</div>
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+</div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('page-script'); ?>
+<!-- Star Rating-->
+<!--<?php echo HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); ?>-->
+<?php echo HTML::script('packages/js/star-rating.js'); ?>
+
+<!--end Star Rating-->
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

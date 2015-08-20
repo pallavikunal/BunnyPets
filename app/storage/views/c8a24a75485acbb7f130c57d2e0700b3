@@ -1,0 +1,154 @@
+<?php $__env->startSection('content'); ?>
+
+<!--Content Header (Page header) -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.booking.index_booking_management'); ?>
+
+        <small><?php echo trans('frontend.agent.booking.index_manage_all_bookings'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="<?php echo URL::to('/agent'); ?>"><i class="fa fa-dashboard"></i><?php echo trans('frontend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('agent.bookings.index'); ?>"><?php echo trans('frontend.bookings'); ?></a></li>
+        <li class="active"><?php echo trans('frontend.index'); ?></li>
+    </ol>
+</section>
+<!-- Main content -->
+
+<div class="box box-primary">
+    <div class="box-body">
+        <section class="">
+            <!-- title row -->
+            <div class="row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<h3>Booking confirmed</h3>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th><b>Booking No:</b></th>
+									<td><?php echo $booking->order_id; ?></td>
+								</tr>                           
+								<tr>
+									<th><b>Booked On:</b></th>
+									<td><?php echo date("dS F Y",strtotime($booking->booking->order->created_at)); ?></td>
+								</tr>
+								<tr>
+									<th><b>Tour Start On:</b></th>
+									<td><?php echo date("d-M-Y",strtotime($booking->booking->tour_dates));; ?></td>
+								</tr>
+								<tr>
+									<th><b>Booked For:</b></th>
+									<td><?php echo ucwords($booking->user->firstName." ".$booking->user->lastName); ?></td>
+								</tr>                            
+							</tbody>
+						</table>
+					</div>
+					<div class="clearfix"></div>
+					<hr>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<h3  class="page-header"><i class="fa fa-globe"></i>
+                        <a href="<?php echo URL::to('/'); ?>/agent/tour/<?php echo $booking->booking->tours->id; ?>"><?php echo ucfirst($booking->booking->tours->title); ?></a></h3>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+						<table class="table">
+							<tbody>
+								<tr>
+									<th><b>Activity Type:</b></th>
+									<td><?php echo $booking->booking->tours->category->name; ?></td>
+								</tr>                           
+								<tr>
+									<th><b>Location:</b></th>
+									<td><?php echo $booking->booking->tours->region->name; ?>, <?php echo $booking->booking->tours->state->name; ?>, <?php echo $booking->booking->tours->country->name; ?></td>
+								</tr>
+								<tr>
+									<th><b>Fitness level:</b></th>
+									<td><?php $fitnessLevel = $booking->booking->tours->fitness_level; ?>
+                                    <?php if(1 == $fitnessLevel): ?>Low
+                                    <?php elseif(2 == $fitnessLevel): ?>Moderate
+                                    <?php elseif(3 == $fitnessLevel): ?>High
+                                    <?php else: ?> Higher
+                                    <?php endif; ?>                        </td>
+								</tr>
+								<tr>
+									<th><b>Contact:</b></th>
+									<td><?php echo isset($booking->user->contactNumber)?$booking->user->contactNumber:'';; ?></td>
+								</tr>   
+								<tr>
+									<th><b>Email:</b></th>
+									<td><?php echo $booking->user->email; ?>    </td>
+								</tr>   
+							</tbody>
+						</table>
+					</div>
+					<div class="clearfix"></div>
+					<hr>
+					<div class="col-xs-12 table-responsive">
+						<table class="table table-striped">
+							<thead>
+								<tr>
+									<th>Qty</th>
+									<th>Rate</th>
+									<th>Subtotal</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td><?php echo $booking->booking->adults; ?> Adults</td>
+									<td><?php echo $booking->booking->tours->charge_per_adult; ?></td>
+									<td>INR <?php echo $booking->booking->tours->charge_per_adult  * $booking->booking->adults; ?></td>
+								</tr>
+								<?php if($booking->booking->childs > 0): ?>
+								<tr>
+									<td><?php echo $booking->booking->childs; ?> Childs</td>
+									<td><?php echo $booking->booking->tours->charge_per_child; ?></td>
+									<td>INR <?php echo $booking->booking->tours->charge_per_child  * $booking->booking->childs; ?></td>
+								</tr>
+								<?php endif; ?>
+								<tr>
+									<td colspan="2"><b>Total</b></td>
+									<td>INR <?php echo ($booking->booking->tours->charge_per_adult  * $booking->booking->adults) + ($booking->booking->tours->charge_per_child  * $booking->booking->childs); ?></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+                    
+                              
+                <!-- /.col -->
+            </div>
+            <!-- info row -->
+            
+
+            <!-- Table row -->
+            <div class="row">
+                <!-- /.col -->
+            </div><!-- /.row -->
+            <br/>
+
+            <!-- this row will not appear when printing -->
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                </div>
+            </div>
+        </section>
+        <br/>
+    </div><!-- /.box-body -->
+</div>
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/jquery.dataTables.js'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/dataTables.bootstrap.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#example2').dataTable();
+    });
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

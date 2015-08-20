@@ -1,0 +1,176 @@
+<?php $__env->startSection('content'); ?>
+
+<!--Content Header (Page header) -->
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.admin.booking.index_booking_management'); ?>
+
+        <small><?php echo trans('backend.admin.booking.show_booking_details'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="<?php echo URL::to('/admin'); ?>"><i class="fa fa-dashboard"></i><?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.bookings.index'); ?>"><?php echo trans('backend.bookings'); ?></a></li>
+        <li class="active"><?php echo trans('backend.index'); ?></li>
+    </ol>
+</section>
+<!-- Main content -->
+
+<div class="box box-primary">
+    <div class="box-body">
+        <section class="content invoice">
+            <!-- title row -->
+            <div class="row">
+                <div class="col-xs-12">
+                    <div id="message">
+                        <?php if(Session::has('message')): ?>
+                        <?php echo Session::get('message'); ?>
+
+                        <?php endif; ?>
+                    </div>
+                    <h2 class="page-header">
+                        <i class="fa fa-globe"></i> 
+                        <a href="<?php echo URL::to('/'); ?>/admin/tour/<?php echo $booking->booking->tours->id; ?>"><?php echo ucfirst($booking->booking->tours->title); ?></a>
+                        <small class="pull-right">Date: <?php echo date("d/m/Y",strtotime($booking->created_at)); ?></small>
+                    </h2>
+                </div><!-- /.col -->
+            </div>
+            <!-- info row -->
+            <?php echo Form::open(['route'=>'admin.paidOfflinePayment','method' => 'POST','name' => 'frmPaidOffline', 'id' => 'frmPaidOffline']); ?>
+
+            <div class="row invoice-info">
+                <div class="col-xs-12 marginBottom10">
+                    <?php if($booking->order_status == 4 && $booking->booking->tour_dates < date("Y-m-d")): ?>
+                    <span class="color-red">Check-In date has been expired!</span>
+                    <?php endif; ?>
+                </div>
+
+                <div class="col-sm-4 invoice-col">
+                    <strong>To</strong>
+                    <address>
+                        <?php if($booking->agent->agency_name): ?>
+                        <?php echo $booking->booking->agent->agency_name; ?>
+
+                        <?php else: ?>
+                        <?php echo ucwords($booking->booking->agent->firstName . " ". $booking->booking->agent->lastName ); ?>
+
+                        <?php endif; ?>
+                        <?php echo $booking->booking->tours->stree_address; ?><br>
+                        <?php echo $booking->booking->tours->region->name; ?>,
+                        <?php echo $booking->booking->tours->state->name; ?>,
+                        <?php echo $booking->booking->tours->country->name; ?><br>
+                        <?php if($booking->agent->contactNumber): ?>
+                        Phone: <?php echo $booking->agent->contactNumber; ?> <br>
+                        <?php endif; ?>
+                        Email: <?php echo $booking->agent->email; ?>
+
+                    </address>
+                </div>
+                <div class="col-sm-4 invoice-col">
+                    <strong>From</strong>
+                    <address>
+                        <?php echo ucwords($booking->user->firstName." ".$booking->user->lastName); ?>
+
+                        <br/>
+                        Email: <?php echo $booking->user->email; ?> <br>
+                        <?php if($booking->user->contactNumber): ?>
+                        Phone: <?php echo $booking->user->contactNumber; ?>
+
+                        <?php endif; ?>
+                    </address>
+                </div><!-- /.col -->
+                <div class="col-sm-4 invoice-col pull-right">
+                    <b>Order ID:</b> <?php echo $booking->order_id; ?><br>
+                    <b>Tour Start Date:</b> <?php echo date("d M,Y",strtotime($booking->booking->tour_dates));; ?><br>
+                    <b>payment Mode:</b> <?php if($booking->order_type == 1): ?>Online <?php else: ?> Offline <?php endif; ?> <br>
+                    <b>Status:</b>
+                    <?php if($booking->order_status == 1): ?><span class='color-green'>Success</span>
+                    <?php elseif($booking->order_status == 2): ?><span class='color-red'>Cancelled</span>
+                    <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates < date("Y-m-d"))): ?><span class='color-red'>Expired</span>
+                    <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates > date("Y-m-d"))): ?><span class='color-green'>Requested</span>
+                    <?php else: ?><span class='color-red'>Failure</span> <?php endif; ?><br>
+
+                    <?php if($booking->order_status == 4 && ($booking->booking->tour_dates > date("Y-m-d"))): ?>
+                    <?php echo Form::hidden('order_id',$booking->order_id,['id' => 'order_id']); ?>
+
+                    <?php echo Form::submit('Paid',['class' => 'btn btn-default', 'id' => 'paid']); ?>
+
+                    <?php endif; ?>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <?php echo Form::close(); ?>
+
+            <div class="row no-print">
+                <div class="col-xs-12 marginBottom10">
+                    <?php if(!empty($booking->coupen_code)): ?>
+                    <b>Code / Name of Referrer:</b> <?php echo $booking->coupen_code; ?>
+
+                    <?php endif; ?>
+                </div>
+                <div class="col-xs-12 marginBottom10">
+                    <?php if(!empty($booking->comments)): ?>
+                    <b>Comments:</b> <?php echo $booking->comments; ?>
+
+                    <?php endif; ?>
+                </div>
+            </div>
+
+            <!-- Table row -->
+            <div class="row">
+                <div class="col-xs-12 table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Qty</th>
+                                <th>Rate</th>
+                                <th>Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><?php echo $booking->booking->adults; ?> Adults</td>
+                                <td><?php echo $booking->booking->tours->charge_per_adult; ?></td>
+                                <td>INR <?php echo $booking->booking->tours->charge_per_adult  * $booking->booking->adults; ?></td>
+                            </tr>
+                            <?php if($booking->booking->childs > 0): ?>
+                            <tr>
+                                <td><?php echo $booking->booking->childs; ?> Childs</td>
+                                <td><?php echo $booking->booking->tours->charge_per_child; ?></td>
+                                <td>INR <?php echo $booking->booking->tours->charge_per_child  * $booking->booking->childs; ?></td>
+                            </tr>
+                            <?php endif; ?>
+                            <tr>
+                                <td colspan="2"><b>Total</b></td>
+                                <td>INR <?php echo ($booking->booking->tours->charge_per_adult  * $booking->booking->adults) + ($booking->booking->tours->charge_per_child  * $booking->booking->childs); ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+            <br/>
+
+            <!-- this row will not appear when printing -->
+            <div class="row no-print">
+                <div class="col-xs-12">
+                    <button class="btn btn-default" onclick="window.print();"><i class="fa fa-print"></i> Print</button>
+                </div>
+            </div>
+        </section>
+        <br/>
+    </div><!-- /.box-body -->
+</div>
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/jquery.dataTables.js'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/dataTables.bootstrap.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#example2').dataTable();
+    });
+</script>
+<?php $__env->stopSection(); ?>
+
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

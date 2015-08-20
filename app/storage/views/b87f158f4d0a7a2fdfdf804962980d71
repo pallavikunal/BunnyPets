@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <!-- START head -->
+    <?php echo $__env->make('includes.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <!-- END head -->
+
+    <!-- START body -->
+    <body>
+        <!-- START header -->
+            <?php echo $__env->make('includes.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <!-- END header -->
+
+            <?php echo $__env->yieldContent('sliders_content', ''); ?>
+
+        <!-- START .main-contents -->
+            <?php echo $__env->yieldContent('content'); ?>
+        <!-- END .main-contents -->
+
+        <!-- START footer -->
+             <?php echo $__env->make('includes.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <!-- END footer -->
+    </body>
+</html>

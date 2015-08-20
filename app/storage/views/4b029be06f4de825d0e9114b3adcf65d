@@ -1,0 +1,33 @@
+<?php $__env->startSection('content'); ?>
+<div class="inner-banner">
+    <div class="banner-col1">
+        <div class="item1">
+            <?php if($bgimage->image_name): ?>
+                <img src="<?php echo asset('packages/images/inner-banner1.png'); ?>" alt="Trailwala">
+            <?php else: ?>
+                <img src="<?php echo asset('packages/images/inner-banner1.png'); ?>" alt="Trailwala">
+            <?php endif; ?>            
+        </div>        
+    </div>
+</div>
+
+<div class="container marketing">
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">
+        <div class="col-sm-7">
+            <h2 class="MuseoSlab500 color-maroon marginLeft55"><?php echo $page->title; ?></h2>
+            <div class="container MuseoSans500">
+                <ul style="list-style:none;">
+                    <li class="marginTop15 marginBottom15">
+                        <?php echo ucfirst($page->description); ?>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- /.row -->
+</div><!-- /.container -->
+
+<div class="clearfix"></div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agentfront', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

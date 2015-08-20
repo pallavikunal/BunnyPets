@@ -1,0 +1,28 @@
+<div class="pull-left col-md-5" id="<?php echo str_replace('.','-',$image); ?>">
+   <div class="tourImage">
+        <img src="<?php echo asset('uploads/temp'); ?>/<?php echo $image; ?>"/>
+    </div>
+    <div class="form-group tourImageInputs">
+        <?php echo Form::hidden('images[]',$image, array('class' => 'control')); ?>
+
+        <label for="title" class="label-width70">Title</label>
+        <?php echo Form::text('title[]',null, array('class' => 'control')); ?>
+
+    </div>
+    <div class="form-group tourImageInputs">
+        <label for="caption" class="label-width70">Caption</label>
+        <?php echo Form::text('caption[]', null,array('class' => 'control')); ?>
+
+    </div>
+    <div class="form-group tourImageInputs">
+        <label for="mark-as-featured">Mark As Featured</label>
+        <div class="icheckbox_minimal" style="position: relative;" aria-checked="false" aria-disabled="false">
+            <?php echo Form::checkbox('featured[]',1,false,array('class' => 'control','style' => 'position: absolute; opacity: 0;')); ?>
+
+        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; background: none repeat scroll 0% 0% rgb(255, 255, 255); border: 0px none; opacity: 0;"></ins>
+        </div>
+    </div>
+    <div class="remove-image">
+        <a href="javascript:void(0)" class="removeImage" data-name="<?php echo $image; ?>" data-temp="1"><i class="fa fa-minus-circle"></i></a>
+    </div>
+</div>

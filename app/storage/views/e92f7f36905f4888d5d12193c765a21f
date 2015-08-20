@@ -1,0 +1,18 @@
+<?php $__env->startSection('content'); ?>
+    <?php echo $__env->make('page.banner', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    <div class="container marketing">
+        <!-- Three columns of text below the carousel -->
+        <div class="row marginTop30 marginBottom30"> 
+            <?php echo $__env->make('includes.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            <div class="col-sm-8 col-md-9 col-lg-9">
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+                <?php echo $__env->yieldContent('dashboard_content'); ?>
+            </div>
+        </div><!-- /.row -->
+    </div>
+    <div class="clearfix"></div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

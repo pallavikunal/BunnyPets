@@ -1,0 +1,220 @@
+<!-- sidebar: style can be found in sidebar.less -->
+<section class="sidebar">
+    <!-- Sidebar user panel -->
+    <div class="user-panel">
+        <div class="pull-left image">
+            &nbsp;
+        </div>
+        <div class="pull-left info">
+            <p>Hello, <?php echo ucwords(Auth::user()->firstName); ?></p>
+        </div>
+    </div>  
+    <!-- sidebar menu: : style can be found in sidebar.less -->
+    <ul class="sidebar-menu">
+        <!--Start Dashboard-->
+        <li class="active">
+            <a href="<?php echo URL::route('admin...index'); ?>">
+                <i class="fa fa-dashboard"></i> <span><?php echo trans('backend.admin.sidebar.dashboard'); ?></span>
+            </a>
+        </li>
+        <!--End Dashboard-->
+        </li>
+        <li class="<?php if(Session::get('parent_menu') == 'questions'): ?> active  <?php endif; ?>">
+            <a href="<?php echo URL::route('admin.questions.index'); ?>">
+                <i class="fa fa-barcode"></i> <span><?php echo trans('backend.admin.sidebar.questions'); ?></span>
+            </a>
+        </li>
+
+        <li  class="treeview <?php if(Session::get('parent_menu') == 'pages'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-file-text"></i>
+                <span><?php echo trans('backend.admin.sidebar.pages'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'page'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.page.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_pages'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+
+
+        <!--Start User Module-->
+        <li class="treeview <?php if(Session::get('parent_menu') == 'user'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-users"></i>
+                <span><?php echo trans('backend.admin.sidebar.users'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'user_index'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.user.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_users'); ?></span>
+                    </a>
+                </li>
+                <!--                <li class="<?php if(Session::get('sub_menu') == 'user_create'): ?> active  <?php endif; ?>">
+                                    <a href="<?php echo URL::route('admin.user.create'); ?>" style="margin-left: 10px;">
+                                        <i class="fa fa-angle-double-right"></i>
+                                        <span><?php echo trans('backend.admin.sidebar.create_user'); ?></span>
+                                    </a>
+                                </li>-->
+
+                <li class="<?php if(Session::get('sub_menu') == 'user_create'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.siteUser'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.search_siteuser'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--End User Module-->
+
+        <!--Start Tour Module-->
+        <li class="treeview <?php if(Session::get('parent_menu') == 'tours'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-barcode"></i>
+                <span><?php echo trans('backend.admin.sidebar.tours'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'tour_index'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.tour.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_tours'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--End Tour Module-->
+
+        <!--Start Booking Module-->
+        <li class="treeview <?php if(Session::get('parent_menu') == 'bookings'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-barcode"></i>
+                <span><?php echo trans('backend.admin.sidebar.bookings'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'bookings_index'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.bookings.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_bookings'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--End Booking Module-->
+
+        <!--Start Category Module-->
+        <li class="treeview <?php if(Session::get('parent_menu') == 'category'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-list-alt"></i>
+                <span><?php echo trans('backend.admin.sidebar.categories'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'category_index'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.category.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_categories'); ?></span>
+                    </a>
+                </li>
+                <li class="<?php if(Session::get('sub_menu') == 'category_create'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.category.create'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.create_category'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--End Category Module-->
+
+        <!--Start Region Module-->
+        <li class="treeview <?php if(Session::get('parent_menu') == 'region'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-building-o"></i>
+                <span><?php echo trans('backend.admin.sidebar.regions'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'region_country'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.country.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_countries'); ?></span>
+                    </a>
+                </li>
+                <li class="<?php if(Session::get('sub_menu') == 'region_state'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.state.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_states'); ?></span>
+                    </a>
+                </li>
+                <li class="<?php if(Session::get('sub_menu') == 'region_region'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.region.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.manage_regions'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--End Region Module-->
+
+        <!--Start Mail Template Module-->
+        <li class="treeview <?php if(Session::get('parent_menu') == 'profile'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-user"></i>
+                <span><?php echo trans('frontend.agent.sidebar.personal_details'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <!--                <li class="<?php if(Session::get('sub_menu') == 'update_profile'): ?> active  <?php endif; ?>">
+                                    <a href="<?php echo URL::route('agent.updateProfile'); ?>" style="margin-left: 10px;">
+                                        <i class="fa fa-angle-double-right"></i>
+                                        <span><?php echo trans('frontend.agent.sidebar.update_profile'); ?></span>
+                                    </a>
+                                </li>-->
+                <!--                <li class="<?php if(Session::get('sub_menu') == 'pay_in_details'): ?> active  <?php endif; ?>">
+                                    <a href="<?php echo URL::route('agent.payInDetails'); ?>" style="margin-left: 10px;">
+                                        <i class="fa fa-angle-double-right"></i>
+                                        <span><?php echo trans('frontend.agent.sidebar.pay_in_details'); ?></span>
+                                    </a>
+                                </li>-->
+                <li class="<?php if(Session::get('sub_menu') == 'change_password'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.changepassword'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('frontend.agent.sidebar.change_password'); ?></span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--Start settings Module-->
+        <li  class="treeview <?php if(Session::get('parent_menu') == 'settings'): ?> active  <?php endif; ?>">
+            <a href="#">
+                <i class="fa fa-cogs"></i>
+                <span><?php echo trans('backend.admin.sidebar.settings'); ?></span>
+                <i class="fa fa-angle-left pull-right"></i>
+            </a>
+            <ul class="treeview-menu">
+                <li class="<?php if(Session::get('sub_menu') == 'background_image'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.backgroundImage.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span><?php echo trans('backend.admin.sidebar.background_image'); ?></span>
+                    </a>
+                </li>
+                <li class="<?php if(Session::get('sub_menu') == 'manage_settings'): ?> active  <?php endif; ?>">
+                    <a href="<?php echo URL::route('admin.setting.index'); ?>" style="margin-left: 10px;">
+                        <i class="fa fa-angle-double-right"></i>
+                        <span>Manage Settings</span>
+                    </a>
+                </li>
+            </ul>
+        </li>
+        <!--End settings Module-->       
+
+    </ul>
+</section>
+<!-- /.sidebar -->

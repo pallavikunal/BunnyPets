@@ -1,0 +1,140 @@
+<?php $__env->startSection('dashboard_content'); ?>
+<?php echo Form::model($user, ['route' => ['user.updateprofile'], 'method' => 'post', 'files' => 'true']); ?>
+
+<input type="hidden" name="tid" id="tid" />
+<div class="userProfile-right-col MuseoSans500">
+    <h3 class="MuseoSans300 color-maroon">User Profile</h3>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">First Name</label>
+            <?php echo Form::text('firstName',ucfirst($user->firstName),['class' => 'popup-input', 'id'=> 'firstName','placeholder' => 'First Name*']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('firstName'); ?></div>
+        </div>
+        <div class="clearfix visible-xs visible-sm"><br></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Last Name</label>
+            <?php echo Form::text('lastName',ucfirst($user->lastName),['class' => 'popup-input', 'id'=> 'lastName','placeholder' => 'Last Name*']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('lastName'); ?></div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Contact Number</label>
+            <?php echo Form::text('contactNumber',$user->contactNumber, ['class' => 'popup-input', 'id'=> 'contactNumber','placeholder' => 'Contact Number*']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('contactNumber'); ?></div>
+        </div>
+        <div class="clearfix visible-xs visible-sm"><br></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Email</label>
+            <?php echo Form::text('email',$user->email,['class' => 'popup-input', 'id'=> 'lastName','disabled' => 'disabled','placeholder' => 'Email*']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('email'); ?></div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Country</label>
+            <span class="custom-dropdown-1"><?php echo Form::select('country',$countries,$userCountry,['class' => 'customSelect-1 MuseoSans300 color-maroon fontSize16', 'id'=> 'country','placeholder' => 'Enter Country*']); ?></span>
+            <div class="color-red fontSize12"><?php echo $errors->first('country'); ?></div>
+        </div>
+        <div class="clearfix visible-xs visible-sm"><br></div>
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">City</label>
+            <?php echo Form::text('region',$userRegion,['class' => 'popup-input MuseoSans300 color-maroon fontSize16', 'id'=> 'region', 'autocomplete' => 'on' , 'placeholder' => 'Select Location*']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('region'); ?> </div>
+        </div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Pin Code</label>
+            <?php echo Form::text('pincode',$userPincode,['class' => 'popup-input', 'id'=> 'pinCode','placeholder' => 'Pin Code']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('pincode'); ?></div>
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6"><br></div>
+    </div>
+    <div class="clearfix"></div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Street Address</label>
+            <?php echo Form::textarea('street_address',$userAddress,['class' => 'popup-textarea', 'id'=> 'street_address', 'cols'=> '40', 'rows'=> '8', 'placeholder'=> 'Street Address']); ?>
+
+            <span class="color-red fontSize12"><?php echo $errors->first('street_address'); ?></span>
+        </div>
+        <div class="clearfix visible-xs visible-sm"><br></div>
+
+    </div>
+    <div class="clearfix"></div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <span class="floatL MuseoSans300 color-maroon fontSize16 font-sz-normal">Upload photo: </span>
+            <?php echo Form::file('image',null,['class' => 'floatL', 'id'=> 'image']); ?>
+
+            <div class="color-red fontSize12"><?php echo $errors->first('image'); ?> </div>
+        </div>
+        <div class="clearfix visible-xs visible-sm"><br></div>
+    </div>
+    <div class="clearfix"></div>
+    <div><br></div>
+    <div class="row">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <?php echo Form::submit('Update', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100')); ?>
+
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <div><br></div>
+
+
+</div>
+<?php echo Form::close(); ?>
+
+<?php $__env->startSection('dashboard-script'); ?>
+<script src="<?php echo asset('packages/js/jquery.min.js'); ?>"></script>
+<script language="javascript" type="text/javascript" src="<?php echo asset('packages/js/json.js'); ?>"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
+<script type="text/javascript">
+var countryCode = new Array();
+window.onload = function() {
+    countryCode = $.parseJSON('<?php echo json_encode($countriesCode); ?>');
+    var d = new Date().getTime();
+    document.getElementById("tid").value = d;
+    //initialize(countryCode[$('#country').val()]);
+};
+$(function() {
+    $("#region").focus(function() {
+        initialize(countryCode[$('#country').val()]);
+    });
+    $(document).on('change', "#country", function() {
+        initialize(countryCode[$(this).val()]);
+        $('#region').val("");
+    });
+});
+function initialize(country) {
+    var options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: country}
+    };
+    var input = document.getElementById('region');
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+}
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('user.profile.dashboard', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

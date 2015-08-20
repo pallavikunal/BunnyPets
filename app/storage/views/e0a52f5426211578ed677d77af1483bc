@@ -1,0 +1,90 @@
+<?php $__env->startSection('content'); ?>
+
+<!--Content Header (Page header) -->
+<h1>
+    <?php echo trans('frontend.agent.profile.update_profile'); ?>
+
+</h1>
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+                <!-- form start -->
+                <?php echo Form::model($user, ['route' => ['agent.updateprofile'], 'method' => 'post', 'files' => 'true']); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="firstName"><?php echo trans('frontend.agent.profile.first_name'); ?></label>
+                        <?php echo Form::text('firstName',$user->firstName,['class' => 'form-control', 'id'=> 'firstName','placeholder' => trans('frontend.agent.profile.enter_first_name') ]); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('firstName'); ?></span>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName"><?php echo trans('frontend.agent.profile.last_name'); ?></label>
+                        <?php echo Form::text('lastName', $user->lastName, ['class' => 'form-control', 'id'=> 'lastName','placeholder' => trans('frontend.agent.profile.enter_last_name')]); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('lastName'); ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="agencyName"><?php echo trans('frontend.agent.profile.agency_name'); ?></label>
+                        <?php echo Form::text('agencyName',$user->agencyName,['class' => 'form-control', 'id'=> 'agencyName','placeholder' => trans('frontend.agent.profile.enter_agency_name')]); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('agencyName'); ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="agencyAddress"><?php echo trans('frontend.agent.profile.agency_address'); ?></label>
+                        <?php echo Form::textarea('agencyAddress',$user->agencyAddress, ['class' => 'form-control',
+                            'id'=> 'agencyAddress','rows' => '5', 'cols' => '10']); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('agencyAddress'); ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber"><?php echo trans('frontend.agent.profile.contact_number'); ?></label>
+                        <?php echo Form::text('contactNumber',$user->contactNumber,['class' => 'form-control', 'id'=> 'contactNumber','placeholder' => trans('frontend.agent.profile.enter_contact_number')]); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('contactNumber'); ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="aboutMe"><?php echo trans('frontend.agent.profile.about_me'); ?></label>
+                        <?php echo Form::textarea('aboutMe',$user->about_me, ['class' => 'form-control',
+                            'id'=> 'aboutMe','rows' => '5', 'cols' => '10']); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('aboutMe'); ?></span>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="image"><?php echo trans('frontend.agent.profile.change_image'); ?></label>
+                        <?php echo Form::file('image',null,['class' => 'form-control', 'id'=> 'image']); ?>
+
+                        <p class='color-red fontSize12'><?php echo $errors->first('image'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <p>
+                            <?php if($user->avtar): ?>
+                            <img src="<?php echo asset('/uploads/avtar/'); ?>/<?php echo $user->avtar; ?>"
+                                 width="100px;" height="100px;">
+                            <?php else: ?>
+                            <img src="<?php echo asset('/packages/images/'); ?>/user-pic-.png" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'>
+                            <?php endif; ?>
+                        </p>
+                    </div>
+
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <?php echo Form::submit(trans('frontend.submit'), array('class' => 'btn btn-primary')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

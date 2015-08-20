@@ -1,0 +1,139 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.tour.index_tour_management'); ?>
+
+        <small><?php echo trans('frontend.agent.tour.index_manage_all_tours'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i><?php echo trans('frontend.home'); ?></a></li>
+        <li><a href="#"><?php echo trans('frontend.tours'); ?></a></li>
+        <li class="active"><?php echo trans('frontend.index'); ?></li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="message">
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('frontend.agent.tour.index_tour_management_list'); ?></h3>
+                    <div class="pull-right margin">
+                        <a href="<?php echo URL::route('agent.tour.create'); ?>" class="btn btn-success pull-right">
+                            <i class="fa fa-plus"></i><?php echo trans('frontend.agent.tour.index_create_tour'); ?>
+
+                        </a>
+                        <div class="clear"></div>
+                    </div>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body table-responsive">
+                    <table id="example2" class="table table-bordered table-striped data-table">
+                        <thead>
+                            <tr>
+                                <th><?php echo trans('frontend.agent.tour.index_name'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_category'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_adult_rate'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_child_rate'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_created_at'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.status'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_actions'); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($tours as $tour): ?>
+                            <tr id="row_<?php echo $tour->id; ?>">
+                                <td><?php echo ucfirst(substr($tour->title,0,60)); ?>...</td>
+                                <td><?php echo $tour->category->name; ?></td>
+                                <td><?php echo $tour->charge_per_adult; ?></td>
+                                <td><?php echo $tour->charge_per_child; ?></td>
+                                <td><?php echo date('d M, Y',strtotime($tour->created_at )); ?></td>
+                                <td>
+                                    <?php if($tour->status): ?>
+                                    <a href="javascript:void(0);" class="fa fa-square text-green"
+                                       title="Published">&nbsp;</a>
+                                    <?php else: ?>
+                                    <a href="javascript:void(0);" class="fa fa-square text-red"
+                                       title="Waiting for admin approval">&nbsp;</a>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <a href="<?php echo URL::route('agent.tour.show',['id' => $tour->id ]); ?>" class="fa fa-search" title="View Details">&nbsp;</a>
+                                    <a href="<?php echo URL::route('agent.tour.edit',['id' => $tour->id ]); ?>" class="fa fa-edit" title="Edit Details">&nbsp;</a>
+                                    <a href="<?php echo URL::route('addimages',['id' => $tour->id ]); ?>" class="fa fa-picture-o" title="Add Images">&nbsp;</a>
+                                    <a href="<?php echo URL::route('agent.tourreview',['id' => $tour->id ]); ?>" class="fa fa-comments-o" title="View Review">&nbsp;</a>
+                                    <?php if($tour->block): ?> <!-- already blocked-->
+                                    <a href="javascript:void(0);" class="fa fa-ban change-block-status " data-id="<?php echo $tour->id; ?>"
+                                       data-status="<?php echo $tour->block; ?>" title="<?php echo trans('frontend.agent.tour.index_tour_unblock_this'); ?>">&nbsp;</a>
+                                    <?php else: ?>
+                                    <a href="javascript:void(0);" class="fa fa-circle-o change-block-status"
+                                       data-id="<?php echo $tour->id; ?>" data-status="<?php echo $tour->block; ?>" title="<?php echo trans('frontend.agent.tour.index_tour_block_this'); ?>">&nbsp;</a>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th><?php echo trans('frontend.agent.tour.index_name'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_category'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_adult_rate'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_child_rate'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_created_at'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.status'); ?></th>
+                                <th><?php echo trans('frontend.agent.tour.index_actions'); ?></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/jquery.dataTables.js'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/dataTables.bootstrap.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#example2').dataTable();
+
+        $(document).on('click', '.change-block-status', function() {
+            var self = $(this);
+            var status = parseInt(self.attr('data-status'));
+            var data = {'id': self.attr('data-id'),
+                'status': status,
+                'type': CONFIG.get('TOUR_BLOCK')};
+            var res = executeAjaxRequest(self, data, true);
+            $("#message").html(res.str);
+
+            if (res.valid) {
+                if (status) {
+                    $("#loader").replaceWith('<a href="javascript:void(0);" class="fa fa-circle-o change-block-status" data-id="' + self.attr('data-id') + '" data-status="0" title="Block This">&nbsp;</a>');
+
+                    return false;
+                }
+                $("#loader").replaceWith('<a href="javascript:void(0);" class="fa fa-ban change-block-status" data-id="' + self.attr('data-id') + '" data-status="1" title="Unblock This">&nbsp;</a>');
+            }
+
+            // if some error occurrs then loader will again changed to element
+            $("#loader").replaceWith(self);
+        });
+    });
+
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

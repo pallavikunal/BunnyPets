@@ -1,0 +1,126 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Create Region
+        <small>Create new Region.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.region.index'); ?>"><?php echo trans('backend.regions.region.edit_update_region'); ?></a></li>
+        <li class="active"><?php echo trans('backend.create'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div id="message" class="marginBottom15">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title">Region Creation Form</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::open(['route' => 'admin.region.store','files'=> true,'id'=> 'frmRegion']); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="country"><?php echo trans('backend.regions.region.index_region_country'); ?></label>
+                        <?php echo Form::select('country',$countries,null,['class' => 'form-control', 'id'=> 'country']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('country'); ?></p>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="name"><?php echo trans('backend.regions.region.index_region_name'); ?></label>
+                        <?php echo Form::text('name',null,['class' => 'form-control', 'id'=> 'region','placeholder' => 'Select region','disabled' => 'disabled']); ?>
+
+                        <input type="hidden" value="0" name="validRegionFlag" id="validRegionFlag" />
+                        <div id="validRegionMsg" style="display: none" class="color-red">Please select valid name.</div>
+                        <p class='text-red'><?php echo $errors->first('name'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="description"><?php echo trans('backend.description'); ?></label>
+                        <?php echo Form::textarea('description',null,['class' => 'form-control', 'id'=> 'description', 'rows' => 5 , 'cols' => 10 ]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('description'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="image"><?php echo trans('backend.regions.region.edit_region_image'); ?></label>
+                        <?php echo Form::file('image',null,['class' => 'form-control', 'id'=> 'image']); ?>
+
+                        <p>For better quality please upload an image size least 268px by 261px</p>
+                        <p class='text-red'><?php echo $errors->first('image'); ?></p>
+                    </div>
+                </div><!-- /.box-body -->
+                <div class="box-footer">
+                    <input type="hidden" name="tid" id="tid" />                    
+                    <?php echo Form::button('Submit', array('class' => 'btn btn-primary', 'id' => 'subRegion')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<script src="<?php echo asset('packages/js/jquery.min.js'); ?>"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
+<script type="text/javascript">
+var countryCode = new Array();
+window.onload = function() {
+    countryCode = $.parseJSON('<?php echo json_encode($countriesCode); ?>');
+    var d = new Date().getTime();
+    document.getElementById("tid").value = d;
+    //initialize(countryCode[$('#country').val()]);
+};
+$(function() {
+    $("#region").focus(function() {
+        initialize(countryCode[$('#country').val()]);
+    });
+    $(document).on('change', "#country", function() {
+        initialize(countryCode[$(this).val()]);
+        if ($(this).val()) {
+            $('#region').prop("disabled", false);
+        } else {
+            $('#region').prop("disabled", true);
+        }
+        $('#region').val("");
+    });
+
+    $(document).on('click', "#subRegion", function() {
+        if ($("#validRegionFlag").val() == '1') {
+            $("#frmRegion").submit();
+        } else {
+            $("#validRegionMsg").css("display", "block");
+        }
+    });
+});
+function initialize(country) {
+    var options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: country}
+    };
+    var input = document.getElementById('region');
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+
+    $('#validRegionFlag').val("0");
+    google.maps.event.addListener(autocomplete, 'place_changed', function() {
+        var result = autocomplete.getPlace();
+        console.log(result);
+        if ((typeof result.address_components)) {
+            $('#validRegionFlag').val("1");
+            $("#validRegionMsg").css("display", "none");
+        }
+    });
+}
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

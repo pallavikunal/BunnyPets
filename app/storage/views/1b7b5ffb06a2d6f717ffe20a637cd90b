@@ -1,0 +1,102 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.regions.region.edit_update_region'); ?>
+
+        <small><?php echo trans('backend.regions.region.edit_update_region_information'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.region.index'); ?>"><?php echo trans('backend.regions.region.edit_update_region'); ?></a></li>
+        <li class="active"><?php echo trans('backend.update'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('backend.regions.region.edit_update_region_information'); ?></h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($region, ['route' => ['admin.region.update', $region->id ], 'method' => 'patch','files'=> true]); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="country"><?php echo trans('backend.regions.region.index_region_country'); ?></label>
+                        <?php echo Form::select('country',$countries,$region->country->id,['class' => 'form-control', 'id'=> 'country']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('country'); ?></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="state"><?php echo trans('backend.regions.region.index_region_state'); ?></label>
+                        <?php echo Form::select('state',$states,$region->state->id,['class' => 'form-control', 'id'=> 'state']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('state'); ?></p>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name"><?php echo trans('backend.regions.region.index_region_name'); ?></label>
+                        <?php echo Form::text('name', $region->name, ['class' => 'form-control', 'id'=> 'name','placeholder' => trans('backend.regions.region.enter_region_name') ]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('name'); ?></p>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="description"><?php echo trans('backend.description'); ?></label>
+                    <?php echo Form::textarea('description',$region->description,['class' => 'form-control', 'id'=> 'description', 'rows' => 5 , 'cols' => 10 ]); ?>
+
+                    <p class='text-red'><?php echo $errors->first('description'); ?></p>
+                </div>
+
+                <div class="form-group">
+                    <label for="image"><?php echo trans('backend.regions.region.edit_region_image'); ?></label>
+                    <?php echo Form::file('image',null,['class' => 'form-control', 'id'=> 'image']); ?>
+
+                    <p>For better quality please upload an image size least 268px by 261px</p>
+                    <p class='text-red'><?php echo $errors->first('image'); ?></p>
+                </div> 
+                <div class="form-group">
+                    <p>
+                        <?php if($region->image): ?>
+                        <img src="<?php echo asset('uploads/regions'); ?>/<?php echo $region->image; ?>"
+                             width="100px;" height="100px;">
+                        <?php else: ?>
+                        <img src="<?php echo asset('uploads/regions'); ?>/default.jpg"
+                             width="100px;" height="100px;">
+                        <?php endif; ?>
+                    </p>
+                </div>
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                    <?php echo Form::submit(trans('backend.submit'), array('class' => 'btn btn-primary')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<script type="text/javascript">
+    $(function() {
+        $(document).on('change', "#country", function() {
+            var _self = $(this);
+            var data = {"country": _self.val(),
+                "type": CONFIG.get('COUNTRY_STATE')}
+            var res = executeAjaxRequest(_self, data);
+            $('#state').replaceWith(res);
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

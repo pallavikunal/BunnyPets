@@ -1,0 +1,32 @@
+<?php $__env->startSection('dashboard_content'); ?>
+    <div class="userProfile-right-col MuseoSans500">
+        <h3 class="MuseoSans300 color-maroon">My Booking</h3>
+
+        <div class="col-sm-11 marginLeft-12 floatL">
+            <div class="fullBorder">
+                <?php if(isset($bookings) && $bookings->count() > 0): ?>
+                    <?php foreach($bookings as $bookedTour): ?>
+                    <div class="bottomBorder">
+                        <div class="width15">
+                            <a href="<?php echo URL::route('booking-details',[$bookedTour->order_id]); ?>" class="color-yellow"><?php echo $bookedTour->order_id; ?></a>
+                        </div>
+                        <div class="width40"><?php echo $bookedTour->booking->tours->title; ?></div>
+                        <div class="width15"><?php echo date("d M,Y",strtotime($bookedTour->created_at)); ?></div>
+                        <div class="width15"><?php echo date("d M,Y",strtotime($bookedTour->created_at)); ?></div>
+                        <div class="width15"><span class="Rupee-Foradian">`</span> <?php echo $bookedTour->order_amount; ?></div>
+                    </div>
+
+                    <span class="clearfix"></span>
+                    <?php endforeach; ?>
+                <?php else: ?>
+                    <div class="bottomBorder">
+                        <center>You haven't booked any adventure yet! <a href='<?php echo URL::route("tours"); ?>'>Browse</a> adventures.</center>
+                    </div>
+                    <span class="clearfix"></span>
+                <?php endif; ?>
+            </div>
+        </div>
+    </div>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('user.profile.dashboard', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

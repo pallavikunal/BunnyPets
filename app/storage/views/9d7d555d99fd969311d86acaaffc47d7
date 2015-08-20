@@ -1,0 +1,454 @@
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('page.banner', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="container marketing">
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">
+        <div class="col-sm-9">
+            <?php echo Form::model($userdetails, ['route' => ['createorder'], 'method' => 'post', 'files' => 'true']); ?>
+
+            <div class="transaction-right-col MuseoSans500">
+                <div class="floatL circle-sm">1</div>
+                <span class="MuseoSans300 fontSize15 color-maroon">Enter your details</span>
+                <hr class="hrLine">
+                <div class="col-sm-5 floatL">
+                    <ul>
+                        <li class="marginBottom10">
+                            <input type="hidden" name="tid" id="tid" />
+                            <input type="hidden" name="order_id" value="<?php echo $orderId; ?>"/>
+                            <input type="hidden" name="data_accept" id="data_accept" value="Y"/>
+
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">First Name</label>
+                            <?php echo Form::text('firstName',$userdetails->firstName,['class' => 'popup-input', 'id'=> 'firstName','placeholder' => 'Enter First Name*']); ?>
+
+                            <span class="color-red"><?php echo $errors->first('firstName'); ?></span>
+                        </li>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Contact Number</label>
+                            <?php echo Form::text('contactNumber',$userdetails->contactNumber,['class' => 'popup-input', 'id'=> 'contactNumber','placeholder' => 'Enter Contact Number*']); ?>
+
+                            <span class="color-red"><?php echo $errors->first('contactNumber'); ?></span>
+                        </li>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Country</label>
+                            <span class="custom-dropdown-1"><?php echo Form::select('country',$countries,$userCountry,['class' => 'customSelect-1 popup-input MuseoSans300 color-maroon fontSize16', 'id'=> 'country', 'placeholder' => 'Select Country*']); ?></span>
+                            <br><span class="color-red"><?php echo $errors->first('country'); ?></span>
+                        </li>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Pin Code</label>
+                            <?php echo Form::text('pincode',$userPinCode,['class' => 'popup-input', 'id'=> 'pincode','placeholder' => 'Enter Pin Code*']); ?>
+
+                            <span class="color-red"><?php echo $errors->first('pincode'); ?></span>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="col-sm-5 floatL">
+                    <ul>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Last Name</label>
+                            <?php echo Form::text('lastName',$userdetails->lastName,['class' => 'popup-input', 'id'=> 'lastName','placeholder' => 'Enter Last Name*']); ?>
+
+                            <span class="color-red"><?php echo $errors->first('lastName'); ?></span>
+                        </li>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Email</label>
+                            <?php echo Form::text('email', $userdetails->email, ['class' => 'popup-input MuseoSans300 color-maroon fontSize16', 'id'=> 'email','disabled'=> 'disabled']); ?>
+
+                        </li>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">City</label>
+                            <?php echo Form::text('region', isset($userRegion)?$userRegion:'' ,['class' => 'popup-input MuseoSans300 color-maroon fontSize16', 'id'=> 'region', 'autocomplete' => 'on' , 'placeholder' => 'Select Location*']); ?></span>
+                            <span class="color-red"><?php echo $errors->first('region'); ?></span>
+                        </li>
+
+                    </ul>
+                </div>
+
+                <div class="col-sm-10 marginBottom10">
+                    <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Street Address</label>
+                    <?php echo Form::text('street_address',$userStreetAddress,['class' => 'popup-input', 'id'=> 'street_address' ,'placeholder' => 'Enter Street Address*']); ?>
+
+                    <span class="color-red"><?php echo $errors->first('street_address'); ?>
+
+                </div>
+
+                <div class="col-sm-10">
+                    <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Code / Name of Referrer (optional)</label>
+                    <?php echo Form::text('coupen_code',null,['class' => 'popup-input marginTop5', 'id'=> 'coupen_code']); ?>
+
+                    <span class="color-red"><?php echo $errors->first('coupen_code'); ?></span>
+                </div>
+
+                <div class="clearfix"></div>
+                <div class="col-sm-10 marginTop10 marginBottom20">
+<!--                    <span class="fontSize12">This is how we'll get in touch if we need to reach you <b>at your destination</b>.Including your mobile number is a good idea.</span>-->
+                </div>
+
+
+                <!--Enter your details section end here -->
+
+
+                <div class="clearfix"></div>
+                <div class="floatL circle-sm">2</div>
+                <span class="MuseoSans300 fontSize15 color-maroon">Review your purchase</span>
+                <hr class="hrLine">
+                <div class="col-sm-12 floatL marginBottom20">
+                    <h4><?php echo ucfirst($booking->tours->title); ?></h4>
+                    <h5 class="color-maroon MuseoSans300">Conducted by <a href="" class="color-yellow" data-toggle="modal" data-target="#userProfilePoP"><?php echo ucfirst($booking->tours->user->agencyName); ?></a></h5>
+                    <div class="col-sm-3 floatL marginRight5 marginLeft-12">
+                        <span>
+                            <a href="<?php echo URL::route('tours'); ?>/<?php echo $booking->tours->slug; ?>_<?php echo $booking->tours->user->agencyNameSlug; ?>">
+
+                                <?php if(!empty($tourImages['image_name']) && ($tourImages['image_name'] != NULL)): ?>
+                                <img  width="150" height="133" src="<?php echo asset('uploads/tours'); ?>/<?php echo $booking->tours->user->id; ?>/<?php echo $booking->tour_id; ?>/thumb_150X133_<?php echo $tourImages['image_name']; ?>"
+                                      alt="<?php echo $tourImages['title']; ?>"  title="<?php echo $tourImages['title']; ?>">
+                                <?php else: ?>
+                                <img alt="img" src="<?php echo asset('packages/images/trave-list-img.png'); ?>" width="150" height="133">
+                                <?php endif; ?>
+                            </a>
+                        </span>
+                    </div>
+                    <div class="col-sm-7 floatL">
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Activity type:</span>
+                            <span class="floatL"><?php echo $booking->tours->category->name; ?></span>
+                        </div>
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Location:</span>
+                            <span class="floatL"><?php echo $booking->tours->region->name; ?></span>
+                        </div>
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Duration: </span>
+                            <span class="floatL">
+                                <?php if(isset($info['activity_duration'])): ?>
+                                <?php echo (!empty($info['activity_duration'][0]))?$info['activity_duration'][0]." Days":""; ?>
+
+                                <?php echo (!empty($info['activity_duration'][1]))?$info['activity_duration'][1]." Hours":""; ?>
+
+                                <?php echo (!empty($info['activity_duration'][2]))?$info['activity_duration'][2]." Minutes":""; ?>
+
+                                <?php endif; ?>
+                            </span>
+                        </div>
+                        <!--                        <div class="width100 floatL">
+                                                    <span class="font-sz-bold width100PX floatL">Activity Time: </span>
+                                                    <span class="floatL"><?php echo date('g:i a', strtotime($booking->tours->activity_timing)); ?></span>
+                                                </div>-->
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Tour Date: </span>
+                            <span class="floatL"><?php echo date("dS F Y",strtotime($booking->tour_dates)); ?></span>
+                        </div>
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Fitness level: </span>
+                            <span class="floatL">
+                                <?php $fitnessLevel = $booking->tours->fitness_level; ?>
+                                <?php if(1 == $fitnessLevel): ?>Low
+                                <?php elseif(2 == $fitnessLevel): ?>Moderate
+                                <?php elseif(3 == $fitnessLevel): ?>High
+                                <?php else: ?> Higher
+                                <?php endif; ?>
+                            </span>
+                        </div>
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Participants: </span>
+                            <span class="floatL"><?php echo $booking->adults; ?> X Adult, <?php echo $booking->childs; ?> X Child (Age 1 - 12 years)</span>
+                        </div>
+                        <div class="width100 floatL">
+                            <span class="font-sz-bold width100PX floatL">Refund policy: </span>
+                            <span class="floatL"><a href="" class="floatR color-yellow basic3" data-toggle="modal" data-target="#refundPolicy">View Policy</a></span>
+                            <!-- Modal popup strat here -->
+                            <div class="modal fade width101" id="refundPolicy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                            <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Refund Policy </h4>
+                                        </div>
+
+                                        <div class="modal-body">
+                                            <?php echo $info['tour_info']['cancellation_policy']; ?>
+
+                                            <div class="clearfix"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- Modal popup end here -->
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-2 floatL">
+                        <?php $commission = round((Config::get('config.comission') / 100) * $booking->booking_amount); ?>
+                        <a href="" class="color-yellow" data-toggle="modal" data-target="#ticketDetails"><span class="Rupee-Foradian">`</span> <?php echo $booking->booking_amount + $commission; ?></a>
+                    </div>
+                </div>
+                <!-- Modal popup strat here -->
+                <div class="modal fade" id="ticketDetails" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                                <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Fare Details</h4>
+                            </div>
+
+                            <div class="modal-body">
+
+                                <span class="width100 marginTop5 floatL marginBottom5">Adults: <?php echo $booking->adults; ?> x <?php echo $booking->tours->charge_per_adult; ?> = <?php echo $booking->adults * $booking->tours->charge_per_adult; ?></span>
+                                <span class="width100 marginTop5 floatL marginBottom5">Child: <?php echo $booking->childs; ?>  x <?php echo $booking->tours->charge_per_child; ?> = <?php echo $booking->childs * $booking->tours->charge_per_child; ?> </span>
+                                <span class="width100 marginTop5 floatL marginBottom5">Total: <?php echo $booking->booking_amount + $commission; ?> </span>
+                                <div class="clearfix"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal popup end here -->
+                <!--Review your purchase section end here -->
+                <div class="clearfix"></div>
+                <div class="clearfix marginBottom20"></div>
+
+                <!--Select payment method section end here -->
+
+                <hr class="hrLine1">
+                <div class="clearfix"></div>
+                <div class="total-price marginBottom20">
+                    <div class="floatL marginTop5 marginLeft5"><span class="fontSize12 color-maroon MuseoSlab100"><b>Price includes all taxes and fees</b></span></div>
+                    <div class="floatR">
+                        <span>Total Price: </span>
+                        <span class="fontSize20"><b><span class="Rupee-Foradian">`</span> <?php echo $booking->booking_amount + $commission; ?></b></span>
+                    </div>
+                </div>
+                <div class="clearfix marginBottom20"></div>
+                <div class="col-sm-12 marginTop10 bg1">
+                    <span class="floatL"><b><span class="asterisk">*</span> By clicking on pay now I am accepting Trailwala's Refund Policy and <a href="<?php echo URL::to('/'); ?>/acceptance-of-the-terms-of-use" target="_blank" class="color-yellow">Terms of Use</a>.</b> </span>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-5 floatR marginTop10 marginRight-15">
+                    <?php echo Form::hidden('tour',$booking->tours->id); ?>
+
+                    <?php echo Form::hidden('amount',($booking->booking_amount+$commission)); ?>
+
+                    <?php echo Form::submit('Pay Now', array('class' => 'btn btn-search1 floatR fontSize14 MuseoSans300')); ?>
+
+                </div>
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div>
+
+        <div class="col-sm-3">
+            <div class="transaction-left-col height600 MuseoSans500">
+                <div class="sub-right-colm marginBottom10">
+                    <span><b>You can pay with:</b></span> <br><br>
+                    <span><img src="<?php echo asset('packages/images/American-Express.png'); ?>" width="45" height="28"></span>
+                    <span><img src="<?php echo asset('packages/images/Mastercard.png'); ?>" width="45" height="28"></span>
+                    <span><img src="<?php echo asset('packages/images/Visa.png'); ?>" width="45" height="28"></span>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="sub-right-colm marginBottom10">
+                    <span><b>Need Help?</b></span> <br><br>
+                    <span>
+                        <img src="<?php echo asset('packages/images/email-icon.png'); ?>" width="30" height="28">
+                        <a href="mailto:ask@trailwala.com" class="color-yellow">&nbsp;ask@trailwala.com</a>
+                    </span>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!--<div class="sub-right-colm marginBottom10">
+                      <span><b>Data Security</b></span> <br><br>
+                    <span class="floatL width10"><img src="<?php echo asset('packages/images/lock1.png'); ?>" width="30" height="30"></span>
+                    <span class="floatR width80">Your info's safe with us. All data is <b>encrypted and transmitted securely</b>
+  with an SSI protocol <br><br>GetYourGuide <b>respects your privacy</b>. We do not seel your personal information to anyone. <a href="" class="color-yellow">Privacy Statement>></a></span>
+  <div class="clearfix"></div>
+                  </div>-->
+
+
+                <div class="clearfix"></div>
+
+                <!--                <div class="sub-right-colm marginBottom10">
+                                    <span><b>Book with Confidence</b></span> <br><br>
+                                    <span class="floatL width10"><img src="<?php echo asset('packages/images/checkmark1.png'); ?>" width="30" height="30"></span>
+                                    <span class="floatR width80"><b>Best price guarantee</b>. Found your activity for less? We'll refund the difference.
+                                        <br><br><b>Pease of mind</b>.  Book here to skip the lines and reserve your spot.</span>
+                                    <div class="clearfix"></div>
+                                </div>-->
+            </div>
+        </div>
+
+    </div><!-- /.row -->
+</div>
+<?php echo $__env->make('user.profile.userprofilepopup', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->startSection('page-script'); ?>
+<script language="javascript" type="text/javascript" src="<?php echo asset('packages/js/json.js'); ?>"></script>
+<script src="http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places" type="text/javascript"></script>
+<script type="text/javascript">
+var countryCode = new Array();
+function getCreditCardType(accountNumber) {
+    var result = "unknown";
+    if (/^5/.test(accountNumber)) {
+        result = "masterCard";
+    } else if (/^4/.test(accountNumber)) {
+        result = "visa";
+    } else if (/^3[47]/.test(accountNumber)) {
+        result = "americanExpress";
+    }
+
+    return result;
+}
+window.onload = function() {
+
+    countryCode = $.parseJSON('<?php echo json_encode($countriesCode); ?>');
+    var d = new Date().getTime();
+    document.getElementById("tid").value = d;
+    //initialize(countryCode[$('#country').val()]);
+};
+$(function() {
+    $("#bank_details").show();
+    $("#region").focus(function() {
+        initialize(countryCode[$('#country').val()]);
+    });
+    $(document).on('change', "#country", function() {
+        initialize(countryCode[$(this).val()]);
+        $('#region').val("");
+    });
+    $(document).on('change', "#state", function() {
+        var _self = $(this);
+        var data = {"state": _self.val(),
+            "type": CONFIG.get('TOUR_REGION_STATE')}
+        var res = executeAjaxRequest(_self, data);
+        $('#region').replaceWith(res);
+    });
+    $(document).on('click', '.paymenttype', function() {
+        var val = $(this).val();
+        if (val == 1) {
+            $("#bank_details").show();
+            $("#card_details").hide();
+        }
+
+        if (val == 2 || val == 3) {
+            $("#bank_details").hide();
+            $("#card_details").show();
+        }
+    });
+    $(document).on('keyup', "#cardnumber", function() {
+        var type = getCreditCardType($(this).val());
+        $(this).removeClass('masterCard visa americanExpress maestro');
+        $(this).addClass(type);
+        $("#cardtype").val(type.toUpperCase());
+    });
+    $(document).on('change', "#card_type", function() {
+        var card_type = $(this).val();
+        if (card_type == 'CRDC') {
+            $("#card_name").val('Credit card');
+        } else {
+            $("#card_name").val('Debit card');
+        }
+
+    });
+
+    var jsonData;
+    //'.Config::get('config.CCAvenue_access_mode').'
+    var actionUrl = "<?php echo Config::get('config.CCAvenue_prod_url'); ?>";
+    var access_code = '<?php echo Config::get("config.CCAvenue_Access_code"); ?>'
+    var amount = "<?php echo $booking->booking_amount+$commission; ?>";
+    var currency = '<?php echo Config::get("config.CCAvenue_currency"); ?>';
+
+    $.ajax({
+        url: actionUrl + '/transaction/transaction.do?command=getJsonData&access_code=' + access_code + '&currency=' + currency + '&amount=' + amount,
+        dataType: 'jsonp',
+        jsonp: false,
+        jsonpCallback: 'processData',
+        success: function(data) {
+            jsonData = data;
+            // processData method for reference
+            processData(data);
+            // get Promotion details
+            $.each(jsonData, function(index, value) {
+                if (value.Promotions != undefined && value.Promotions != null) {
+                    var promotionsArray = $.parseJSON(value.Promotions);
+                    $.each(promotionsArray, function() {
+                        console.log(this['promoId'] + " " + this['promoCardName']);
+                        var promotions = "<option value=" + this['promoId'] + ">"
+                                + this['promoName'] + " - " + this['promoPayOptTypeDesc'] + "-" + this['promoCardName'] + " - " + currency + " " + this['discountValue'] + "  " + this['promoType'] + "</option>";
+                        $("#promo_code").find("option:last").after(promotions);
+                    });
+                }
+            });
+        },
+        error: function(xhr, textStatus, errorThrown) {
+            alert('An error occurred! ' + (errorThrown ? errorThrown : xhr.status));
+            //console.log("Error occured");
+        }
+    });
+
+    function processData(data) {
+        var paymentOptions = [];
+        var creditCards = [];
+        var debitCards = [];
+        var netBanks = [];
+        var cashCards = [];
+        var mobilePayments = [];
+        $.each(data, function() {
+            // this.error shows if any error
+            console.log(this.error);
+            paymentOptions.push(this.payOpt);
+            switch (this.payOpt) {
+                case 'OPTCRDC':
+                    var jsonData = this.OPTCRDC;
+                    var obj = $.parseJSON(jsonData);
+                    $.each(obj, function() {
+                        creditCards.push(this['cardName']);
+                    });
+                    break;
+                case 'OPTDBCRD':
+                    var jsonData = this.OPTDBCRD;
+                    var obj = $.parseJSON(jsonData);
+                    $.each(obj, function() {
+                        debitCards.push(this['cardName']);
+                    });
+                    break;
+                case 'OPTNBK':
+                    var jsonData = this.OPTNBK;
+                    var obj = $.parseJSON(jsonData);
+                    $.each(obj, function() {
+                        netBanks.push(this['cardName']);
+                    });
+                    break;
+
+                case 'OPTCASHC':
+                    var jsonData = this.OPTCASHC;
+                    var obj = $.parseJSON(jsonData);
+                    $.each(obj, function() {
+                        cashCards.push(this['cardName']);
+                    });
+                    break;
+
+                case 'OPTMOBP':
+                    var jsonData = this.OPTMOBP;
+                    var obj = $.parseJSON(jsonData);
+                    $.each(obj, function() {
+                        mobilePayments.push(this['cardName']);
+                    });
+            }
+
+        });
+    }
+
+
+});
+function initialize(country) {
+    var options = {
+        types: ['(cities)'],
+        componentRestrictions: {country: country}
+    };
+    var input = document.getElementById('region');
+    var autocomplete = new google.maps.places.Autocomplete(input, options);
+}
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

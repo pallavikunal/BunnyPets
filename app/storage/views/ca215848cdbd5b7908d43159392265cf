@@ -1,0 +1,215 @@
+<table border='0' width='100%'>
+    <tr><td width="40%" valign="top" style="font-family:MuseoSans500;">
+            <table width="100%" cellpadding="5" >
+                <tr>
+                    <td style="background-color: #F4F4F4" width="30%">
+                        <div class="sub-right-colm marginBottom10">
+                            <?php if($booking->order_status == 1): ?>
+                            <span class="floatL width10"><img src="<?php echo asset('packages/images/checkmark1.png'); ?>" width="30" height="30"></span>
+                            <?php endif; ?>
+                            <span class="floatR width80">
+                                <?php if($booking->order_status == 1): ?>
+                                <b>Thank You!</b> <br>
+                                <h5 style="color: #333333;">Your booking has been confirmed! </h5>
+                                <b>Your adventure awaits you!</b>
+                                <?php elseif($booking->order_status == 2): ?><h5 style="color: #f7941e">Your booking has been cancelled! </h5>
+                                <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates < date("Y-m-d"))): ?><h5 style="color: #f7941e">Your booking has been expired! </h5>
+                                <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates > date("Y-m-d"))): ?><h5 style="color: #f7941e">Thank you for your booking request! </h5>
+                                <?php else: ?> <h5 style="color: #f7941e">Your booking has been failed! </h5> <?php endif; ?>
+                            </span>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td style="height:4px;"></td></tr>
+                <tr>
+                    <td style="background-color: #F4F4F4">
+                        <div class="clearfix"></div>
+                        <div class="sub-right-colm marginBottom10">
+                            <span><b style="color: #333333; font-size: 14px">Your Operator / Agency details</b></span> <br><br>
+                            <div class="width100">
+                                <span style="color: #333333; font-size: 14px"><b>Operator:</b></span>
+                                <span style="font-size: 14px"> <?php echo ucwords($booking->agent->firstName." ".$booking->agent->lastName); ?></span>
+                            </div>
+                            <div class="width100">
+                                <span style="color: #333333; font-size: 14px"><b>Agency:</b></span> <span style="font-size: 14px"><?php echo ($booking->agent->agencyName)?$booking->agent->agencyName: 'N/A'; ?></span>
+                            </div>
+                            <div class="width100">
+                                <span style="color: #333333; font-size: 14px"><b>Email:</b></span> <span style="font-size: 14px"> <?php echo $booking->agent->email; ?></span>
+                            </div>
+                            <div class="width100">
+                                <span style="color: #333333; font-size: 14px"><b>Contact:</b></span> <span style="font-size: 14px"> <?php echo ($booking->agent->contactNumber)?$booking->agent->contactNumber:'Not Provided'; ?></span>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr><td style="height:4px;"></td></tr>
+                <tr>
+                    <td style="background-color: #F4F4F4">
+
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="sub-right-colm marginBottom10">
+                            <span style="color: #333333; font-size: 14px"><b>Need Help?</b></span> <br><br>
+                            <span>
+                                <img src="<?php echo asset('packages/images/email-icon.png'); ?>" width="30" height="28">
+                                <a href="mailto:ask@trailwala.com" style="color: #f7941e">&nbsp;ask@trailwala.com</a>
+                            </span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+        <td colspan="5" ><table border="0"><tr><td style="background-color: #F4F4F4; font-family:MuseoSans500;" valign="top" cellpadding="5">
+                        <div class="col-sm-11 marginLeft-12">
+                            <div class="width100 floatL">
+                                <div class="grand-price marginBottom20">
+                                    <div>
+                                        <?php if($booking->order_status == 1): ?><h3 style="color:#129637">Booking confirmed</h3>
+                                        <?php elseif($booking->order_status == 2): ?><h3 style="color:#f00">Booking Cancelled</h3>
+                                        <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates < date("Y-m-d"))): ?><h3 style="color:#f00">Booking Expired</h3>
+                                        <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates > date("Y-m-d"))): ?><h3 style="color:#129637">Booking Requested</h3>
+                                        <?php else: ?><h3 style="color:#f00">Booking Failure </h3><?php endif; ?>
+                                    </div>
+                                    <div class="width100 floatL">
+                                        <span style="color: #333333; font-size: 14px; font-weight: bold;">Booking No.:</span>
+                                        <span style="font-size: 14px"><?php echo $booking->booking->order->order_id; ?></span>
+                                    </div>                                    
+                                    <div class="width100 floatL">
+                                        <span style="color: #333333; font-size: 14px; font-weight: bold;">Booked On:</span>
+                                        <span style="color: #333333;font-size: 14px"><?php echo date("dS F Y",strtotime($booking->booking->order->created_at)); ?> </span>
+                                    </div>
+                                    <div class="width100 floatL">
+                                        <span style="color: #333333; font-size: 14px; font-weight: bold;">Tour Start On:</span>
+                                        <span style="color:#333333; font-size: 14px"><?php echo date("dS F Y",strtotime($booking->booking->tour_dates)); ?></span>
+                                    </div>
+                                    <!--                                    <div class="width100 floatL">
+                                                                            <span style="color: #333333; font-size: 14px; font-weight: bold;">Activity Time: </span>
+                                                                            <span style="color:#F6A620; font-size: 14px"><?php echo $booking->booking->tours->activity_timing; ?></span>
+                                                                        </div>-->
+                                    <div class="width100 floatL">
+                                        <span style="color: #333333; font-size: 14px; font-weight: bold;">Booked for: </span>
+                                        <span class="floatL"><?php echo ucwords($booking->booking->order->user->firstName ." ".  $booking->booking->order->user->lastName); ?></span>
+                                    </div>                                    
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="col-sm-12 floatL marginBottom20">
+                            <table border="0" width="100%" style="font-family:MuseoSans500;" cellpadding="5">
+                                <tr>
+                                    <td colspan="2">
+                                        <h3><?php echo ucfirst($booking->booking->tours->title); ?></h3>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="45%" style="font-family:MuseoSans500;">                                        
+                                        <!--<h5 class="color-maroon MuseoSans300">Conducted by <a href="" class="color-yellow" data-toggle="modal" data-target="#userProfilePoP">XYZ</a></h5>-->
+                                        <div class="col-sm-3 floatL marginRight5 marginLeft-12">
+                                            <?php if(!empty($tourImages['image_name']) && ($tourImages['image_name'] != NULL)): ?>
+                                            <img  width="150" height="133" src="<?php echo asset('uploads/tours'); ?>/<?php echo $booking->booking->tours->user->id; ?>/<?php echo $booking->booking->tours->id; ?>/thumb_150X133_<?php echo $tourImages['image_name']; ?>"
+                                                  alt="<?php echo $tourImages['title']; ?>"  title="<?php echo $tourImages['title']; ?>">
+                                            <?php else: ?>
+                                            <img alt="img" src="<?php echo asset('packages/images/trave-list-img.png'); ?>" width="150" height="133">
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+                                    <td valign="bottom">
+                                        <div class="col-sm-9 marginLeft-12 floatL">
+                                            <div style="color: #333333;font-size: 14px">
+                                                <span><b>Activity type:</b></span>
+                                                <span class="floatL"><?php echo $booking->booking->tours->category->name; ?></span>
+                                            </div>
+                                            <div style="color: #333333;font-size: 14px">
+                                                <span><b>Location:</b></span>
+                                                <span class="floatL"><?php echo $booking->booking->tours->region->name; ?>, <?php echo $booking->booking->tours->state->name; ?>, <?php echo $booking->booking->tours->country->name; ?></span>
+                                            </div>
+                                            <div style="color: #333333;font-size: 14px">
+                                                <span ><b>Duration: </b></span>
+                                                <span class="floatL">
+                                                    <?php echo $extraInfo['activity_duration'][0]." Day "; ?>
+
+                                                    <?php echo (!empty($extraInfo['activity_duration'][1]))?$extraInfo['activity_duration'][1]." Hours":""; ?>
+
+                                                    <?php echo (!empty($extraInfo['activity_duration'][2]))?$extraInfo['activity_duration'][2]." Minutes":""; ?>
+
+                                                </span>
+                                            </div>
+                                            <!--                                            <div style="color: #333333;font-size: 14px">
+                                                                                            <span><b>Activity Time: </b></span>
+                                                                                            <span class="floatL "><?php echo date('h:i A', strtotime($booking->booking->tours->activity_timing));; ?></span>
+                                                                                        </div>-->                                            
+                                            <div style="color: #333333;font-size: 14px">
+                                                <span><b>Fitness level: </b></span>
+                                                <span class="floatL">
+                                                    <?php $fitnessLevel = $booking->booking->tours->fitness_level; ?>
+                                                    <?php if(1 == $fitnessLevel): ?>Low
+                                                    <?php elseif(2 == $fitnessLevel): ?>Moderate
+                                                    <?php elseif(3 == $fitnessLevel): ?>High
+                                                    <?php else: ?> Higher
+                                                    <?php endif; ?>
+                                                </span>
+                                            </div>
+                                            <div style="color: #333333;font-size: 14px">
+                                                <span><b>Participants: </b></span>
+                                                <span class="floatL"><?php echo $booking->booking->adults; ?> X Adult, <?php echo $booking->booking->childs; ?> X Child (Age 1 - 12 years)</span>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr></table>
+                            <div class="clearfix"></div>
+                            <div style="font-family:MuseoSans500;">
+                                <div class="width100 floatL">
+                                    <span><b style="font-size:14px;">Refund policy: </b></span>
+                                    <span style="font-size:14px;"><?php echo ($extraInfo['tour_info']['cancellation_policy'])?ucfirst($extraInfo['tour_info']['cancellation_policy']): 'N/A'; ?></span>
+                                </div>
+                            </div>
+
+                            <div class="clearfix"></div>
+                            <div style="font-family:MuseoSans500;font-size:14px;padding: 5px">
+                                <div style="background-color: #F4F4F4">
+                                    <div><h4 style="color: #333333">Payment Details</h4></div>
+                                    <div class="width100 floatL">
+                                        <span class="font-sz-bold width245PX floatL">Total Fare:</span>
+                                        <span class="floatL"><span style="font-family:DejaVu Sans; sans-serif">&#8377;</span> <?php echo $booking->booking->booking_amount; ?></span>
+                                    </div>
+                                    <?php $commission = round((Config::get('config.comission') / 100) * $booking->booking->booking_amount); ?>
+                                    <div class="width100 floatL">
+                                        <span class="font-sz-bold width245PX floatL">Total Amount Charged (rounded):</span>
+                                        <span class="floatL"><span style="font-family:DejaVu Sans; sans-serif">&#8377;</span> <?php echo $booking->booking->booking_amount + $commission; ?>  </span>
+                                    </div>
+                                    <div class="width100 floatL">
+                                        <span class="font-sz-bold width245PX floatL">Payment mode:</span>
+                                        <span class="floatL">
+                                            <?php if($booking->order_type == 2): ?> Offline
+                                            <?php else: ?> Online
+                                            <?php endif; ?>                                            
+                                        </span>
+                                    </div>                                    
+                                    <div class="width100 floatL">
+                                        <span class="font-sz-bold width245PX floatL">Note:</span>
+                                        <span class="floatL width60">Any discount or promotional offer, if availed, has been adjusted in the Total Amount Charged.  </span>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-sm-11 marginTop10">
+                                <div class="width100 floatL">
+                                    <div id="map-canvas"></div>
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>

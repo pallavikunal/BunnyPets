@@ -1,0 +1,25 @@
+<div class="pull-left col-md-5 marginTop30" id="<?php echo str_replace('.','-',$image); ?>">
+    <div class="tourImage">
+        <img src="<?php echo asset('uploads/temp'); ?>/<?php echo $image; ?>"/>
+    </div>
+    <div class="form-group tourImageInputs">
+        <?php echo Form::hidden('images[]',$image, array('class' => 'control')); ?>    
+        <label for="title" class="label-width70">Title</label>
+        <?php echo Form::text('title[]',null, array('class' => 'control')); ?>
+
+    </div>
+    <div class="form-group tourImageInputs">
+        <label for="caption" class="label-width70">Caption</label>
+        <?php echo Form::text('caption[]', null,array('class' => 'control')); ?>
+
+    </div>    
+    <div class="remove-image">
+        <a href="javascript:void(0)" class="removeImage" data-name="<?php echo $image; ?>" data-temp="1"><i class="fa fa-minus-circle"></i></a>
+    </div>    
+    <div class="form-group tourImageInputs">
+        <label for="mark-as-featured">Mark As Featured</label>
+        <?php echo Form::radio('featured[]',1,false,array('class' => 'control iCheck-helper')); ?>
+
+    </div>
+
+</div>

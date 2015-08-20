@@ -1,0 +1,26 @@
+<div class="modal fade" id="showPartnerForgotPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" >
+    <div class="modal-dialog modal-sm">    	
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title color-yellow MuseoSlab500" id="myModalLabel">Forgot Password</h4>
+            </div>
+            <?php echo Form::open(['name' => 'frmForgetPassword','id' => 'frmForgetPassword']); ?>
+
+            <div class="modal-body">
+                <div id="successMessage" class="color-green fontSize12">&nbsp;</div>
+                <?php echo Form::text('email',null,['class' => 'popup-input', 'id'=> 'email','placeholder' => 'Email Address']); ?>
+
+                <span id="error_email_forget" class="color-red fontSize12"></span>
+                <?php echo Form::hidden('roleId',2); ?><!--Role Id 2 is for Agent-->
+                <?php echo Form::submit('Submit', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100', 'id' => 'submit-button')); ?>                
+                <div class="clearfix"></div>
+                <!--<hr style="border-bottom:1px solid #E6E6E6; height:2px; width:100%; margin-top:20px;">
+                <div class="clearfix"></div>
+                <span>Have an account? <a href="" id="flipToLogin" class="flipLink color-yellow"><b>Log In</b></a></span>-->
+            </div>
+            <?php echo Form::close(); ?>
+
+        </div>                 
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<?php $__env->startSection('dashboard_content'); ?>
+<?php echo Form::open(['route' => 'user.changepassword','method' => 'post']); ?>
+
+<div class="userProfile-right-col MuseoSans500">
+	<h3 class="MuseoSans300 color-maroon">Change Password</h3>
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-md-5 col-lg-5">
+			<label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Old Pasword</label>                
+			<?php echo Form::Input('password','old_password',null,['class' => 'popup-input','id'=> 'old_password','placeholder' => 'Old Pasword*']); ?>
+
+			<span class="color-red fontSize12"><?php echo $errors->first('old_password'); ?></span>   
+		</div>
+		<div class="clearfix"><br></div>
+		<div class="col-xs-12 col-sm-8 col-md-5 col-lg-5">
+			<label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">New Password</label>                
+			<?php echo Form::Input('password','password',null,['class' => 'popup-input', 'id'=> 'email','placeholder' => 'New Password*']); ?>
+
+			<span class="color-red fontSize12"><?php echo $errors->first('password'); ?></span>   
+		</div>
+		<div class="clearfix"><br></div>
+		<div class="col-xs-12 col-sm-8 col-md-5 col-lg-5">
+			<label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Confirm Password</label>
+			<?php echo Form::Input('password','password_confirmation',null,['class' => 'popup-input', 'id'=> 'password_confirmation','placeholder' => 'Confirm Password*']); ?>
+
+			<span class="color-red fontSize12"><?php echo $errors->first('password_confirmation'); ?></span>   
+		</div>
+		<div class="clearfix"></div>
+	</div>
+	<div><br></div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-8 col-md-5 col-lg-5">
+			<?php echo Form::submit('Update', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100')); ?>
+
+		</div>
+	</div>
+	<div><br></div>
+
+
+    
+
+   
+        
+    
+
+</div>
+<?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('user.profile.dashboard', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

@@ -1,0 +1,335 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.tour.index_tour_management'); ?>
+
+        <small><?php echo trans('frontend.agent.tour.create_new_package'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('frontend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>"><?php echo trans('frontend.tours'); ?></a></li>
+        <li class="active"><?php echo trans('frontend.create'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('frontend.agent.tour.tour_package_form' ); ?></h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+
+                <?php echo Form::open(['route' => 'agent.tour.store', 'files'=> true, 'id'=> 'frmTour']); ?>
+
+                <div class="box-body col-md-6">
+                    <div class="form-group">
+                        <label for="category"><?php echo trans('frontend.category' ); ?></label>
+                        <span class="custom-dropdown-1"><?php echo Form::select('category',$categories,null,['class' => 'customSelect-1 form-control', 'id'=> 'category']); ?></span>
+                        <p class='text-red'><?php echo $errors->first('category'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="title"><?php echo trans('frontend.title' ); ?></label>
+                        <?php echo Form::text('title',null,['class' => 'form-control', 'id'=> 'name','placeholder' => trans('frontend.agent.tour.enter_title')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('title'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="details"><?php echo trans('frontend.details' ); ?></label>
+                        <?php echo Form::textarea('details',null,['class' => 'form-control textarea textarea-editor', 'id'=> 'details']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('details'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="selectRangeDates">
+                        <div style="width:120px; float:left;">
+                            <input type="radio" name="dateType" id='radioRandomDate' checked="checked"  value="1" />
+                            <label for="randomDate">Random Date</label>
+                        </div>
+                        <div style="width:120px; float:left;">
+                            <input type="radio" name="dateType" id='radioRangeDate' value="2" />
+                            <label for="range">Date Range</label>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class='form-group' id='individualDates'>
+                        <?php echo Form::text('dates',(isset($dates))?$dates:null,['class' => 'form-control', 'id'=> 'dates','placeholder' => trans('frontend.agent.tour.select_dates')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('dates'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group" id="dateRangeWrapper">
+                        <div id="moreDateRange">
+                            <div id='span-date-range-picker' class='date-range-picker' style='margin-top: 5px;'>
+                                <span>
+                                    <input name='startdate[]' class='date-range form-control pull-left start-range' style='width:225px;margin-right: 4px;' id='date_start_0' placeholder='Start Date' value="<?php if(is_array($startDates)): ?><?php echo $startDates[0]; ?><?php endif; ?>" />
+                                    <input name='enddate[]' class='date-range form-control pull-left end-range' style='width:225px;' id='date_end_0' placeholder='End Date'  value="<?php if(is_array($endDates)): ?><?php echo $endDates[0]; ?><?php endif; ?>"/>
+                                    <input type="button" class="addDate btn-sm btn-primary" value="+" style='margin-left: 4px;'/>
+                                    <div class='clearfix'></div>
+                                    <p class='text-red'><?php echo $errors->first('dates'); ?></p>
+                                </span>
+                            </div>
+
+                            <?php if(isset($startDates) && isset($endDates)): ?>
+                            <?php
+                            unset($startDates[0]);
+                            unset($endDates[0]);
+                            $counter = 1;
+                            ?>
+                            <?php foreach($startDates as $key => $value): ?>
+                            <div class='date-range-picker' style='margin-top: 5px;'>
+                                <span>
+                                    <input name='startdate[]' class='date-range form-control pull-left start-range' style='width:295px;margin-right: 4px;' id='date_start_<?php echo $counter; ?>' placeholder='Start Date' value="<?php echo $value; ?>" />
+                                    <input name='enddate[]' class='date-range form-control pull-left end-range' style='width:295px;' id='date_end_<?php echo $counter; ?>' placeholder='End Date' value="<?php echo $endDates[$key]; ?>" />
+                                    <input type="button" class="removeDate btn-sm btn-primary" value="-" style='margin-left: 4px;'/>
+                                    <div class='clearfix'></div>
+                                </span>
+                            </div>
+                            <?php $counter++; ?>
+                            <?php endforeach; ?>
+                            <?php endif; ?>
+                        </div><!-- /.input group -->
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="adult_rate"><?php echo trans('frontend.agent.tour.rate_per_adult' ); ?></label>
+                        <?php echo Form::text('adult_rate',null,['class' => 'form-control', 'id'=> 'adult_rate','placeholder' => trans('frontend.agent.tour.enter_rate_per_adult'),'maxlength' => 12]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('adult_rate'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="child_rate"><?php echo trans('frontend.agent.tour.rate_per_child' ); ?> (Optional)</label>
+                        <?php echo Form::text('child_rate',null,['class' => 'form-control', 'id'=> 'child_rate','placeholder' => trans('frontend.agent.tour.enter_rate_per_child'),'maxlength' => 12]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('child_rate'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="Country"><?php echo trans('frontend.country'); ?></label>
+                        <span class="custom-dropdown-1"><?php echo Form::select('country',$countries,null,['class' => 'customSelect-1 form-control', 'id'=> 'country']); ?></span>
+                        <p class='text-red'><?php echo $errors->first('country'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <!--                    <div class="form-group">
+                                            <label for="state"><?php echo trans('frontend.state'); ?></label>
+                                            <span class="custom-dropdown-1"><?php echo Form::select('state',$state,null,['class' => 'customSelect-1 form-control', 'id'=> 'state']); ?></span>
+                                            <p class='text-red'><?php echo $errors->first('state'); ?></p>
+                                        </div>-->
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="region">Region</label>
+                        <?php echo Form::text('region','',['class' => 'form-control', 'id'=> 'region']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('region'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div id="otherCity" style="display: none">
+                        <div class="form-group">
+                            <label for="city"><?php echo trans('frontend.agent.tour.city'); ?></label>
+                            <?php echo Form::text('city',null,['class' => 'form-control', 'id'=> 'city','placeholder' => trans('frontend.agent.tour.enter_city')]); ?>
+
+                            <p class='text-red'><?php echo $errors->first('city'); ?></p>
+                        </div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="street_address"><?php echo trans('frontend.agent.tour.street_address'); ?></label>
+                        <?php echo Form::textarea('street_address',null,['class' => 'form-control', 'id'=> 'street_address','rows' => 5,'cols' => 3]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('street_address'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="pin_code"><?php echo trans('frontend.agent.tour.pin_code'); ?></label>
+                        <?php echo Form::text('pin_code',null,['class' => 'form-control', 'id'=> 'pin_code','placeholder' => trans('frontend.agent.tour.enter_pin_code')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('pin_code'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="activity_duration" class='pull-left'><?php echo trans('frontend.agent.tour.activity_duration'); ?></label>
+                        <span class='clearfix'></span>
+                        <div style="width:80px; float:left;">
+                            <span class="custom-dropdown-1"><?php echo Form::selectRange('activity_duration_day', 0, 50, 1, ['class' => 'customSelect-1 form-control pull-left', 'id'=> 'activity_duration_day']);; ?></span></div>
+                        <span class='pull-left margin'>Days</span>
+                        <div style="width:80px; float:left;">
+                            <span class="custom-dropdown-1"><?php echo Form::selectRange('activity_duration_hours', 0, 23, 0, ['class' => 'customSelect-1 form-control pull-left', 'id'=> 'activity_duration_hour']);; ?></span></div>
+                        <span class='pull-left margin'>Hours</span>
+                        <div style="width:80px; float:left;">
+                            <span class="custom-dropdown-1"><?php echo Form::selectRange('activity_duration_miutes', 0, 55, 0, ['class' => 'customSelect-1 form-control pull-left', 'id'=> 'activity_duration_miutes']);; ?></span></div>
+                        <span class='pull-left margin'>Minutes</span>
+                        <span class='clearfix'></span>
+                    </div>
+                    <div class='clearfix'></div>
+                    <!--                    <div class="form-group">
+                                            <label for="availability"><?php echo trans('frontend.agent.tour.availability'); ?></label>
+                                            <span class="custom-dropdown-1"><?php echo Form::select('availability',['Daily' => trans('frontend.agent.tour.daily'),'Alternate Day' =>  trans('frontend.agent.tour.alternate_day'),'Weekly' => trans('frontend.agent.tour.weekly')],null,['class' => 'customSelect-1 form-control', 'id'=> 'availability']); ?></span>
+                                        </div>
+                                        <div class='clearfix'></div>
+                                        <div class="form-group">
+                                            <label for="activity_timing" class='pull-left'><?php echo trans('frontend.agent.tour.activity_timing'); ?></label>
+                                            <span class='clearfix'></span>
+                                            <span class="custom-dropdown-1"><?php echo Form::text('activity_timing',null,['class' => 'customSelect-1 form-control pull-left','id'=> 'activity_timing','placeholder' =>  trans('frontend.agent.tour.enter_activity_timing')]); ?></span>
+                                            <p class='text-red'><?php echo $errors->first('activity_timing'); ?></p>
+                                            <span class='clearfix'></span>
+                                        </div>-->
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="fitness_level"><?php echo trans('frontend.agent.tour.fitness_level'); ?></label>
+                        <span class="custom-dropdown-1"><?php echo Form::select('fitness_level',['1' => trans('frontend.agent.tour.low'),
+                                        '2' =>  trans('frontend.agent.tour.moderate'),
+                                        '3' => trans('frontend.agent.tour.high'),
+                                        '4' => trans('frontend.agent.tour.higher')
+                            ],2,['class' => 'customSelect-1 form-control', 'id'=> 'fitness_level']); ?> </span>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="age_group">Age Group</label>
+                        <span class="custom-dropdown-1">
+                            <?php echo Form::select('age_group',['1' => trans('frontend.agent.tour.no_age_limit'),
+                                        '2' =>  trans('frontend.agent.tour.only_for_adult'),
+                                        '3' => trans('frontend.agent.tour.only_for_kids')                                        
+                            ],null,['class' => 'form-control', 'id'=> 'age_group']); ?>
+
+                        </span>
+                    </div>
+                    <div class='clearfix'></div>
+                    <div class="form-group">
+                        <label for="pricing"><?php echo trans('frontend.agent.tour.more_about_pricing'); ?></label>
+                        <?php echo Form::textarea('pricing',null,['class' => 'form-control textarea textarea-editor', 'id'=> 'pricing']); ?>
+
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="cancellation_policy"><?php echo trans('frontend.agent.tour.cancellation_policy'); ?></label>
+                        <?php echo Form::textarea('cancellation_policy',null,['class' => 'form-control textarea textarea-editor', 'id'=> 'cancellation_policy']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('cancellation_policy'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="other_rules"><?php echo trans('frontend.agent.tour.other_rules'); ?></label>
+                        <?php echo Form::textarea('other_rules',null,['class' => 'form-control textarea textarea-editor', 'id'=> 'other_rules']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('other_rules'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="whats_included">What's Included</label>
+                        <?php echo Form::textarea('whats_included',null,['class' => 'form-control textarea textarea-editor', 'id'=> 'whats_included']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('whats_included'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="whattobring"><?php echo trans('frontend.agent.tour.what_to_bring'); ?></label>
+                        <?php echo Form::textarea('whattobring',null,['class' => 'form-control textarea textarea-editor', 'id'=> 'whattobring']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('whattobring'); ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="box-footer">
+                    <?php echo Form::hidden('saveAsDraftFlag','0',['id'=> 'saveAsDraftFlag']); ?>
+
+                    <?php echo Form::button('Save As Draft', array('class' => 'btn btn-primary', 'id'=> 'saveAsDraft')); ?>
+
+                    <?php echo Form::hidden('agentId', Auth::id()); ?>
+
+                    <?php echo Form::submit('Next', array('class' => 'btn btn-primary', 'id'=> 'next')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div><!-- /.box-body -->
+        </div>
+    </div>
+</div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::style('packages/admin/assets/css/datepicker/multidatepicker.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-multi-datepicker.js'); ?>
+
+
+<?php echo HTML::style('packages/admin/assets/css/jquery-datepicker.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/jquery-datepicker-min.js'); ?>
+
+
+<?php echo HTML::style('packages/admin/assets/css/datepicker/bootstrap-timepicker.min.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-timepicker.min.js'); ?>
+
+
+<?php echo HTML::style('packages/admin/assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js'); ?>
+
+<?php echo HTML::script('packages/agent/assets/js/tour.js'); ?>
+
+<?php echo HTML::script('http://maps.googleapis.com/maps/api/js?sensor=false&amp;libraries=places'); ?>
+
+<script>
+    $(function() {
+        var dateType = '<?php echo $dateType; ?>';
+        showDateOptions(dateType);
+        _initializeDatePicker(0);
+        if (dateType == 2) {
+            var rangeInput = '<?php echo $rangeInput; ?>';
+            showDatePickers(rangeInput);
+        }
+
+        $(document).on('click', "#next", function() {
+            $("#saveAsDraftFlag").val('0');
+        });
+
+        $(document).on('click', "#saveAsDraft", function() {
+            $("#saveAsDraftFlag").val('1');
+            $("#frmTour").submit();
+        });
+    });
+
+
+    $(function() {
+        countryCode = $.parseJSON('<?php echo json_encode($countriesCode); ?>');
+        $("#bank_details").show();
+        $("#region").focus(function() {
+            initialize(countryCode[$('#country').val()]);
+        });
+        $(document).on('change', "#country", function() {
+            initialize(countryCode[$(this).val()]);
+            $('#region').val("");
+        });
+
+
+        function initialize(country) {
+            var options = {
+                types: ['(cities)'],
+                componentRestrictions: {country: country}
+            };
+            var input = document.getElementById('region');
+            var autocomplete = new google.maps.places.Autocomplete(input, options);
+        }}
+    );
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

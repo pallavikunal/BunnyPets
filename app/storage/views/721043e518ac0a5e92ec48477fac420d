@@ -1,0 +1,107 @@
+<?php $__env->startSection('dashboard_content'); ?>
+<?php echo Form::model($user, ['route' => ['user.updateprofile'], 'method' => 'post', 'files' => 'true']); ?>
+
+<div class="userProfile-right-col MuseoSans500">
+    <h3 class="MuseoSans300 color-maroon">User Profile</h3>    
+    <div class="col-sm-5 floatL">
+        <ul>
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">First Name</label>
+                <?php echo Form::text('firstName',ucfirst($user->firstName),['class' => 'popup-input', 'id'=> 'firstName','placeholder' => 'First Name*']); ?>
+
+                <div class="color-red fontSize12"><?php echo $errors->first('firstName'); ?></div>                
+            </li>
+
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Contact Number</label>
+                <?php echo Form::text('contactNumber',$user->contactNumber, ['class' => 'popup-input', 'id'=> 'contactNumber','placeholder' => 'Contact Number*']); ?>
+
+                <div class="color-red fontSize12"><?php echo $errors->first('contactNumber'); ?></div>
+            </li>
+
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Country</label>
+                 <span class="custom-dropdown-1"><?php echo Form::select('country',$countries,$userCountry,['class' => 'customSelect-1 MuseoSans300 color-maroon fontSize16', 'id'=> 'country']); ?></span>
+                <div class="color-red fontSize12"><?php echo $errors->first('country'); ?></div>
+            </li>    
+
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">City</label>
+                <span class="custom-dropdown-1"><?php echo Form::select('region',$regions,$userRegion,['class' => 'customSelect-1 MuseoSans300 color-maroon fontSize16', 'id'=> 'region']); ?></span>
+                <div class="color-red fontSize12"><?php echo $errors->first('region'); ?></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-sm-5 floatL">
+        <ul>
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Last Name</label>
+                <?php echo Form::text('lastName',ucfirst($user->lastName),['class' => 'popup-input', 'id'=> 'lastName','placeholder' => 'Last Name*']); ?>
+
+                <div class="color-red fontSize12"><?php echo $errors->first('lastName'); ?></div>                
+            </li>
+
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Email</label>
+                <?php echo Form::text('email',$user->email,['class' => 'popup-input', 'id'=> 'lastName','disabled' => 'disabled','placeholder' => 'Email*']); ?>
+
+                <div class="color-red fontSize12"><?php echo $errors->first('email'); ?></div>                
+            </li>
+
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">State</label>
+                <span class="custom-dropdown-1"><?php echo Form::select('state',$states,$userState,['class' => 'customSelect-1 MuseoSans300 color-maroon fontSize16', 'id'=> 'state']); ?></span>
+                <div class="color-red fontSize12"><?php echo $errors->first('state'); ?></div>                
+            </li>
+
+            <li class="marginBottom10">
+                <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Pin Code</label>
+                <?php echo Form::text('pincode',$userPincode,['class' => 'popup-input', 'id'=> 'pinCode','placeholder' => 'Pin Code']); ?>
+
+                <div class="color-red fontSize12"><?php echo $errors->first('pincode'); ?></div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="col-sm-10">
+        <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Street Address</label>
+        <?php echo Form::textarea('street_address',$userAddress,['class' => 'popup-textarea', 'id'=> 'street_address', 'cols'=> '40', 'rows'=> '8', 'placeholder'=> 'Street Address']); ?>
+
+        <span class="color-red fontSize12"><?php echo $errors->first('street_address'); ?></span>        
+    </div>
+    <div class="clearfix"></div>
+    <div class="col-sm-10 marginTop10">
+        <span class="floatL MuseoSans300 color-maroon fontSize16 font-sz-normal">Upload photo: </span>
+        <?php echo Form::file('image',null,['class' => 'floatL', 'id'=> 'image']); ?>        
+    </div>    
+    <div class="clearfix"></div>
+    <div class="col-sm-3">  
+        <?php echo Form::submit('Update', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100')); ?>        
+    </div>
+</div>
+<?php echo Form::close(); ?>
+
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('page-script'); ?>
+<script type="text/javascript">
+    $(function() {
+        $(document).on('change', "#country", function() {
+            var _self = $(this);
+            var data = {"country": _self.val(),
+                "type": CONFIG.get('TOUR_COUNTRY_STATE')}
+            var res = executeAjaxRequest(_self, data);
+            $('#state').replaceWith(res);
+        });
+
+        $(document).on('change', "#state", function() {
+            var _self = $(this);
+            var data = {"state": _self.val(),
+                "type": CONFIG.get('TOUR_REGION_STATE')}
+            var res = executeAjaxRequest(_self, data);
+            $('#region').replaceWith(res);
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('user.profile.dashboard', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

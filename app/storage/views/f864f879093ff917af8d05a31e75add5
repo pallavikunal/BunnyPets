@@ -1,0 +1,25 @@
+<ul class="nav navbar-nav navbar-right">
+    <li><a href="<?php echo URL::to('/'); ?>">Home</a></li>
+    <li><a href="<?php echo URL::to('/'); ?>/faq-s">FAQ's</a></li>
+    <li><a href="http://www.trailwala.com/blog/" target="_blank" >Blog</a></li>
+    <?php if(!Session::has('user_email')): ?>
+
+    <li><a class="open-login" data-target="#myModal" data-toggle="modal"  href="javascript:void(0);">Log In</a></li>
+    <?php else: ?>
+    <li class="dropdown"><a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+            <span>
+                <?php if(Auth::user()->avtar): ?>
+                <img src="<?php echo asset('uploads/avatar/19x18/'); ?>/<?php echo Auth::user()->avtar; ?>" width="19" height="18">
+                <?php else: ?>
+                <img src="<?php echo asset('/packages/images/user-pic-sm.png'); ?>" width="19" height="18">
+                <?php endif; ?>            
+            </span>
+            <?php echo Auth::user()->firstName[0]; ?><?php echo Auth::user()->lastName[0]; ?>    
+        </a>
+        <ul class="dropdown-menu" role="menu">
+            <li><a title="" href="<?php echo URL::route('mybookings'); ?>">My Account</a></li>
+            <li><a title="" href="<?php echo URL::to('/'); ?>/logout">Logout</a></li>
+        </ul>
+    </li>   
+    <?php endif; ?>
+</ul>

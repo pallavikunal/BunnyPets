@@ -1,0 +1,13 @@
+<!-- jQuery 2.0.2 -->
+<?php echo HTML::script('http://ajax.googleapis.com/ajax/libs/jquery/2.0.2/jquery.min.js'); ?>
+
+<!-- Bootstrap -->
+<?php echo HTML::script('packages/admin/assets/js/bootstrap.min.js'); ?>
+
+<!-- AdminLTE App -->
+<?php echo HTML::script('packages/admin/assets/js/AdminLTE/app.js'); ?>
+
+<script type='text/javascript' src="<?php echo asset('packages/js/common.js'); ?>"></script>
+<?php echo $__env->yieldContent('page-script'); ?>
+
+

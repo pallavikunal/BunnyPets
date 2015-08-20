@@ -1,0 +1,365 @@
+<div id="search-sidebar-collapse" class="col-xs-8 col-sm-4 col-md-3 col-lg-3">
+    <div id="show-sidebr-btn" class="show-sidebr-btn visible-xs"><span class="glyphicon glyphicon-filter"></span></div>
+    <div class="sub-left-colm marginBottom10 m-sub-left-colm-sor">
+        <div class="title-colm"><?php echo trans('frontend.search.sort_by_adventure'); ?></div>
+        <div class="left-content-colm MuseoSans300 side-panel-scroll-y">
+            <span>
+                <a href="javascript:void(0);" data-attr="categories" class='select_all'><?php echo trans('frontend.search.select_all'); ?></a>
+                <span class="color-yellow">|</span>
+                <a href="javascript:void(0);" data-attr="categories" class='unselect_all'><?php echo trans('frontend.search.unselect_all'); ?></a>
+            </span>
+            <div class="clearfix"></div>
+            <ul class="marginTop10 marginBottom10" id="adventure">
+                <?php $iterate = 1; ?>
+                <?php foreach($filterCategories as $key => $category): ?>
+                <li>
+                    <?php /*
+                      @if ($iterate >= 5 && count($categories) > 5)
+                      <li style="display:none;" class="flip-flop">
+                      @else
+
+                      @endif */ ?>
+                    <input type="checkbox" name="categories[]" id="cat_<?php echo $iterate; ?>"
+                           class="css-checkbox sort" value="<?php echo $category['id']; ?>"
+                           data-attr="categories"
+                           <?php if($categoryId == $category['id']): ?> checked="checked" <?php endif; ?>/>
+                           <label for="cat_<?php echo $iterate; ?>"><?php echo $category['name']; ?></label>
+                </li>
+                <?php $iterate++; ?>
+                <?php endforeach; ?>
+            </ul>
+            <?php /*
+              <span class="marginLeft25">
+              DO NOT REMOVE view_all class as it has been used in JS
+              <a href="javascript:void(0);" data-attr="adventure" data-action="1" class="view_all" >View all</a>
+              </span> */ ?>
+        </div>
+    </div>
+    <!--1st colum box end -->
+    <!--<div class="clearfix"></div>-->
+
+    <div class="sub-left-colm marginTop10 marginBottom10 m-margin-L-R-2 m-sub-left-colm-sor">
+        <div class="title-colm"><?php echo trans('frontend.search.sort_by_region'); ?></div>
+        <div class="left-content-colm MuseoSans300 side-panel-scroll-y">
+            <span>
+                <a href="javascript:void(0);" data-attr="regions" class='select_all'>
+                    <?php echo trans('frontend.search.select_all'); ?>
+
+                </a>
+                <span class="color-yellow">|</span>
+                <a href="javascript:void(0);" data-attr="regions" class='unselect_all'>
+                    <?php echo trans('frontend.search.unselect_all'); ?>
+
+                </a>
+            </span>
+            <div class="clearfix"></div>
+            <ul class="marginTop10 marginBottom10" id="region_ul">
+                <?php $index = 1; ?>
+                <?php foreach($filterRegions as $key => $region): ?>
+                <li>
+                    <input type="checkbox"
+                           name="regions[]"
+                           id="region_<?php echo $index; ?>"
+                           class="css-checkbox sort"
+                           value="<?php echo $region['id']; ?>" data-attr="regions"
+                           <?php if($regionId == $region['id']): ?> checked="checked" <?php endif; ?> />
+                           <label for="region_<?php echo $index; ?>"><?php echo $region['name']; ?></label>
+                </li>
+                <?php $index++; ?>
+                <?php endforeach; ?>
+            </ul>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+    <!--2nd colum box end-->
+    <!--<div class="clearfix"></div>-->
+
+    <div class="sub-left-colm marginTop10 marginBottom10 m-sub-left-colm-sor">
+        <div class="title-colm"><?php echo trans('frontend.search.sort_by_price'); ?></div>
+        <div class="left-content-colm MuseoSans300 side-panel-scroll-y">
+            <span>
+                <a href="javascript:void(0);" data-attr="price" class='select_all'>
+                    <?php echo trans('frontend.search.select_all'); ?>
+
+                </a>
+                <span class="color-yellow">|</span>
+                <a href="javascript:void(0);" data-attr="price" class='unselect_all'>
+                    <?php echo trans('frontend.search.unselect_all'); ?>
+
+                </a>
+            </span>
+            <div class="clearfix"></div>
+            <ul class="marginTop10 marginBottom10">
+                <li>
+                    <input type="checkbox" class="sort" id="pri_1" name="price[]" data-attr="price" value='1-5000'>
+                    <label for="pri_1">0 - 5000</label>
+                </li>
+                <li>
+                    <input type="checkbox" class="sort" id="pri_2" name="price[]" data-attr="price" value='5001-10000'>
+                    <label for="pri_2">5001 - 10,000</label>
+                </li>
+                <li>
+                    <input type="checkbox" class="sort" id="pri_3" name="price[]" data-attr="price" value='10001-20000'>
+                    <label for="pri_3">10,001 - 20,000</label>
+                </li>
+                <li>
+                    <input type="checkbox" class="sort" id="pri_4" name="price[]" data-attr="price" value='20001-30000'>
+                    <label for="pri_4">20,001 - 30,000</label>
+                </li>
+                <li>
+                    <input type="checkbox" class="sort" id="pri_5" name="price[]" data-attr="price" value='30001-50000'>
+                    <label for="pri_5">30,001 - 50,000</label>
+                </li>
+                <li>
+                    <input type="checkbox" class="sort" id="pri_6" name="price[]" data-attr="price" value='50001-75000'>
+                    <label for="pri_6">50,001 - 75,000</label>
+                </li>
+                <li>
+                    <input type="checkbox" class="sort" id="pri_7" name="price[]" data-attr="price" value='75001-100000'>
+                    <label for="pri_7">75,001 - 1,000,00</label>
+                </li>
+            </ul>
+            <input type="hidden" name="allcategories" value="" id="allcategories"/>
+            <input type="hidden" name="allregions" value="" id="allregions"/>
+            <input type="hidden" name="allprice" value="" id="allprice"/>
+            <input type="hidden" name="regionId" value="<?php echo isset($regionId)?$regionId:'0'; ?>" id="regionId"/>
+            <input type="hidden" name="categoryId" value="<?php echo isset($categoryId)?$categoryId:'0'; ?>" id="categoryId"/>
+
+        </div>
+    </div>
+    <!--3rd colum box end-->
+</div>
+<div class="modal fade" id="detailsPopUp" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Tour Details</h4>
+            </div>
+
+            <div class="modal-body">
+            </div>
+        </div>
+    </div>
+</div>
+<?php $__env->startSection('page-script'); ?>
+<!--<link href="<?php echo asset('packages/css/jquery-ui.min.css'); ?>" property="stylesheet">-->
+<?php echo HTML::script('packages/js/bootstrap-select.min.js'); ?>
+
+<?php echo HTML::script('packages/js/jquery-ui.min.js'); ?>
+
+<?php echo HTML::script('packages/js/jcarousel/jquery_002.js'); ?>
+
+<?php echo HTML::script('packages/js/jcarousel/jcarousel.js'); ?>
+
+<script src="https://www.google.com/jsapi?key=ABQIAAAAn01L8sl4uwWn5vTPpoEoXhQlhX9aoLwtuBlP8SLx1ePnrLY9UBT9g3_4EQBp1uyDz1sgvvv7UqG-nQ"></script>
+<?php echo HTML::script('packages/js/jquery.cookie.js'); ?>
+
+<script type="text/javascript">
+    
+    if($.cookie("name") == "true") {
+        $.removeCookie('page');
+        $.removeCookie('name', { path: '/' }); // => true
+        console.log($.cookie("page"));
+    }
+var page = 0;
+function getResult(_elem) {
+    var categories = $(":checkbox[name='categories[]']:checked").map(function() {
+        return $(this).val();
+    }).get();
+
+    var regions = $(":checkbox[name='regions[]']:checked").map(function() {
+        return $(this).val();
+    }).get();
+
+    var price = $(":checkbox[name='price[]']:checked").map(function() {
+        return $(this).val();
+    }).get();
+    page = $.cookie("page");
+    var data = {
+        'page': page,
+        'monthName': '<?php echo $monthName; ?>',
+        'month': '<?php echo $month; ?>',
+        'year': '<?php echo $year; ?>',
+        'categories': categories,
+        'regions': regions,
+        'price': price,
+        'allcat': $("#allcategories").val(),
+        'allregion': $("#allregions").val(),
+        'allprice': $("#allprice").val(),
+        'type': CONFIG.get('TOUR_SEARCH_SORT')};
+    var res = executeAjaxRequest(_elem, data, false);
+    var result = $.parseJSON(res);
+    $("#load-data").html(result.view);
+    //window.history.pushState(null, '', BASE_URL + '/tours');
+}
+
+$(function() {
+    var showCategory = [];
+    var showRegion = [];
+    var searchCategoryRecords = [];
+    var searchRegionRecords = [];
+    showCategory = $.cookies.get('searchCategory');
+    showRegion = $.cookies.get('searchRegion');
+
+    if (showRegion != null || (showRegion != '')) {
+        if (jQuery.type(showRegion) === "array") {
+            showRegion = unique(showRegion);
+            $(showRegion).each(function(i, val) {
+                $(":checkbox[value='" + val + "']").prop('checked', true);
+                getResult(val);
+            });
+        } else {
+            $(":checkbox[value='" + showRegion + "']").prop('checked', true);
+            getResult(showRegion);
+        }
+    }
+
+    if (showCategory != null) {
+        showCategory = unique(showCategory);
+        $(showCategory).each(function(i, val) {
+            $(":checkbox[value='" + val + "']").prop('checked', true);
+            getResult(val);
+        });
+    }
+
+    $(document).on('click', '.select_all', function() {
+        page = 0;
+        var dataAttr = $(this).attr('data-attr');
+        $(":checkbox[name='" + dataAttr + "[]']").prop('checked', true);
+        $("#getall").val(dataAttr);
+        $("#all" + dataAttr).val(1);
+        getResult($(this));
+    });
+
+    $(document).on('click', '.unselect_all', function() {
+        page = 0;
+        var dataAttr = $(this).attr('data-attr');
+        if (dataAttr == 'categories') {
+            $.cookies.del('searchCategory');
+        } else {
+            $.cookies.del('searchRegion');
+            $.cookies.del('searchCookie');
+        }
+        $(":checkbox[name='" + dataAttr + "[]']").prop('checked', false);
+        $("#getall").val('');
+        $("#all" + dataAttr).val(0);
+        getResult($(this));
+    });
+
+    $(document).on('click', '.sort', function() {
+        page = 0;
+        var sortAttr = $(this).attr('data-attr');
+        var ele = $(this).find(':checkbox');
+        var searchRegionRecords = [];
+        var searchCategoryRecords = [];
+
+        if ($("#regionId").val() != '0')
+            searchRegionRecords.push($("#regionId").val());
+
+        if ($("#categoryId").val() != '0')
+            searchCategoryRecords.push($("#categoryId").val());
+
+        if ($(this).prop("checked") == true) {
+            if (sortAttr == 'categories') {
+                searchCategoryRecords.push($(this).val());
+                if (searchCategoryRecords != null) {
+                    var currentCategory = unique(searchCategoryRecords);
+                    $.cookies.set('searchCategory', currentCategory);
+                }
+            }
+            if (sortAttr == 'regions') {
+                searchRegionRecords.push($(this).val());
+                if (searchRegionRecords != null) {
+                    var currentRegion = unique(searchRegionRecords);
+                    $.cookies.set('searchRegion', currentRegion);
+                }
+            }
+        } else {
+            if (sortAttr == 'categories') {
+                currentCategory = $.cookies.get('searchCategory');
+                if (currentCategory != null) {
+                    currentCategory.splice($.inArray($(this).val(), currentCategory), 1);
+                    currentCategory = unique(currentCategory);
+                }
+                $.cookies.set('searchCategory', currentCategory);
+            }
+            if (sortAttr == 'regions') {
+                currentRegion = $.cookies.get('searchRegion');
+                if (currentRegion != null) {
+                    if (jQuery.type(showRegion) === "array") {
+                        currentRegion.splice($.inArray($(this).val(), currentRegion), 1);
+                    }
+                    currentRegion = unique(currentRegion);
+                }
+                $.cookies.set('searchRegion', currentRegion);
+            }
+        }
+        if (sortAttr != 'undefined') {
+            $("#all" + sortAttr).val(0);
+        }
+        getResult($(this));
+    });
+
+    $(document).on('click', '.pagination a', function(e) {
+        $("#load-data").append('<div class="overlay"></div><div class="loading-img"></div>');
+        page = $(this).attr('href').split('page=')[1];
+        $.cookie("page", page);
+        getResult($(this));
+        $(window).scrollTop(0);
+        e.preventDefault();
+    });
+
+    $(document).on('click', '.view_all', function(e) {
+        var ul = $(this).attr('data-attr');
+        $("#" + ul + " li.flip-flop").toggle();
+        if (parseInt($(this).attr('data-action')) == 1) {
+            $(this).attr('data-action', 0);
+            $(this).text('View Less');
+        } else {
+            $(this).attr('data-action', 1);
+            $(this).text('View All');
+        }
+    });
+
+    $(document).on('click', '.operator_profile', function() {
+        var operator = $(this).attr('data-ref');
+        var data = {'id': operator, 'type': 'tour_operator_pofile'};
+        var res = executeAjaxRequest('', data, false);
+        var response = jQuery.parseJSON(res);
+        if (response.valid == 1 && response.data != "") {
+            $("#loadContent").html(response.data);
+            $('#userProfilePoP').modal();
+        }
+    });
+
+    $(document).on('click', '.tour-details', function() {
+        var tour = $(this).attr('data-ref');
+        $("#detailsPopUp .modal-body").html($("#description" + tour).val());
+        $("#detailsPopUp").modal();
+    });
+    
+    $("#show-sidebr-btn").click(function() {
+//var x = document.getElementById("search-sidebar-collapse").style.left;
+        //alert(x);
+        var x = $("#search-sidebar-collapse").css("left");
+        if (x == "-230px") {
+            $("#search-sidebar-collapse").animate({left: "0"}, 2000);
+        }
+        else {
+            $("#search-sidebar-collapse").animate({left: "-230px"}, 2000);
+        }
+    });
+    
+    $( "#searchList" ).click(function() {
+        $.removeCookie('page');
+    });
+});
+function unique(array) {
+    return $.grep(array, function(el, index) {
+        return index == $.inArray(el, array);
+    });
+}
+</script>
+<?php $__env->stopSection(); ?>

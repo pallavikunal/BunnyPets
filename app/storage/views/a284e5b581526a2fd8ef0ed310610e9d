@@ -1,0 +1,59 @@
+<div class="modal fade" id="buyLater" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="buyLaterForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Buy Later</h4>
+                </div>
+                <?php echo Form::open(['name' => 'frmBuyLater','id' => 'frmBuyLater']); ?>
+
+                <div class="modal-body">
+                    <?php echo Form::text('bookingName',Input::get('bookingName'),['class' => 'popup-input marginTop5', 'id'=> 'bookingName', 'placeholder' => "Name*"]); ?>
+
+                    <span id="error_bookingName" class="color-red fontSize12 floatL alignLeft"></span>                    
+
+                    <?php echo Form::text('bookingEmail',Input::get('bookingEmail'),['class' => 'popup-input marginTop5', 'id'=> 'bookingEmail', 'placeholder' => "Email Address*"]); ?>
+
+                    <span id="error_bookingEmail" class="color-red fontSize12 floatL alignLeft"></span>                    
+
+                    <?php echo Form::text('bookingContactNumber',Input::get('bookingContactNumber'),['class' => 'popup-input marginTop5', 'id'=> 'bookingContactNumber', 'placeholder' => "Contact number"]); ?>
+
+                    <span id="error_bookingContactNumber" class="color-red fontSize12 floatL alignLeft"></span>
+
+                    <?php echo Form::text('bookingCodeOrNameOfReferrer',null,['class' => 'popup-input marginTop5', 'id'=> 'bookingCodeOrNameOfReferrer', 'placeholder' => "Code / Name of Referrer"]); ?>
+
+                    <span id="error_bookingCodeOrNameOfReferrer" class="color-red fontSize12 floatL alignLeft"></span>
+
+                    <?php echo Form::textarea('bookingComments',null,['class' => 'popup-textarea marginTop5', 'id'=> 'bookingComments', 'style'=>'resize: none;','rows' => 8, 'cols' => 32, 'placeholder' => "Comments"]); ?>
+
+                    <span id="error_bookingComments" class="color-red fontSize12 floatL alignLeft"></span>                                        
+                    <?php echo Form::hidden('adultCount',Input::get('adultCount'),['id' => 'adultCount']); ?>
+
+                    <?php echo Form::hidden('childCount',Input::get('childCount'),['id' => 'childCount']); ?>
+
+                    <?php echo Form::hidden('checkOutDate',Input::get('checkOutDate'),['id' => 'checkOutDate']); ?>
+
+                    <?php echo Form::hidden('bookingAmount',Input::get('bookingAmount'),['id' => 'bookingAmount']); ?>
+
+                    <?php echo Form::hidden('agentId',Input::get('agentId'),['id' => 'agentId']); ?>
+
+                    <?php echo Form::button("Submit" , array('class' => 'btn btn-details-qu marginTop20 floatL fontSize14 MuseoSans300 width100' , 'id' => 'submit-buyLater')); ?>
+
+                    <div class="clearfix"></div>
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+            <div id="buyLaterSuccess" style="display: none">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Buy Later</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="color-green fontSize12">Thank you for your booking; we will be in touch with you via email shortly.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

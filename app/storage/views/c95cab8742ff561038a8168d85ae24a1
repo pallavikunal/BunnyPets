@@ -1,0 +1,51 @@
+<?php echo HTML::style('packages/css/star-rating.css'); ?>
+
+<?php echo HTML::script('packages/js/star-rating.js'); ?>
+
+<div class="modal fade" id="writeTOreview" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <?php echo Form::open(['name' => 'frmPostReview','id' => 'frmPostReview']); ?>
+
+        <div class="modal-content">
+            <div id="postReviewFrom">
+                <div class="modal-header">
+                    <div id="errorMessage" class="color-red fontSize12">&nbsp;</div>
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Write a review </h4>
+                </div>
+
+                <div class="modal-body">
+                    <?php echo Form::textarea('reviewText',null,['class' => 'popup-textarea', 'id'=> 'reviewText','rows' => 8, 'cols' => 31, 'placeholder' => "Write a review*"]); ?>
+
+                    <span id="error_reviewText" class="color-red fontSize12"></span>
+                    <?php echo Form::number('rating',0,['class' => 'rating', 'id'=> 'input-id', 'data-min'=> '0', 'data-size' => 'xs', 'data-max'=> '5', 'data-step'=> '1']); ?>
+
+                    <span id="error_rating" class="color-red fontSize12"></span>
+                    <?php echo Form::button("Submit" , array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100 post-review' , 'id' => 'submit-review')); ?>
+
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div id="postReviewSuccess" style="display: none">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Write a review</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="color-green fontSize12">Thanks for your review.</div>
+                </div>
+            </div>
+            <div id="reviewAlreadyPosted" style="display: none">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Write a review</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="color-red fontSize12">You have already posted review for this Adventure.</div>
+                </div>
+            </div>            
+        </div>
+        <?php echo Form::close(); ?>
+
+    </div>
+</div>

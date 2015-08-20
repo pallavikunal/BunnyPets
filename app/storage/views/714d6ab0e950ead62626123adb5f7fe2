@@ -1,0 +1,142 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('frontend.agent.question.show_question_details' ); ?>
+
+        <small> <?php echo trans('frontend.agent.question.show_all_question_details' ); ?>.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('frontend.home' ); ?></a></li>
+        <li><a href="<?php echo URL::route('agent.questions.index'); ?>"><?php echo trans('frontend.questions' ); ?></a></li>
+        <li class="active"><?php echo trans('frontend.details'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+            <div class="box box-primary">
+                <!-- form start -->
+                <div class="box-body">
+                    <?php if($question === NULL): ?>
+                    <div class="alert alert-info">                        
+                        <b>Woops!</b> We are not able find any details for this Question.
+                    </div>
+                    <?php else: ?>
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<table class="table">
+								<tbody>
+									<tr>
+										<th><b>Tour&nbsp;Name:</b></th>
+										<td><a href="<?php echo URL::to('/'); ?>/agent/tour/<?php echo $question->tour->id; ?>"><?php echo ucfirst($question->tour->title); ?></a></td>
+									</tr>                           
+									<tr>
+										<th><b>Question&nbsp;Id:</b></th>
+										<td><?php echo $question->ticketId; ?></td>
+									</tr>
+									<tr>
+										<th><b><?php echo trans('frontend.agent.question.question'); ?>:</b></th>
+										<td><?php echo $question->question; ?></td>
+									</tr>
+<!--									<tr>
+										<th><b>Email:</b></th>
+										<td><?php echo $question->email; ?></td>
+									</tr>
+									<tr>
+										<th><b>Contact no:</b></th>
+										<td><?php echo $question->contactNumber; ?></td>
+									</tr>-->
+									<tr>
+										<th><b>Posted&nbsp;On:</b></th>
+										<td><?php echo date('d M, Y', strtotime($question->created_at)); ?></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+                    <?php endif; ?>
+					<hr>
+					<!-- /.box-body -->
+					<?php if(empty($answer)): ?>
+					<?php echo Form::model($question, ['route' => ['agent.questions.update', $question->ticketId ], 'method' => 'patch']); ?>
+
+					<div class="row">
+						<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+							<div class="form-group">
+								<label for="answer"><h3><?php echo trans('frontend.answer'); ?></h3></label>
+								<?php echo Form::textarea('answer', null, ['class' => 'form-control textarea',
+									'id'=> 'answer']); ?>
+
+								<p class='text-red'><?php echo $errors->first('answer'); ?></p>
+							</div>
+
+							<div class="box-foote">
+								<?php echo Form::submit( trans('frontend.submit'), array('class' => 'btn btn-primary')); ?>
+
+							</div>
+						</div>
+					</div>
+					<?php echo Form::close(); ?>
+
+					<?php else: ?>
+						<div class="row">
+							<div class="col-xs-12 col-sm-12 col-md-6 col-lg-6">
+								<table class="table">
+									<tbody>
+										<tr>
+											<th><b><?php echo trans('frontend.agent.question.answered_by'); ?>:</b></th>
+											<td><?php echo ucfirst($question->user->firstName). " ".ucfirst($question->user->lastName); ?></td>
+										</tr>                           
+										<tr>
+											<th><b><?php echo trans('frontend.agent.question.answer'); ?>:</b></th>
+											<td><?php echo $question->content; ?></td>
+										</tr>
+										<tr>
+											<th><b><?php echo trans('frontend.agent.question.answered_at'); ?>:</b></th>
+											<td><?php echo date('d M, Y', strtotime($question->updated_at)); ?></td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					<?php endif; ?>
+				</div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<script type="text/javascript">
+    $(function() {
+        $(document).on('click', '.change-status', function() {
+            var self = $(this);
+            var status = parseInt(self.attr('data-status'));
+            var data = {'id': self.attr('data-id'),
+                'status': status,
+                'type': CONFIG.get('TOUR_CHANGE_STATUS')};
+            var res = executeAjaxRequest(self, data, true);
+            $("#message").html(res.str);
+            if (res.valid) {
+                if (status) {
+                    $("#loader").replaceWith('<a href="javascript:void(0);" class="btn-danger btn-sm change-status" data-id="' + self.attr('data-id') + '" data-status="0" title="Publish This">Unpublished</a>');
+                    return false;
+                }
+
+                $("#loader").replaceWith('<a href="javascript:void(0);" class="btn btn-success btn-sm change-status" data-id="' + self.attr('data-id') + '" data-status="1" title="Unpublish This">Published</a>');
+            }
+
+            // if some error occurrs then loader will again changed to element
+            $("#loader").replaceWith(self);
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.agent', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

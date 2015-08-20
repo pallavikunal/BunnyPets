@@ -1,0 +1,63 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+       <?php echo trans('backend.meta.meta_management'); ?>
+
+        <small><?php echo trans('backend.meta.update_meta_information'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="#"><?php echo trans('backend.meta.meta'); ?></a></li>
+        <li class="active"><?php echo trans('backend.meta.edit_update'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('backend.meta.edit_update_information'); ?></h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($metaInfo, ['route' => ['admin.saveMeta', isset($metaData->id)?$metaData->id:0], 'method' => 'post']); ?>
+
+                    <div class="box-body">
+                        <div class="form-group">
+                            <label for="metaTitle"><?php echo trans('backend.meta.meta_title'); ?></label>
+                            <?php echo Form::textarea('metaTitle', isset($metaInfo->meta_title)?$metaInfo->meta_title:null, ['class' => 'form-control', 'id'=> 'metaTitle','placeholder' => trans('backend.meta.enter_meta_title' ) ,'rows' => '3', 'cols' => '10']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('metaTitle'); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="metaKeyword"><?php echo trans('backend.meta.meta_keyword'); ?></label>
+                            <?php echo Form::textarea('metaKeyword', isset($metaInfo->metaKeyword)?$metaInfo->metaKeyword:null, ['class' => 'form-control', 'id'=> 'metaKeyword','placeholder' => trans('backend.meta.enter_meta_keyword') ,'rows' => '5', 'cols' => '10']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('metaKeyword'); ?></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="metaDescription"><?php echo trans('backend.meta.meta_description'); ?></label>
+                            <?php echo Form::textarea('metaDescription', isset($metaInfo->meta_value)?$metaInfo->meta_value:null, ['class' => 'form-control', 'id'=> 'metaKeyword','placeholder' => trans('backend.meta.enter_meta_description') ,'rows' => '5', 'cols' => '10']); ?>
+
+                            <p class='text-red'><?php echo $errors->first('metaDescription'); ?></p>
+                        </div>
+                    </div><!-- /.box-body -->
+
+                    <div class="box-footer">
+                        <?php echo Form::hidden('entityType', $entity, array('class' => 'control')); ?> 
+                        <?php echo Form::hidden('entityId', $entityId, array('class' => 'control')); ?> 
+                        <?php echo Form::submit(trans('backend.save'), array('class' => 'btn btn-primary')); ?>
+
+                    </div>
+            <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

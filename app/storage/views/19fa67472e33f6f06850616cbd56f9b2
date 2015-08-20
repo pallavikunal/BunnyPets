@@ -1,0 +1,52 @@
+<?php $__env->startSection('page-style'); ?>
+<!-- Star Rating -->
+<?php echo HTML::style('packages/css/star-rating.css'); ?>
+
+<!-- end Star Rating -->
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('page.banner', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="container marketing">
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">
+        <div class="col-sm-7">
+            <!--<h2 class="MuseoSlab500 color-maroon marginLeft55">Reviews</h2>-->
+            <div class="container MuseoSans500">
+                <ul style="list-style:none;">
+                    <li class="marginTop15 marginBottom15">
+                        <div class="width100 marginBottom25 floatL">
+                            <span class="widthauto floatL"><h3 class="color-maroon MuseoSlab500">Reviews for <a href="" class="color-yellow" data-toggle="modal" data-target="#userProfilePoP"><?php echo ucfirst($agentDetails['agentDetail']['agencyName']); ?></a></h3></span>
+                            <span class="marginLeft20 floatL star-strip star-strip<?php echo (int)$reviewAverage; ?>">&nbsp;</span>
+                        </div>
+                        <?php foreach($tourReview as $review): ?>
+                        <div class="clearfix"></div>                
+                        <div class="width100 marginBottom25 ">
+                            <div class="MuseoSans300"><b>Reviewed by: <span><?php echo ucfirst($review->reviewer->firstName); ?>&nbsp;<?php echo ucfirst($review->reviewer->lastName); ?></span></b></div>
+                            <span class="width100 star-strip star-strip<?php echo (int)$review->rating; ?>">&nbsp;</span>
+                            <Div class="clearfix"></Div>
+                            <span class="width100"><?php echo ucfirst(substr($review->review,0,1000)); ?></span>
+                        </div>
+                        <?php endforeach; ?>
+                        <br>
+                        <br>
+                        <br>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div><!-- /.row -->
+</div>
+
+<!-- Modal popup strat here -->
+<?php echo $__env->make('user.profile.userprofilepopup', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<!-- Modal popup end here --> 
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js'); ?>
+
+<?php echo HTML::script('packages/js/star-rating.js'); ?>
+
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

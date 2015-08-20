@@ -1,0 +1,77 @@
+<?php if(isset($tours) && $tours->count() >= 1): ?>
+<?php echo $__env->make('search.pagination', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="clearfix"></div>
+<?php foreach($tours as $tour): ?>
+<div class="clearfix"></div>
+<div class="row marginBottom10">
+    <div class="sub-right-colm search-grid">
+        <div class="col-xs-12 col-sm-12 col-md-5 col-lg-4 search-grid-img">
+            <a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>_<?php echo $tour->user->agencyNameSlug; ?>">
+                <?php if(!empty($tour->image_name) && $tour->image_name != NULL): ?>
+                <img src="<?php echo asset('uploads/tours'); ?>/<?php echo $tour->user_id; ?>/<?php echo $tour->TourId; ?>/thumb_225X225_<?php echo $tour->image_name; ?>"
+                     alt="<?php echo $tour->ImageTitle; ?>"  title="<?php echo $tour->ImageTitle; ?>">
+                <?php else: ?>
+                <img alt="img" src="<?php echo asset('packages/images/trave-list-img.png'); ?>" width="225px" height="225px">
+                <?php endif; ?>
+            </a>
+        </div>
+        <div class="col-xs-12 col-sm-12 col-md-7 col-lg-8 marginTop15">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>_<?php echo $tour->user->agencyNameSlug; ?>">
+                        <h4 class="MuseoSlab500 color-maroon">
+                            <?php echo ucfirst($tour->title); ?>
+
+                        </h4>
+                    </a>
+                    <span class="star-strip star-strip<?php echo (int)$tour->rating; ?>"></span>
+                    <?php if((int)$tour->rating): ?>
+                    <span class="floatL marginTop2 marginLeft5">
+                        <a href="<?php echo URL::to('review'); ?>/<?php echo $tour->slug; ?>" target="_blank" class="color-yellow">(<?php echo $tour->review->count(); ?> Reviews)</a>
+                    </span>
+                    <?php endif; ?>
+                    <div class="clearfix"></div>
+
+                    <p>
+                        <strong>Category : </strong> <?php echo $tour->category->name; ?> <br>
+                        <strong>Location : </strong> <?php echo ucfirst($tour->region->name); ?>, <?php echo ucfirst($tour->state->name); ?> <br>
+                        <strong>Duration : </strong> <?php echo (!empty($tour['activity_duration'][0]))?$tour['activity_duration'][0]." Days":""; ?>
+
+                        <?php echo (!empty($tour['activity_duration'][1]))?$tour['activity_duration'][1]." Hours":""; ?>
+
+                        <?php echo (!empty($tour['activity_duration'][2]))?$tour['activity_duration'][2]." Minutes":""; ?> <br>
+                        <strong>Operated by : </strong> <a href="javascript:void(0)"  data-ref="<?php echo $tour->user->id; ?>" class="color-yellow operator_profile"> <?php if($tour->user->agencyName ): ?> <?php echo ucfirst($tour->user->agencyName ); ?> <?php else: ?> <?php echo $tour->user->firstName; ?> <?php echo $tour->user->lastName; ?> <?php endif; ?></a> <br>
+                        <strong>Description : </strong> <?php echo substr(strip_tags($tour->details),0,44); ?> <?php if(strlen($tour->details) > 44): ?><a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>_<?php echo $tour->user->agencyNameSlug; ?>" class='color-yellow'>Read More</a><?php endif; ?> <br>
+                        <input type="hidden" name="description" id="description<?php echo $tour->id; ?>" value="<?php echo strip_tags($tour->details); ?>"/>
+
+                    </p>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-8 col-md-8 col-lg-6">
+                    <a href="<?php echo URL::route('tours'); ?>/<?php echo $tour->slug; ?>_<?php echo $tour->user->agencyNameSlug; ?>" class="color-whiite">
+                        <span class="btn-search1 text-center width100 floatL btn-book fontSize16 MuseoSlab100">
+                            <span><img alt="icon" src="<?php echo asset('packages/images/ruppes-icon.png'); ?>"></span>
+                            <span class="color-light-maroon"><?php if($tour->age_group == '3'): ?><?php echo $tour->charge_per_child; ?><?php else: ?> <?php echo $tour->charge_per_adult; ?> <?php endif; ?>/-</span> 
+                            View Details
+                        </span>
+                    </a>
+                </div>
+                <div class="clearfix"><br></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+<?php endforeach; ?>
+<div class="clearfix"></div>
+<?php echo $__env->make('search.pagination', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php else: ?>
+<div class="col-sm-12">
+    <div class="sub-right">
+        <div class="alert alert-warning">Whoops! No results found for the region you selected. But below are some related tours you may be interested in.</div>
+    </div>
+</div>
+<?php endif; ?>

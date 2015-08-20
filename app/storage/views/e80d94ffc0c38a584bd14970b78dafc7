@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <?php echo $__env->make('includes.agent.head', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+    </head>
+    <body class="skin-blue">
+        <?php echo $__env->make('includes.agent.header', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        <div class="wrapper row-offcanvas row-offcanvas-left">
+
+            <?php if(Auth ::id() && (Auth ::user()->role_id == '2')): ?>
+            <aside class="left-side sidebar-offcanvas" style="min-height: 2014px;">
+                <?php echo $__env->make('includes.agent.sidebar', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+            </aside>
+            <?php endif; ?>
+            <aside class="right-side">
+                <?php echo $__env->yieldContent('content'); ?>
+            </aside>
+        </div>
+
+        <footer>
+            <?php echo $__env->make('includes.agent.footer', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+        </footer>
+    </body>
+</html>

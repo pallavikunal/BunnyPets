@@ -1,0 +1,39 @@
+<div class="modal fade" id="sendMail" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="sendMailForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Send Booking Details</h4>
+                </div>
+                <?php echo Form::open(['name' => 'frmSendMail','id' => 'frmSendMail']); ?>
+
+                <div class="modal-body">
+                    <?php echo Form::text('send_email',Input::get('email'),['class' => 'popup-input', 'id'=> 'send_email', 'placeholder' => "Email Address*"]); ?>
+
+                    <span id="error_send_email" class="color-red fontSize12 floatL alignLeft"></span>
+                    <?php echo Form::textarea('email_content',Input::get('email_content')
+                        ,['class' => 'popup-textarea marginTop5', 'id'=> 'question', 'style'=>'resize: none;','rows' => 10, 'cols' => 32, 'placeholder' => "Enter content*"]); ?>
+
+                        <span id="error_email_content" class="color-red fontSize12 floatL alignLeft"></span>                                        
+                        <div class="clearfix"></div>
+                    <div id="attachedFile" class="booking-mail-attachment marginTop5"><img src="<?php echo asset('packages/images/attchment.png'); ?>">&nbsp;Booking_detail.pdf</div>                    
+                    <?php echo Form::button("Send" , array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100' , 'id' => 'submit-mail')); ?>
+
+                    <div class="clearfix"></div>
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+            <div id="sendMailFormSuccess" style="display: none">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Send Booking Details</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="color-green fontSize12">Email has been sent successfully.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

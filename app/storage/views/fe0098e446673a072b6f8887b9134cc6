@@ -1,0 +1,40 @@
+<div id="search-sidebar-collapse" class="col-sm-4 col-md-3 col-lg-3">
+	<div id="show-sidebr-btn1" class="show-sidebr-btn visible-xs"><span class="glyphicon glyphicon-user"></span></div>
+    <div class="userProfile-left-col height600 MuseoSans300">
+        <div class="profile-pic">
+            <span style="position:absolute; top:160px; color:#fff; left:98px;"></span>
+            <?php if(Auth::user()->avtar): ?>
+            <img src="<?php echo URL::to('/'); ?>/uploads/avatar/160x152/<?php echo Auth::user()->avtar; ?>"
+                 width="160" height="152">
+            <?php else: ?>            
+            <img src="<?php echo asset('packages/images/user-pic-.png'); ?>" width="160" height="152">            
+            <?php endif; ?>
+        </div>
+        <ul>
+            <li class="<?php if(Session::get('dashboard_menu') == 'my_bookings'): ?> active  <?php endif; ?>"><a href="<?php echo URL::route('mybookings'); ?>" class="<?php if(Session::get('dashboard_menu') == 'my_bookings'): ?> color-yellow  <?php endif; ?>">My Bookings</a></li>
+            <li class="<?php if(Session::get('dashboard_menu') == 'update_profile'): ?> active  <?php endif; ?>"><a href="<?php echo URL::route('updateProfile'); ?>" class="<?php if(Session::get('dashboard_menu') == 'update_profile'): ?> color-yellow  <?php endif; ?>">User Details</a></li>
+            <li class="<?php if(Session::get('dashboard_menu') == 'change_password'): ?> active  <?php endif; ?>"><a href="<?php echo URL::route('changePassword'); ?>" class="<?php if(Session::get('dashboard_menu') == 'change_password'): ?> color-yellow  <?php endif; ?>">Change Password</a></li>
+            <li class=""><a href="<?php echo URL::to('/'); ?>/logout" class="">Log out</a></li>
+        </ul>                
+    </div>
+</div>
+<?php $__env->startSection('page-script'); ?>
+<script  type="text/javascript">
+	$(function() {
+		$("#show-sidebr-btn1").click(function(){
+			//var x = document.getElementById("search-sidebar-collapse").style.left;
+			//alert(x);
+			var x = $("#search-sidebar-collapse").css("left");
+			if(x == "-230px"){
+				$("#search-sidebar-collapse").animate({left:"0"}, 2000);
+				}
+			else{
+				$("#search-sidebar-collapse").animate({left:"-230px"}, 2000);
+				
+			}
+			
+		});
+	});
+</script>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->yieldContent('dashboard-script'); ?>

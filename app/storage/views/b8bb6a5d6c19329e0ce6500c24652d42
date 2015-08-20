@@ -1,0 +1,143 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Tour Package Images
+        <small>Add new Images.</small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li><a href="<?php echo URL::route('agent.tour.index'); ?>">Tours</a></li>
+        <li class="active">Create</li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div id="message" class="marginBottom15">
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+            </div>
+        <div class="col-md-12">
+            <div class="box box-primary" id='fileWrapper'>
+                <div class="box-header">
+                    <h3 class="box-title">Tour Package Images</h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($tour,['route' => ['admin.saveimages',$tour->id],'id' => 'frmFileUpload','method' => 'post','files'=> true]); ?>
+
+                <div class="box-body">
+                    <div class="form-group">
+                        <label class="pull-left" for="fileUpload"><?php echo trans('frontend.images'); ?></label>
+                        <input type="file" name="files[]" class="pull-left" style="margin-left: 5px;" id="fileUpload" multiple/>
+                        <div class='clearfix'></div>
+                        <div class="marginBottom15">For better quality please upload an image size at least 748 pixels by 340 pixels</div>
+                        <div id="showErrorMessage" class="color-red"></div>
+                    </div>
+                    <div id="loaddata"></div>
+                    <div class='clearfix'></div>
+                    <hr/>
+                    <div class='clearfix'></div>
+                    <?php if($images): ?>
+                    <?php foreach($images as $key => $image): ?>
+                    <div class="pull-left col-md-5 marginTop30" id="img<?php echo $image['id']; ?>">
+                        <div class="tourImage">
+                            <img src="<?php echo asset('uploads/tours'); ?>/<?php echo $tour->user->id; ?>/<?php echo $tour->id; ?>/thumb_150X133_<?php echo $image['image_name']; ?>" />
+                        </div>
+                        <div class="form-group tourImageInputs">
+                            <?php echo Form::hidden('previmages[]',$image['image_name'], array('class' => 'control')); ?>
+
+                            <?php echo Form::hidden('previds[]',$image['id'], array('class' => 'control')); ?>
+
+                            <label for="title" class="label-width70"><?php echo trans('frontend.title'); ?></label>
+                            <?php echo Form::text('prevtitle[]',$image['title'], array('class' => 'control')); ?>
+
+                            <?php echo $errors->first('prevtitle[]'); ?>
+
+                        </div>
+                        <div class="form-group tourImageInputs">
+                            <label for="caption" class="label-width70"><?php echo trans('frontend.agent.tour.caption'); ?></label>
+                            <?php echo Form::text('prevcaption[]', $image['caption'],array('class' => 'control')); ?>
+
+                            <?php echo $errors->first('prevcaption[]'); ?>
+
+                        </div>
+                        <div class="form-group tourImageInputs">
+                            <label for="mark-as-featured"><?php echo trans('frontend.agent.tour.mark_as_featured'); ?></label>
+                            <?php echo Form::radio('prevfeatured[]',$image['id'],$image['is_featured'],array('class' => 'control')); ?>
+
+                        </div>
+                        <div class="remove-image">
+                            <a href="javascript:void(0)" class="removeImage" data-name="<?php echo $image['id']; ?>" data-temp="0"><i class="fa fa-minus-circle"></i></a>
+                        </div>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+
+                </div><!-- /.box-body -->
+                <div class='clearfix'></div>
+                <div class="box-footer">
+                    <?php echo Form::submit(trans('backend.save'), array('class' => 'btn btn-primary')); ?>
+
+                </div>
+
+                <?php echo Form::close(); ?>
+
+                <div class="clearfix"></div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/agent/assets/js/plugins/fileupload/jquery.ui.widget.js'); ?>
+
+<?php echo HTML::script('packages/agent/assets/js/plugins/fileupload/jquery.iframe-transport.js'); ?>
+
+<?php echo HTML::script('packages/agent/assets/js/plugins/fileupload/jquery.fileupload.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#fileUpload').fileupload({
+            dataType: 'json',
+            url: "<?php echo route('admin.uploadimage'); ?>",
+            limitMultiFileUploads: "<?php echo Config::get('config.MAX_FILE_UPLOAD_NUMBER'); ?>",
+            sequentialUploads: true,
+            beforeSend: function(e) {
+                $("input[type='file']").after('<span id="loading_image" class="pull-left" style="margin-left: 5px;"><img src="<?php echo asset("packages/images/loader.gif"); ?>" id="loading_image" /></span>');
+            },
+            done: function(e, data) {
+                $("#loading_image").remove();
+                if (data.result.view == 'error') {
+                    $("#showErrorMessage").text("Internal server error while uploading image(s).");
+                } else {
+                    $("#loaddata").append(data.result.view);
+                }
+            }
+        });
+
+        $(document).on('click', '.removeImage', function() {
+            if (confirm('Are you sure do you want to remove?')) {
+                var name = $(this).attr('data-name');
+                var temp = $(this).attr('data-temp');
+                var data = {'img': name, 'temp': temp, 'type': 'tour_admin_remove_image'};
+                var response = executeAjaxRequest('', data, false);
+                var res = $.parseJSON(response);
+                if (typeof res.img != 'undefined' && res.valid == '1') {
+                    $("#" + res.img).remove();
+                }
+
+            }
+        });
+
+        $("#frmFileUpload").submit(function() {
+            $("#fileWrapper").append('<div class="overlay"></div><div class="loading-img"></div>');
+        });
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

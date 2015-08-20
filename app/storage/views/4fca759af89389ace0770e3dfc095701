@@ -1,0 +1,989 @@
+<?php $__env->startSection('page-style'); ?>
+<!-- Star Rating -->
+<!--<?php echo HTML::style('http://netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css'); ?>-->
+<?php echo HTML::style('packages/css/star-rating.css'); ?>
+
+<?php echo HTML::style('packages/admin/assets/css/datepicker/multidatepicker.css'); ?>
+
+<?php echo HTML::style('packages/admin/assets/css/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css'); ?>
+
+<!-- end Star Rating -->
+<?php $__env->stopSection(); ?>
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('page.banner', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="container marketing">
+    <h2 class="MuseoSlab500 color-maroon"><?php echo ucfirst($tours->title); ?></h2>
+    <h4 class="color-maroon MuseoSlab500">Operated by <a href="" class="color-yellow" data-toggle="modal" data-target="#userProfilePoP"><?php echo ucfirst($tours->user->agencyName ); ?> </a></h4>
+
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">
+        <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
+            <div class="banner-block">
+                <div id="carousel-example-generic" class="carousel slide carousel-details" data-ride="carousel">
+                    <div class="carousel-inner">
+                        <?php if($tourImages): ?>
+                        <?php $counter = 0; ?>
+                        <?php foreach($tourImages as $image): ?>
+                        <div class="item <?php if($counter == 0): ?> active <?php endif; ?>">
+                            <img src="<?php echo asset('uploads/tours'); ?>/<?php echo $tours->user_id; ?>/<?php echo $tours->TourId; ?>/thumb_748X340_<?php echo $image['image_name']; ?>"
+                                 alt='<?php echo $image["title"]; ?>'>
+                                 <?php $counter++; ?>
+                        </div>
+                        <?php endforeach; ?>
+                        <?php else: ?>
+                        <div class="item active">
+                            <img alt="tourImg" src="<?php echo asset('packages/images/trave-list-big-img.png'); ?>" title='<?php echo $tours->title; ?>'/>
+                        </div>
+                        <?php endif; ?>
+                    </div>
+                    <a class="left carousel-control" href="#carousel-example-generic" data-slide="prev">
+                        <span class="glyphicon glyphicon-chevron-left"></span>
+                    </a>
+                    <a class="right carousel-control" href="#carousel-example-generic" data-slide="next">
+                        <span class="glyphicon glyphicon-chevron-right"></span>
+                    </a>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="tab-block">
+                <div id="tabs" class="hidden-xs">
+                    <ul>
+                        <li><a href="#tabs-1">Details</a></li>
+                        <li><a href="#tabs-2">Itinerary</a></li>
+                        <li><a href="#tabs-3">What’s Included </a></li>
+                        <li><a href="#tabs-4">What to Bring</a></li>
+                    </ul>
+                    <div id="tabs-1">
+                        <div class="fontSize13">
+                            <p><?php echo $tours->details; ?></p>
+                        </div>
+                    </div>
+                    <div id="tabs-2">
+                        <div class="fontSize13">
+                            <p><span class="color-maroon"><b>Meet Location: </b></span> <span> <?php echo $tours->street_address; ?></span> </p>
+                            <p><span class="color-maroon"><b>Itinerary: </b></span> <span><?php echo $metadata['tour_info']['other_rules']; ?></span></p>
+                        </div>
+                    </div>
+                    <div id="tabs-3">
+                        <div class="fontSize13">
+                            <p><?php echo isset($metadata['tour_info']['whats_included'])?$metadata['tour_info']['whats_included']:'';; ?></p>
+                        </div>
+                    </div>
+                    <div id="tabs-4">
+                        <div class="fontSize13">
+                            <p><?php echo isset($metadata['tour_info']['whattobring'])?$metadata['tour_info']['whattobring']:'';; ?></p>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordion" class="visible-xs">
+                    <h3>At a Glance</h3>
+                    <div class="fontSize13">
+                        <div class="right-glance-box">
+                            <ul>
+                                <li class="activity-icons"><span class="title">Activity type:</span> <?php echo ucfirst($tours->category->name); ?></li>
+                                <li class="location-icons"><span class="title">Location: </span> <?php echo ucfirst($tours->region->name); ?></li>
+                                <?php if(isset($metadata['activity_duration'])): ?>
+                                <li class="duration-icons"><span class="title">Duration:</span>
+
+                                    <?php echo (!empty($metadata['activity_duration'][0]))?$metadata['activity_duration'][0]." Days":""; ?>
+
+                                    <?php echo (!empty($metadata['activity_duration'][1]))?$metadata['activity_duration'][1]." Hours":""; ?>
+
+                                    <?php echo (!empty($metadata['activity_duration'][2]))?$metadata['activity_duration'][2]." Minutes":""; ?>
+
+                                </li>
+                                <?php endif; ?>
+                                <li class="fitness-icons"><span class="title">Difficulty level:</span>
+                                    <?php if($tours->fitness_level == 1): ?>Low
+                                    <?php elseif($tours->fitness_level == 2): ?>Moderate
+                                    <?php elseif($tours->fitness_level == 3): ?>High
+                                    <?php else: ?> Higher
+                                    <?php endif; ?>
+                                </li>
+                                <?php if(isset($metadata['tour_info']['cancellation_policy']) && !empty($metadata['tour_info']['cancellation_policy'])): ?>
+                                <li class="refund-policy-icons" id="bs-example-navbar-collapse-3">
+                                    <span class="title">Refund policy:</span>
+                                    <?php echo substr(strip_tags($metadata['tour_info']['cancellation_policy']),0,14); ?>...
+                                    <a href="javascript:void(0)" class="floatR color-yellow basic3" data-toggle="modal" data-target="#refundPolicy">More >></a>
+                                </li>
+                                <?php endif; ?>
+
+                                <?php if(isset($metadata['tour_info']['pricing']) && !empty($metadata['tour_info']['pricing'])): ?>
+                                <li class="pricing-list-icons">
+                                    <span class="title">Pricing List:</span>
+                                    <?php echo substr(strip_tags($metadata['tour_info']['pricing']),0,15); ?>
+
+                                    <a href="javascript:void(0)" class="floatR color-yellow basic3" data-toggle="modal" data-target="#pricing">View >></a>
+                                </li>
+                                <?php endif; ?>
+
+
+                                <li>
+                                    <div class="marginBottom19 marginLeft25 floatL text-center" id="bs-example-navbar-collapse-4">
+                                        <div id="questionSuccessMessage" class="color-green fontSize12" style="display: none">&nbsp;</div>
+                                        <?php echo Form::hidden('loggedInEmail',isset(Auth::user()->email)?Auth::user()->email:'',['id'=>'loggedInEmail']); ?>
+
+                                        <?php echo Form::hidden('loggedInName',isset(Auth::user()->firstName)?Auth::user()->firstName:'',['id'=>'loggedInName']); ?>
+
+                                        <?php echo Form::hidden('loggedInContactNumber',isset(Auth::user()->contactNumber)?Auth::user()->contactNumber:'' ,['id'=>'loggedInContactNumber']); ?>
+
+                                        <hr>
+                                        <h4 class="color-maroon MuseoSlab300">Got a question about this trip? </h4>
+                                        <a href="javascript:void(0)" class="btn btn-details-qu fontSize15 MuseoSlab500 basic4" data-toggle="modal" id="open-ask-question-popupMob" onClick="ga('send', 'event', 'Contact Operator', 'Click', 'Contact');">Contact Operator</a>
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="clearfix"><hr></div>
+                        </div>
+                    </div>
+                    <h3>Details</h3>
+                    <div class="fontSize13">
+                        <p><?php echo $tours->details; ?></p>
+                    </div>
+                    <h3>Itinerary</h3>
+                    <div class="fontSize13">
+                        <p><span class="color-maroon"><b>Meet Location: </b></span> <span> <?php echo $tours->street_address; ?></span> </p>
+                        <p><span class="color-maroon"><b>Itinerary: </b></span> <span><?php echo $metadata['tour_info']['other_rules']; ?></span></p>
+                    </div>
+                    <h3>What’s Included</h3>
+                    <div class="fontSize13">
+                        <p><?php echo isset($metadata['tour_info']['whats_included'])?$metadata['tour_info']['whats_included']:'';; ?></p>
+                    </div>
+                    <h3>What to Bring</h3>
+                    <div class="fontSize13">
+                        <p><?php echo isset($metadata['tour_info']['whattobring'])?$metadata['tour_info']['whattobring']:'';; ?></p>
+                    </div>
+                    <h3>Locate Us</h3>
+                    <div>
+                        <div id="map-canvas1"></div>
+                    </div>
+                    <h3>Review</h3>
+                    <div>
+                        <?php echo Form::hidden('tourId',$tours->id,['id'=>'tourId']); ?>
+
+                        <div class="right-glance-box" id="bs-example-navbar-collapse-2">
+                            <div id="reviewMessage" style="display: none"><?php echo trans('messages.review_success_message'); ?></div>
+                            <div id="reviewSuccessMessage" class="color-green fontSize12" style="display: none">&nbsp;</div>
+                            <h4 class="color-maroon MuseoSlab300">
+                                <?php if(Auth::id() && (Auth ::user()->role_id == '3')): ?>
+                                <a href="" class="color-maroon writeReview" data-toggle="modal" id="open-review-popupMob" >Write a review >></a>
+                                <?php else: ?>
+                                <a href="" data-target="#myModal" data-toggle="modal" class="color-maroon open-login" >Write a review >></a>
+                                <?php endif; ?>
+
+                                <?php if($writeReviewFlag): ?>
+                                <?php echo Form::hidden('reviewPosted','0',['id' => 'reviewPosted']); ?>
+
+                                <?php else: ?>
+                                <?php echo Form::hidden('reviewPosted','1',['id' => 'reviewPosted']); ?>
+
+                                <?php endif; ?>
+                            </h4>
+
+
+                            <div class="clearfix"></div>
+                            <?php if($tourReview): ?>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-10 col-md-8 col-lg-9 box-header">
+                                    <h4 class="box-title MuseoSlab500 color-yellow text-left"><?php echo ucfirst($tours->user->agencyName ); ?></h4>                    
+                                </div>
+                                <div class="col-xs-12 col-sm-2 col-md-4 col-lg-3 text-right">
+                                    <span class="width100 floatR star-strip star-strip<?php echo $reviewAverage; ?> pull-right">
+                                    </span>
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 box-header">
+                                    <h4 class="color-maroon text-left">User's Review &gt;&gt;</h4>                    
+                                </div>
+                                <div class="clearfix"></div>
+                            </div>
+                            <?php foreach($tourReview as $review): ?>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                                    <div class="review color-grey">
+                                        <blockquote>
+                                            <?php echo ucfirst(substr($review['review'],0,250)); ?>
+
+                                        </blockquote>
+                                    </div>
+                                    <div class="clearfix"></div>
+                                    <div class="review-rating text-left pull-left">
+                                        <span class="width100 star-strip star-strip<?php echo $review['rating']; ?> pull-right"></span>
+                                    </div>
+                                    <div class="review-name text-right color-maroon pull-right">By:<i> <?php echo ucfirst($review['reviewer']['firstName']); ?>&nbsp;<?php echo ucfirst($review['reviewer']['lastName']); ?></i></div>
+                                    <div class="clearfix"></div>
+                                </div>
+                                <div class="clearfix"></div>
+                                <hr>
+
+                            </div>
+                            <?php endforeach; ?>
+                            <p style="height:20px; text-align:right;">
+                                <a href="<?php echo URL::route('review', array('slug' => $tours->slug)); ?>" class="color-yellow" data-toggle="modal">Read more >></a>
+                            </p>
+                            <?php else: ?>
+                            <p>
+                            <div class="width100 alert alert-warning">
+                                No reviews yet!
+                            </div>
+                            </p>
+                            <?php endif; ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <hr>
+            <div class="calender-block-mob">
+                <div>
+                    <div class="col-xs-8 col-sm-5 col-md-5 col-lg-5">
+                        <div id="selectedDates-mob"></div>
+                    </div>
+                    <div class="clearfix visible-xs"><hr></div>
+                    <div class="col-xs-12 col-sm-7 col-md-7 col-lg-7">
+                        <?php echo Form::open(['route'=>'buynow','method' => 'POST','name' => 'frmBuyNow', 'id' => 'frmBuyNow']); ?>
+
+                        <?php if($tours->age_group == '1' || $tours->age_group == '2'): ?>
+                        <div class="col-xs-8">
+                            <span class="MuseoSans500">Adult(s) [Age 12+]</span> <br>
+                            (<span class="Rupee-Foradian">`</span>  <?php echo round($tours->charge_per_adult); ?>/- each)
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="custom-dropdown-1">
+                                <?php echo Form::selectRange('noOfAdult', 1, 50, (isset($booking))?$booking->adults:1,['class' => 'customSelect-1', 'id'=> 'numberOfAdult']); ?>
+
+                            </span>
+                        </div>
+                        <div class="clearfix"><hr></div>
+                        <?php else: ?>
+                        <?php echo Form::hidden('noOfAdult',0,['id'=>'numberOfAdult']); ?>
+
+                        <?php endif; ?>
+                        <?php if($tours->age_group == '1' || $tours->age_group == '3'): ?>
+                        <div class="col-xs-8">
+                            <span class="MuseoSans500">Child(ren)</span><br>
+                            (<span class="Rupee-Foradian">`</span>  <?php echo round($tours->charge_per_child); ?>/- each)
+                        </div>
+                        <div class="col-xs-4">
+                            <span class="custom-dropdown-1">
+                                <?php echo Form::selectRange('noOfChild',($tours->age_group == '3')?1:0, 12, (isset($booking))?$booking->childs:0,['id'=> 'numberOfChild', 'class' => 'customSelect-1' ]); ?>
+
+                            </span>
+                        </div>
+                        <div class="clearfix"></div>
+                        <?php else: ?>
+                        <?php echo Form::hidden('noOfChild',0,['id'=>'numberOfChild']); ?>
+
+                        <?php endif; ?>
+                        <div class="col-xs-12"><h4 class="color-maroon Rupee-Foradian text-left" >Total ` <span id="totalAmount"><?php if(isset($booking)): ?> <?php echo $booking->booking_amount; ?> <?php endif; ?></span>/- </h4>
+                            <br>
+                            <?php if(isset($metadata['tour_info']['pricing']) && !empty($metadata['tour_info']['pricing'])): ?>
+                            <div class="width100 text-left">
+                                <span class="MuseoSlab500">
+                                    <a href="javascript:void(0)" class="fontSize15 basic3 color-maroon" data-toggle="modal" data-target="#pricing">Pricing List >></a>
+                                </span>
+                            </div>
+                            <?php endif; ?></div>
+                        <div class="clearfix"><br></div>
+<!--                        <?php if(Auth::id() && (Auth ::user()->role_id == '3')): ?>
+                        <div class="col-xs-6">
+                            <?php echo Form::submit('Buy Now',['class' => 'btn btn-buy-now fontSize15 MuseoSlab500', 'id' => 'buyNow', 'data-toggle' => "tooltip", 'data-placement' => "top", 'title' => "Please select booking date!", 'onClick' => "ga('send', 'event', 'Buy Now', 'Click', 'Pay')"]); ?>
+
+                        </div>
+                        <?php else: ?>
+                        <div class="col-xs-6">
+                            <a href="javascript:void(0);" id="buyNowLogin" data-target="#myModal" data-toggle="modal" class="btn btn-details-qu dateSelected open-login btn btn-buy-now fontSize15 MuseoSlab500" data-placement='top' title='Please login to book tour!'>
+                                Buy Now
+                            </a>
+                            <a href="javascript:void(0);" id="buyNowLogin" data-toggle="tooltip" data-placement="top" class="btn btn-details-qu dateNotSelected btn btn-buy-now fontSize15 MuseoSlab500" data-placement='top' title='Please select booking date!'>
+                                Buy Now
+                            </a>
+                        </div>
+                        <?php endif; ?>-->
+                        <div class="col-xs-12 text-center">
+                            <span class="">
+                                <a  href="javascript:void(0)" data-toggle="tooltip" data-placement="top" title="Please select booking date!" id="buyLaterBtn" class="btn btn-details-qu fontSize15 MuseoSlab500 basic4" data-toggle="modal" onClick="ga('send', 'event', 'Buy Later', 'Click', 'Pay');">Book a Spot</a>
+                            </span>
+                        </div>
+                        <?php echo Form::hidden('tourid',$tours->id); ?>
+
+                        <?php echo Form::hidden('url',Request::url(),['id' => 'url']); ?>
+
+                        <?php echo Form::hidden('dates',null,['id' => 'dates']); ?>
+
+                        <?php echo Form::hidden('agentId',$tours->user_id,['id' => 'agentId']); ?>
+
+                        <?php echo Form::hidden('redirectBuyNowLogin',false,['id' => 'redirectBuyNowLogin']); ?>
+
+                        <?php echo Form::hidden('refreshed','no',['id' => 'refreshed']); ?>
+
+                        <?php echo Form::hidden('age_group',$tours->age_group,['id' => 'age_group']); ?>                        
+
+                        <div class="clearfix"></div>
+                        <div class="col-xs-12"><div id="errorMessageBuyNow" class="color-red fontSize13 alignRight width100" style="display:none;">&nbsp;</div></div>
+                        <div class="load-content"></div>
+                        <div class="clearfix"><br></div>
+                        <div class="col-xs-12">
+
+                            <div class="clearfix"><br></div>
+                            <?php echo Form::close(); ?>
+
+                        </div>
+
+                        <div class="clearfix"><br></div>
+                    </div>
+
+                </div>
+
+            </div>
+            <div class="clearfix"></div>
+        </div>
+        <!-- main left content -->
+        <div class="modal fade width101 closeOnSideClick" id="refundPolicy" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title color-yellow MuseoSlab500 alignLeft text-indent0" id="myModalLabelR">Refund Policy </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p><?php echo $metadata['tour_info']['cancellation_policy']; ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade width101 closeOnSideClick" id="pricing" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title color-yellow MuseoSlab500 alignLeft text-indent0" id="myModalLabelP">Pricing </h4>
+                    </div>
+
+                    <div class="modal-body">
+                        <p><?php echo $metadata['tour_info']['pricing']; ?></p>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="modal-footer">
+                        <p class="color-maroon"> If your group size is different, please contact <a href="mailto:ask@trailwala.com" class="color-yellow">ask@trailwala.com</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Contact Operater popup strat here -->
+        <div id="load-ask-question-content"></div>
+        <!-- Contact Operater popup end here -->
+        <!-- Modal popup strat here -->
+        <div id="load-review-content"></div>
+        <div id="load-buy-later-content"></div>
+        <!-- Modal popup end here -->
+        <div class="col-xs-12 col-sm-12 col-md-4 col-lg-4 sidebar-module m-sidebar-module hidden-xs">
+            <div class="sub-right-colm marginBottom10 m-glance-col-R  height-mx-352">
+                <div class="right-glance-box">
+                    <h4 class="color-maroon MuseoSlab500">At a Glance</h4>
+                    <ul>
+                        <li class="activity-icons"><span class="title">Activity type:</span> <?php echo ucfirst($tours->category->name); ?></li>
+                        <li class="location-icons"><span class="title">Location: </span> <?php echo ucfirst($tours->region->name); ?></li>
+                        <?php if(isset($metadata['activity_duration'])): ?>
+                        <li class="duration-icons"><span class="title">Duration:</span>
+
+                            <?php echo (!empty($metadata['activity_duration'][0]))?$metadata['activity_duration'][0]." Days":""; ?>
+
+                            <?php echo (!empty($metadata['activity_duration'][1]))?$metadata['activity_duration'][1]." Hours":""; ?>
+
+                            <?php echo (!empty($metadata['activity_duration'][2]))?$metadata['activity_duration'][2]." Minutes":""; ?>
+
+                        </li>
+                        <?php endif; ?>
+                        <li class="fitness-icons"><span class="title">Difficulty level:</span>
+                            <?php if($tours->fitness_level == 1): ?>Low
+                            <?php elseif($tours->fitness_level == 2): ?>Moderate
+                            <?php elseif($tours->fitness_level == 3): ?>High
+                            <?php else: ?> Higher
+                            <?php endif; ?>
+                        </li>
+                        <?php if(isset($metadata['tour_info']['cancellation_policy']) && !empty($metadata['tour_info']['cancellation_policy'])): ?>
+                        <li class="refund-policy-icons" id="bs-example-navbar-collapse-3">
+                            <span class="title">Refund policy:</span>
+                            <?php echo substr(strip_tags($metadata['tour_info']['cancellation_policy']),0,14); ?>...
+
+                            <!--<a href="" class="floatR color-yellow basic3">more >></a>-->
+                            <a href="javascript:void(0)" class="floatR color-yellow basic3" data-toggle="modal" data-target="#refundPolicy">More >></a>
+                            <!-- modal content -->
+                            <!--<div id="basic-modal-content3">
+                                <div class="popup-box">
+                                    <h4 class="color-yellow MuseoSlab500">Refund policy </h4>
+                                    <p><?php echo $metadata['tour_info']['cancellation_policy']; ?></p>
+                                    <div class="clearfix"></div>
+                                </div>
+                            </div>-->
+                        </li>
+                        <?php endif; ?>
+
+                        <?php if(isset($metadata['tour_info']['pricing']) && !empty($metadata['tour_info']['pricing'])): ?>
+                        <li class="pricing-list-icons">
+                            <span class="title">Pricing List:</span>
+                            <a href="javascript:void(0)" class="floatR color-yellow basic3" data-toggle="modal" data-target="#pricing">View >></a>
+                            <?php echo substr(strip_tags($metadata['tour_info']['pricing']),0,15); ?>
+
+
+                        </li>
+                        <?php endif; ?>
+
+
+                        <li>
+                            <div class="marginBottom19 marginLeft25 floatL text-center" id="bs-example-navbar-collapse-4">
+                                <div id="questionSuccessMessage" class="color-green fontSize12" style="display: none">&nbsp;</div>
+                                <?php echo Form::hidden('loggedInEmail',isset(Auth::user()->email)?Auth::user()->email:'',['id'=>'loggedInEmail']); ?>
+
+                                <?php echo Form::hidden('loggedInName',isset(Auth::user()->firstName)?Auth::user()->firstName:'',['id'=>'loggedInName']); ?>
+
+                                <?php echo Form::hidden('loggedInContactNumber',isset(Auth::user()->contactNumber)?Auth::user()->contactNumber:'' ,['id'=>'loggedInContactNumber']); ?>
+
+                                <h4 class="color-maroon MuseoSlab500">Got a question about this trip? </h4>
+                                <a href="javascript:void(0)" class="btn btn-details-qu fontSize15 MuseoSlab500 basic4" data-toggle="modal" id="open-ask-question-popup" onClick="ga('send', 'event', 'Contact Operator', 'Click', 'Contact');">Contact Operator</a>
+                            </div>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <!--<div class="clearfix"></div>-->
+            <?php echo Form::hidden('tourId',$tours->id,['id'=>'tourId']); ?>
+
+            <div class="sub-right-colm marginBottom10 height-max-420 m-write-col-L">
+                <div class="right-glance-box" id="bs-example-navbar-collapse-2">
+                    <div id="reviewMessage" style="display: none"><?php echo trans('messages.review_success_message'); ?></div>
+                    <div id="reviewSuccessMessage" class="color-green fontSize12" style="display: none">&nbsp;</div>
+                    <h4 class="color-maroon MuseoSlab500">
+                        <b>
+                            <?php if(Auth::id() && (Auth ::user()->role_id == '3')): ?>
+                            <a href="" class="color-maroon writeReview" data-toggle="modal" id="open-review-popup" >Write a review >></a>
+                            <?php else: ?>
+                            <a href="" data-target="#myModal" data-toggle="modal" class="color-maroon open-login" >Write a review >></a>
+                            <?php endif; ?>
+
+                            <?php if($writeReviewFlag): ?>
+                            <?php echo Form::hidden('reviewPosted','0',['id' => 'reviewPosted']); ?>
+
+                            <?php else: ?>
+                            <?php echo Form::hidden('reviewPosted','1',['id' => 'reviewPosted']); ?>
+
+                            <?php endif; ?>
+                        </b>
+                    </h4>
+                    <div class="clearfix"></div>
+                    <?php if($tourReview): ?>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-10 col-md-8 col-lg-9 box-header">
+                            <h4 class="box-title MuseoSlab500 color-yellow text-left"><?php echo ucfirst($tours->user->agencyName ); ?></h4>                    
+                        </div>
+                        <div class="col-xs-12 col-sm-2 col-md-4 col-lg-3 text-right">
+                            <span class="width100 floatR star-strip star-strip<?php echo $reviewAverage; ?> pull-right">
+                            </span>
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 box-header">
+                            <h4 class="color-maroon text-left">User's Review &gt;&gt;</h4>                    
+                        </div>
+                        <div class="clearfix"></div>
+                    </div>
+                    <?php foreach($tourReview as $review): ?>
+                    <div class="row">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                            <div class="review color-grey">
+                                <blockquote>
+                                    <?php echo ucfirst(substr($review['review'],0,250)); ?>
+
+                                </blockquote>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="review-rating text-left pull-left">
+                                <span class="width100 star-strip star-strip<?php echo $review['rating']; ?> pull-right"></span>
+                            </div>
+                            <div class="review-name text-right color-maroon pull-right">By:<i> <?php echo ucfirst($review['reviewer']['firstName']); ?>&nbsp;<?php echo ucfirst($review['reviewer']['lastName']); ?></i></div>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <hr>
+
+                    </div>
+                    <?php endforeach; ?>
+                    <p style="height:20px; text-align:right;">
+                        <a href="<?php echo URL::route('review', array('slug' => $tours->slug)); ?>" class="color-yellow" data-toggle="modal">Read more >></a>
+                    </p>
+                    <?php else: ?>
+                    <p>
+                    <div class="width100 alert alert-warning">
+                        No reviews yet!
+                    </div>
+                    </p>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+            <div class="sub-right-colm marginBottom10 text-center">
+                <div id="map-canvas"></div>
+            </div>
+        </div>
+        <!-- main right content -->
+
+        <div class="clearfix"></div>
+    </div><!-- /.row -->
+</div><!-- /.container -->
+<div class="clearfix"></div>
+<?php echo $__env->make('user.profile.userprofilepopup', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/js/jquery-ui.min.js'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datepicker/bootstrap-multi-datepicker.js'); ?>
+
+<?php echo HTML::script('https://maps.googleapis.com/maps/api/js'); ?><!-- Star Rating-->
+<?php echo HTML::script('packages/js/star-rating.js'); ?>
+
+<?php echo HTML::script('packages/js/jquery.cookie.js'); ?>
+
+
+
+<!--end Star Rating-->
+<script type="text/javascript">
+
+    onload = function() {
+        var e = document.getElementById("refreshed");
+        if (e.value == "no")
+            e.value = "yes";
+        else {
+            e.value = "no";
+            location.reload();
+        }
+    }
+
+    $("#buyLaterBtn").tooltip();
+    $("#buyNow").tooltip();
+    $("#buyNowLogin").tooltip();
+    $(".dateNotSelected").tooltip();
+
+    $("#dates").val('');
+    var isDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent.toLowerCase());
+
+    if ($.cookie("bookingInfo")) {
+        var bookingDetails = $.parseJSON($.cookie("bookingInfo"));
+        if (bookingDetails.tourId == $("#tourId").val()) {
+            $("#dates").val(bookingDetails.checkInDate);
+            $("#numberOfChild").val(bookingDetails.noOfChild);
+            $("#numberOfAdult").val(bookingDetails.noOfAdult);
+            $("#buyLaterBtn").tooltip('disable');
+            $("#buyNow").tooltip('disable');
+            if (isDevice) {
+                $("#buyNowLogin").tooltip('disable');
+            }
+            $(".dateNotSelected").hide();
+            $(".dateSelected").show();
+        } else {
+            $(".dateNotSelected").show();
+            $(".dateSelected").hide();
+        }
+    } else {
+        $(".dateSelected").hide();
+        $(".dateNotSelected").show();
+        $("#buyLaterBtn").tooltip('enable');
+        $("#buyNow").tooltip('enable');
+        $("#buyNowLogin").tooltip('enable');
+
+        $("#buyLaterBtn").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+        $("#buyNow").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+        $(".dateNotSelected").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+    }
+
+    function submitData(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $("span[id^='error_']").html("");
+        $("#errorMessage").html("");
+
+        if (response.info.error_exists == '1') {
+            $.each(response.info.messages, function(index, value) {
+                if (index == '0') {
+                    $("#errorMessage").append(value);
+                } else {
+                    $("#error_" + index).append(value);
+                }
+            });
+        } else {
+            $("#reviewPosted").val('1');
+            $("#postReviewFrom").css("display", "none");
+            $("#postReviewSuccess").css("display", "block");
+            setTimeout(function() {
+                $(".close").trigger("click");
+            }, 3000);
+        }
+
+        return response;
+    }
+
+        function openReviewPopUp(data, reviewFlag)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $('#load-review-content').html(response.view);
+        $('#writeTOreview').modal();
+        if (reviewFlag == '1') {
+            $("#postReviewFrom").css("display", "none");
+            $("#reviewAlreadyPosted").css("display", "block");
+            setTimeout(function() {
+                $(".close").trigger("click");
+            }, 3000);
+        }
+
+        return false;
+    }
+
+    function openAskQuestionPopUp(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $('#load-ask-question-content').html(response.view);
+        $('#askQuestion').modal();
+
+        return false;
+    }
+
+    function submitQuestion(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $("span[id^='error_']").html("");
+
+        if (response.info.error_exists == '1') {
+            $.each(response.info.messages, function(index, value) {
+                if (index == '0') {
+                    $("#errorMessage").append(value);
+                } else {
+                    $("#error_" + index).append(value);
+                }
+            });
+        } else {
+            $("#askQuestionForm").css("display", "none");
+            $("#askQuestionSuccess").css("display", "block");
+            setTimeout(function() {
+                $(".close").trigger("click");
+            }, 3000);
+        }
+
+        return response;
+    }
+
+    function submitBuyLater(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $("span[id^='error_']").html("");
+
+        if (response.info.error_exists == '1') {
+            $.each(response.info.messages, function(index, value) {
+                if (index == '0') {
+                    $("#errorMessage").append(value);
+                } else {
+                    $("#error_" + index).append(value);
+                }
+            });
+        } else {
+            $("#buyLaterForm").css("display", "none");
+            $("#buyLaterSuccess").css("display", "block");
+            setTimeout(function() {
+                $(".close").trigger("click");
+            }, 3000);
+            $.removeCookie('bookingInfo');
+            $("#dates").val("");
+
+            var age_group = $("#age_group").val();
+            if (($("#age_group").val() == '1') || ($("#age_group").val() == '2')) {
+                $("#numberOfAdult").val('1');
+                $("#numberOfChild").val('0');
+            } else {
+                $("#numberOfAdult").val('0');
+                $("#numberOfChild").val('1');
+            }
+            $("#selectedDates .active, #selectedDates-mob .active").removeClass("active");
+            $("#buyLaterBtn").tooltip('enable');
+            $("#buyNow").tooltip('enable');
+            $("#buyLaterBtn").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+            $(".dateNotSelected").show();
+            $(".dateSelected").hide();
+            $(".dateNotSelected").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+        }
+
+        return response;
+    }
+
+    function openBuyLaterPopUp(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $('#load-buy-later-content').html(response.view);
+        $('#buyLater').modal();
+
+        return false;
+    }
+
+    $(document).ready(function() {
+        $("#accordion").accordion({heightStyle: "content"});
+        $("#tabs").tabs();
+        $.cookie("tourid", $("#tourId").val(), {expires: 1});
+        $('#input-2a').on('rating.change', function(event, value) {
+            $("#starRated").val(value);
+        });
+        $(document).on('click', '#open-review-popup, #open-review-popupMob', function() {
+            openReviewPopUp({'type': CONFIG.get('TOUR_WRITE_REVIEW')}, $("#reviewPosted").val());
+        });
+        $(document).on('click', '#open-ask-question-popup, #open-ask-question-popupMob', function() {
+            openAskQuestionPopUp({'type': CONFIG.get('TOUR_ASK_QUESTION'), 'email': $("#loggedInEmail").val()});
+        });
+        // calculate total
+        var adultCount = ($.cookie("numberOfAdult")) ? $.cookie("numberOfAdult") : $("#numberOfAdult").val();
+        var childCount = ($.cookie("numberOfChild")) ? $.cookie("numberOfChild") : $("#numberOfChild").val();
+        var totalCharges = calculateTotal(adultCount, childCount);
+        $("#totalAmount").html(totalCharges);
+        var bookedDate = $('#dates').val();
+        var availableDates = new Array();
+        availableDates = $.parseJSON('<?php echo json_encode($dates); ?>');
+        var setDate = new Date();
+        if (availableDates.length > 0) {
+            var availableDatesArr = availableDates[0].split("-");
+            setDate = new Date(availableDatesArr[1] + '/' + availableDatesArr[2] + '/' + availableDatesArr[0] + ' 12:52:48 GMT UTC');
+        }
+        $('#selectedDates, #selectedDates-mob').multidatepicker({
+            dateFormat: 'yyyy-mm-dd',
+            startDate: setDate,
+            beforeShowDay: function(date) {
+                var s = date.getDate();
+                // line is not working in IE
+                //var dmy = date.getFullYear() + "-" + (date.toLocaleDateString('en-US', {month: '2-digit'})) + "-" + date.toLocaleDateString('en-US', {day: '2-digit'});
+                var dd = (date.getDate()).toString();
+                var mm = (date.getMonth() + 1).toString();
+                if (dd.length == 1)
+                    dd = '0' + dd;
+                if (mm.length == 1)
+                    mm = '0' + mm;
+
+                var dmy = date.getFullYear() + "-" + mm + "-" + dd;
+                if ($.inArray(dmy, availableDates) != -1) {
+                    if (dmy == bookedDate) {
+                        return {
+                            classes: 'active lastDate'
+                        };
+                    }
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        });
+
+        $('#selectedDates, #selectedDates-mob').multidatepicker().on('changeDate', function(e) {
+            var dateString = "";
+            var selected_dates = e.dates;
+            var isDevice = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent.toLowerCase());
+
+            if (selected_dates != '') {
+                if (isDevice) {
+                    $("#buyNowLogin").tooltip('disable');
+                }
+                $("#buyLaterBtn").tooltip('disable');
+                $("#buyNow").tooltip('disable');
+
+                $(".dateNotSelected").hide();
+                $(".dateSelected").show();
+            } else {
+                $("#buyLaterBtn").tooltip('enable');
+                $("#buyNow").tooltip('enable');
+                $("#buyLaterBtn").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+                $("#buyNow").attr('placement', 'top').attr('data-toggle', 'tooltip').attr('title', 'Please select booking date.');
+
+                $(".dateNotSelected").show();
+                $(".dateSelected").hide();
+            }
+
+            for (var index in selected_dates) {
+                var date = selected_dates[index];
+                dateString += date.getFullYear() + "-" + (date.toLocaleDateString('en-US', {month: '2-digit'})) + "-" + date.toLocaleDateString('en-US', {day: '2-digit'})
+            }
+
+            if (dateString != bookedDate)
+                $(".lastDate").removeClass("active");
+
+            $("#dates").val(dateString);
+            //$.cookie("dates", $("#dates").val(), {expires: 1});
+
+        });
+
+        $('#myModal').on('hidden.bs.modal', function() {
+            $("#redirectBuyNowLogin").val(false);
+        });
+
+        $(document).on('click', '#buyNowLogin', function(event) {
+            if ($("#dates").val()) {
+                $("#redirectBuyNowLogin").val(true);
+                var buyNowInfo =
+                        {'tourId': $("#tourId").val(), 'checkInDate': $('#dates').val(), 'noOfAdult': $("#numberOfAdult").val(), 'noOfChild': $("#numberOfChild").val()};
+                $.cookie("bookingInfo", JSON.stringify(buyNowInfo));
+            } else {
+                return false;
+            }
+
+        });
+        $(document).on('click', '#buyLaterBtn', function() {
+            if ($("#dates").val() != '') {
+                var buyNowInfo =
+                        {'tourId': $("#tourId").val(), 'checkInDate': $('#dates').val(), 'noOfAdult': $("#numberOfAdult").val(), 'noOfChild': $("#numberOfChild").val()};
+                $.cookie("bookingInfo", JSON.stringify(buyNowInfo));
+                var totalAmount = calculateTotal($("#numberOfAdult").val(), $("#numberOfChild").val());
+                openBuyLaterPopUp({'type': CONFIG.get('TOUR_BUY_LATER'),
+                    'bookingEmail': $("#loggedInEmail").val(),
+                    'bookingName': $("#loggedInName").val(),
+                    'bookingContactNumber': $("#loggedInContactNumber").val(),
+                    'adultCount': $("#numberOfAdult").val(),
+                    'childCount': $("#numberOfChild").val(),
+                    'checkOutDate': $("#dates").val(),
+                    'agentId': $("#agentId").val(),
+                    'bookingAmount': totalAmount});
+            } else {
+                return false;
+            }
+        });
+
+        // Hide show Tab
+        $("#details").click(function() {
+            $("#whatToBringDesc").removeClass('active').addClass('inactive');
+            $("#detailsDesc").removeClass('inactive').addClass('active');
+        });
+        $("#whatToBring").click(function() {
+            $("#detailsDesc").removeClass('active').addClass('inactive');
+            $("#whatToBringDesc").removeClass('inactive').addClass('active');
+        });
+        // calculate total
+        $(document).on('change', "#numberOfAdult", function(event) {
+            var adultCount = $(this).val();
+            $.cookie("noOfAdult", $(this).val(), {expires: 1});
+            totalCharges = calculateTotal(adultCount, $("#numberOfChild").val());
+            $("#totalAmount").html(totalCharges);
+        });
+        $(document).on('click', "#submit-review", function(event) {
+            var tourId = $("#tourId").val();
+            var loginBtn = $("#submit-review");
+            var data = $("#frmPostReview").serialize() + "&type=" + CONFIG.get('TOUR_POST_REVIEW') + "&tourId=" + tourId;
+            loginBtn.val('Submitting...');
+            var response = submitData(data);
+            if (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1) {
+                var redirect = (response.info.url.length > 0) ? response.info.url : $("#url").val();
+                window.location.href = redirect;
+                return false;
+            }
+
+            loginBtn.val('Log In');
+            $("#email").focus();
+            event.preventDefault();
+        });
+        $(document).on('click', "#submit-question", function(event) {
+            var tourId = $("#tourId").val();
+            var loginBtn = $("#submit-question");
+            var data = $("#frmSendQuestion").serialize() + "&type=" + CONFIG.get('TOUR_SEND_QUESTION') + "&tourId=" + tourId;
+            loginBtn.val('Submitting...');
+            var response = submitQuestion(data);
+            if (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1) {
+                var redirect = (response.info.url.length > 0) ? response.info.url : $("#url").val();
+                window.location.href = redirect;
+                return false;
+            }
+
+            loginBtn.val('Submit');
+            $("#email").focus();
+            event.preventDefault();
+        });
+        $(document).on('change', "#numberOfChild", function(event) {
+            var childCount = $(this).val();
+
+            $.cookie("noOfChild", $(this).val(), {expires: 1});
+            totalCharges = calculateTotal($("#numberOfAdult").val(), childCount);
+            $("#totalAmount").html(totalCharges);
+        });
+        $(document).on('submit', "#frmBuyNow", function(event) {
+            if (!$('#dates').val()) {
+                return false;
+            } else {
+                var buyNowInfo =
+                        {'tourId': $("#tourId").val(), 'checkInDate': $('#dates').val(), 'noOfAdult': $("#numberOfAdult").val(), 'noOfChild': $("#numberOfChild").val()};
+                $.cookie("bookingInfo", JSON.stringify(buyNowInfo));
+            }
+//            var data = $("#frmBuyNow").serialize() + '&type=' + CONFIG.get('TOUR_BUY_NOW');
+//            var res = executeAjaxRequest('', data, true);
+//            var response = $.parseJSON(res);
+//            if (response.login == 1) {
+//                openPopUp({'type': CONFIG.get('HOME_LOGIN_PAGE')});
+//                event.preventDefault();
+//            }
+        });
+        $(document).on('click', "#submit-buyLater", function(event) {
+            var tourId = $("#tourId").val();
+            var loginBtn = $("#submit-buyLater");
+            var data = $("#frmBuyLater").serialize() + "&type=" + CONFIG.get('TOUR_SUBMIT_BUY_LATER') + "&tourId=" + tourId;
+            loginBtn.val('Submitting...');
+            var response = submitBuyLater(data);
+            if (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1) {
+                var redirect = (response.info.url.length > 0) ? response.info.url : $("#url").val();
+                window.location.href = redirect;
+
+                return false;
+            }
+            loginBtn.val('Submit');
+            $("#bookingCodeOrNameOfReferrer").focus();
+            event.preventDefault();
+        });
+    });
+    function calculateTotal(numberOfAdult, numberOfChild) {
+        var adultCharges = '<?php echo $tours->charge_per_adult; ?>';
+        var childCharges = '<?php echo $tours->charge_per_child; ?>';
+
+        return totalCharges = ((numberOfAdult * adultCharges) + (numberOfChild * childCharges));
+    }
+    var google;
+    var lat = '<?php echo $tours->lat; ?>';
+    var long = '<?php echo $tours->long; ?>';
+    var contentString = "<b>Meet Location</b>:<?php echo preg_replace( '~[\r\n\"\']*~', '', $tours->meetLocationAtMap );; ?>-<?php echo $tours->pincode; ?>";
+
+    function initialize() {
+        var latlng = new google.maps.LatLng(lat, long);
+        var mapCanvas = document.getElementById('map-canvas');
+        var mapOptions = {
+            center: new google.maps.LatLng(lat, long),
+            zoom: 4,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+        geocoder = new google.maps.Geocoder();
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

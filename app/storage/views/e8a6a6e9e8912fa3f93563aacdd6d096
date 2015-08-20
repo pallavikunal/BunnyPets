@@ -1,0 +1,87 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.page.index_page_management' ); ?>
+
+        <small><?php echo trans('backend.page.index_manage_all_pages' ); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home' ); ?></a></li>
+        <li><a href="#"><?php echo trans('backend.page.pages' ); ?></a></li>
+        <li class="active"><?php echo trans('backend.index' ); ?></li>
+    </ol>
+</section>
+
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-xs-12">
+            <div id="message">
+                <?php if(Session::has('message')): ?>
+                <?php echo Session::get('message'); ?>
+
+                <?php endif; ?>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('backend.page.index_page_management' ); ?></h3>
+                </div>
+
+                <!-- /.box-header -->
+                <div class="box-body table-responsive">
+                    <table id="example2" class="table table-bordered table-striped data-table">
+                        <thead>
+                            <tr>
+                                <th><?php echo trans('backend.name' ); ?></th>
+                                <th><?php echo trans('backend.description' ); ?></th>
+                                <th><?php echo trans('backend.created_at' ); ?></th>
+                                <th><?php echo trans('backend.updated_at' ); ?></th>
+                                <th><?php echo trans('backend.actions' ); ?></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach($pages as $page): ?>
+                            <tr id="row_<?php echo $page->id; ?>">
+                                <td><?php echo $page->title; ?></td>
+                                <td><?php echo ucfirst(substr(strip_tags($page->description),1,50)); ?>...</td>
+                                <td><?php echo date('d M, Y',strtotime($page->created_at )); ?></td>
+                                <td><?php echo date('d M, Y',strtotime($page->updated_at )); ?></td>
+                                <td>
+
+                                    <a href="<?php echo URL::route('admin.page.show',['id' => $page->id ]); ?>" class="fa fa-info-circle" title="<?php echo trans('backend.view_details'); ?>">&nbsp;</a>
+                                    <a href="<?php echo URL::route('admin.page.edit',['id' => $page->id ]); ?>" class="fa fa-edit" title="<?php echo trans('backend.edit_details'); ?>">&nbsp;</a>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th><?php echo trans('backend.name' ); ?></th>
+                                <th><?php echo trans('backend.description' ); ?></th>
+                                <th><?php echo trans('backend.created_at' ); ?></th>
+                                <th><?php echo trans('backend.updated_at' ); ?></th>
+                                <th><?php echo trans('backend.actions' ); ?></th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div><!-- /.box-body -->
+            </div><!-- /.box -->
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/jquery.dataTables.js'); ?>
+
+<?php echo HTML::script('packages/admin/assets/js/plugins/datatables/dataTables.bootstrap.js'); ?>
+
+<script type="text/javascript">
+    $(function() {
+        $('#example2').dataTable();
+    });
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

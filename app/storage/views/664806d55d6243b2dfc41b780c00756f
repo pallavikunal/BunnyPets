@@ -1,0 +1,247 @@
+<?php $__env->startSection('sliders_content'); ?>
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <div class="banner-triangle hidden-xs"></div>
+            <div class="banner-triangle-mob visible-xs"></div>
+            <?php if($bgimage->image_name): ?>
+            <div class="home-banner-block visible-xs" style="background:url(<?php echo asset('uploads/backgroundImage'); ?>/<?php echo $bgimage->image_name; ?>)"></div>
+            <img class="hidden-xs" src="<?php echo asset('uploads/backgroundImage'); ?>/<?php echo $bgimage->image_name; ?>" alt="First slide">
+            <?php else: ?>
+            <div class="home-banner-block visible-xs" style="<?php echo asset('packages/images/banner-bg1.png'); ?>"></div>
+            <img class="hidden-xs" src="<?php echo asset('packages/images/banner-bg1.png'); ?>" alt="First slide">
+            <?php endif; ?>
+
+
+            <div class="container">
+                <div class="carousel-caption">
+                    <h2 class="MuseoSlab100">India’s premier listings directory for outdoor activities</h2>
+                    <h4 class="MuseoSlab100">Find your perfect match from hundreds of options</h4>
+                    <div class="row">
+                        <div class="btn-group col-xs-12 col-sm-10 col-md-10 col-lg-10 search-block1">
+                            <?php echo Form::open(array('route' => 'searchtours','  method' => 'POST','class' => 'plan-tour','id' => 'searchToursfrm')); ?>
+
+                            <div class="input-grou width2 col-xs-12 col-sm-4 col-md-4 col-lg-4 floatL marginLeft paddingR5">
+                                <!--<span class="input-group-addon"><img src="<?php echo asset('packages/images/form-icon1.png'); ?>"></span>-->
+                                <span class="custom-dropdown">
+                                    <?php echo Form::select('categories',$categories,null,['class' => 'customSelect input-form-icon1','id' => 'categories','tabindex' => '1']); ?>
+
+                                </span>
+                            </div>
+                            <div class="clearfix visible-xs lineHeight70"><br></div>
+                            <div class="input-grou width2 col-xs-12 col-sm-4 col-md-4 col-lg-4 floatL marginLeft paddingR5">
+                               <!-- <span class="input-group-addon"><img src="<?php echo asset('packages/images/form-icon2.png'); ?>"></span>-->
+                                <input type='text' value='' tabindex='2' name='regions' placeholder = 'Where you want to go?' class='input-form-icon2' id='regions'/>
+                                <?php echo Form::hidden('region',null,['id' => 'region']); ?>
+
+                                <?php echo Form::hidden('locationId',null,['id' => 'locationId']); ?>
+
+                            </div>
+                            <div class="clearfix visible-xs lineHeight70"><br></div>
+                            <div class="input-grou width2 col-xs-12 col-sm-4 col-md-4 col-lg-4 floatL marginLeft paddingR5">
+                                <!--<span class="input-group-addon">
+                                    <img src="<?php echo asset('packages/images/form-icon3.png'); ?>" class="calender-icon" />
+                                </span>-->
+                                <span class="custom-dropdown">
+                                    <select name="date" id="date" tabindex="3" class="customSelect input-form-icon3" data-live-search="true" >
+                                        <option value="">Choose date</option>
+                                        <option value="">My dates are flexible</option>
+                                        <?php $currentDate = date('Y-m-d') ?>
+                                        <?php for($month = 0; $month <= 11; $month++): ?>
+                                        <?php $nameOfMonth = date("F", strtotime("+" . $month . " months", strtotime($currentDate))) . '-' . date("Y", strtotime("+" . $month . " months", strtotime($currentDate))); ?>
+                                        <option value='<?php echo $nameOfMonth; ?>' <?php if(!empty($monthName) && ($monthName == $nameOfMonth)): ?> selected='selected' <?php endif; ?>>
+                                                <?php echo date('F',strtotime('+'.$month.' months',strtotime($currentDate))); ?>
+
+                                                <?php echo date('Y',strtotime('+'.$month.' months',strtotime($currentDate))); ?>
+
+                                    </option>
+                                    <?php endfor; ?>
+                                </select>
+                            </span>
+                        </div>
+                        <div class="clearfix visible-xs lineHeight70"><br></div>
+                        <!-- <div class="col-xs-12 visible-xs">
+                            <?php echo Form::submit('Search',['class' => 'btn btn-search1 font-sz-bold fontSize15 MuseoSans300 floatR marginLeft col-xs-12', 'onClick' => "ga('send', 'event', 'search', 'Click', 'search')"]); ?>
+
+                            <?php echo Form::close(); ?>
+
+                        </div> -->
+                    </div>
+                    <div class="col-xs-12 col-sm-2 col-md-2 col-lg-2 search-block2">
+                        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 padding0">
+                            <?php echo Form::submit('Search',['class' => 'btn btn-search1 font-sz-bold fontSize15 MuseoSans300 floatR marginLeft col-xs-12 col-sm-12 col-md-12 col-lg-12','tabindex' => '4', 'onClick' => "ga('send', 'event', 'search', 'Click', 'search')"]); ?>
+
+                            <?php echo Form::close(); ?>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="floatR marginTop20 col-xs-12 col-sm-5 col-md-4 col-sm-pull-0 col-lg-3 col-lg-pull-0 signup-algn-rt">
+                    <?php if(is_null(Auth::user()) || Auth::user()->role_id != '3'): ?>
+                    <span class="color-whiite">Don't have an account? </span> <a id="signupidtop" href="javascript:void(0)" class="color-yellow open-login" data-target="#myModal" data-toggle="modal">Sign Up</a>
+                    <?php endif; ?>
+                </div>
+            </div>
+            <?php if(is_null(Auth::user()) || Auth::user()->role_id != '3'): ?>
+            <div class="carousel-caption6">Are you a <b>tour operator?</b> List your tours with us
+                <a href="<?php echo URL::to('/'); ?>/agent" class="color-yellow">Sign Up</a> | <a href="<?php echo URL::to('/'); ?>/agent/login" class="basic color-yellow">Log In</a>
+            </div>
+            <?php endif; ?>
+        </div>
+    </div>
+</div>
+</div>
+<?php echo Form::hidden('url',Request::url(),['id' => 'url']); ?>
+
+<!-- /.carousel -->
+<?php $__env->stopSection(); ?>
+
+<?php $__env->startSection('content'); ?>
+<div class="container marketing">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignCenter marginBottom20">
+            <h1 class="MuseoSlab500 color-maroon">How it works</h1>
+        </div>
+        <div class="clearfix"></div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <img class="img-circle" src="<?php echo asset('packages/images/search.png'); ?> " alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Search</h3>
+            <div class="MuseoSans300 fontSize16">
+                <p>Weekend escapes, Himalayan expeditions, you name it, we got it.</p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <img class="img-circle" src="<?php echo asset('packages/images/consult.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Connect</h3>
+            <div class="MuseoSans300 fontSize16">
+                <p>Contact trip organizers directly. You don’t need middlemen! </p>
+            </div>
+        </div>
+
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4">
+            <img class="img-circle" src="<?php echo asset('packages/images/travel.png'); ?>" alt="Generic placeholder image">
+            <h3 class="MuseoSans500">Travel</h3>
+            <div class="MuseoSans300 fontSize16">
+                <p>Get active, get rejuvenated, get going.</p>
+            </div>
+        </div>
+    </div>
+    <hr class="hr-divider seperator">
+    <div class="row featurette">
+        <div class="col-lg-12 alignCenter marginBottom20">
+            <h1 class="MuseoSlab500 color-maroon">Awesome adventure trips</h1></div>
+        <div class="clearfix"></div>
+        <?php if(isset($topcategories) && $topcategories): ?>
+        <?php foreach($topcategories as $topCategory): ?>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4 home-cat-grid">
+            <a href="<?php echo URL::route('tours'); ?>/<?php echo $topCategory->slug; ?>">
+                <div class="mg-image">
+                    <?php if(!empty($topCategory->name) && $topCategory->name != NULL): ?>
+                    <img src="<?php echo asset('uploads/categories'); ?>/<?php echo $topCategory->image_name; ?>"
+                         alt="<?php echo $topCategory->name; ?>">
+                    <?php else: ?>
+                    <img alt="img" src="<?php echo asset('packages/images/category-default.jpg'); ?>" width="225px" height="225px">
+                    <?php endif; ?>
+                </div>
+                <div class="adt-img-txt-bg adt-img-txt fontSize20 cat-title"><?php echo ucfirst($topCategory->name); ?></div>
+            </a>
+        </div>
+        <?php endforeach; ?>
+        <?php endif; ?>
+
+        <?php if(isset($remaining) && $remaining): ?>
+        <?php foreach($remaining as $category): ?>
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-4  home-cat-grid">
+            <a href="<?php echo URL::route('tours'); ?>/<?php echo $category->slug; ?>">
+                <div class="mg-image">
+                    <?php if(!empty($category->image_name) && $category->image_name != NULL): ?>
+                    <img src="<?php echo asset('uploads/categories'); ?>/<?php echo $category->image_name; ?>"
+                         alt="<?php echo $category->name; ?>">
+                    <?php else: ?>
+                    <img alt="img" src="<?php echo asset('packages/images/category-default.jpg'); ?>" width="225px" height="225px">
+                    <?php endif; ?>
+                </div>
+                <div class="adt-img-txt-bg adt-img-txt fontSize20 cat-title"><?php echo ucfirst($category->name); ?></div>
+            </a>
+        </div>
+        <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>
+<hr class="hr-divider1 seperator1">
+<div class="container-footer" id="footer-banner">
+    <div class="">
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 height300 footer-banner-bg" style="background:url(<?php echo asset('packages/images/fotter-banner.png'); ?>) no-repeat center center #eee; background-size:100%;">
+            <!--<img src="<?php echo asset('packages/images/fotter-banner.png'); ?>" alt="Generic placeholder image"> -->
+            <div class="container marginTop20 text-center fontSize20">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 alignCenter marginBottom20">
+                        <h1 class="MuseoSlab400 color-maroon">Popular destinations</h1>
+                    </div>
+                    <?php if(isset($topRegions) && $topRegions): ?>
+                    <?php foreach($topRegions as $topRegion): ?>
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                        <a href="<?php echo URL::route('tours'); ?>/<?php echo $topRegion->slug; ?>_<?php echo $topRegion->state->slug; ?> "><?php echo ucfirst($topRegion->name); ?></a>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <?php if(isset($remainingRegions) && $remainingRegions): ?>
+                    <?php foreach($remainingRegions as $region): ?>
+                    <div class="col-xs-6 col-sm-6 col-md-4 col-lg-3">
+                        <a href="<?php echo URL::route('tours'); ?>/<?php echo $region->slug; ?>_<?php echo $region->state->slug; ?> "><?php echo ucfirst($region->name); ?></a>
+                    </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                    <div class="clearfix visible-xs"><br></div>
+                </div>
+
+                <!--	<?php if(isset($topRegions) && $topRegions): ?>
+                    <?php foreach($topRegions as $topRegion): ?>
+                    <span class="region-name">
+                        <a href="<?php echo URL::route('tours'); ?>/<?php echo $topRegion->slug; ?>_<?php echo $topRegion->state->slug; ?> "><?php echo $topRegion->name; ?></a>
+                    </span>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+
+                    <?php if(isset($remainingRegions) && $remainingRegions): ?>
+                    <?php foreach($remainingRegions as $region): ?>
+                    <span class="region-name">
+                        <a href="<?php echo URL::route('tours'); ?>/<?php echo $region->slug; ?>_<?php echo $region->state->slug; ?> "><?php echo $region->name; ?></a>
+                    </span>
+                    <?php endforeach; ?>
+                    <?php endif; ?> -->
+            </div>
+        </div>
+    </div>
+</div>
+<hr class="visible-xs hr-divider1 seperator1">
+<div class="clearfix"></div>
+<!-- END .main-contents .bom-contents -->
+<?php $__env->startSection('page-script'); ?>
+<link href="<?php echo asset('packages/css/jquery-ui.min.css'); ?>" rel="stylesheet">
+<?php echo HTML::script('packages/js/modernizr.custom.17475.js'); ?>
+
+<?php echo HTML::script('packages/js/bootstrap-datepicker.js'); ?>
+
+<?php echo HTML::script('packages/js/jquery.flexslider-min.js'); ?>
+
+<?php echo HTML::script('packages/js/script.js'); ?>
+
+<!-- SLIDER REVOLUTION 4.x SCRIPTS  -->
+<?php echo HTML::script('packages/js/rs-plugin/js/jquery.plugins.min.js'); ?>
+
+<?php echo HTML::script('packages/js/rs-plugin/js/jquery.revolution.min.js'); ?>
+
+<?php echo HTML::script('packages/js/jquery-ui.min.js'); ?>
+
+<?php echo HTML::script('packages/js/jquery.cookies.2.2.0.min.js'); ?>
+
+<!--<script src="https://www.google.com/jsapi?key=ABQIAAAAn01L8sl4uwWn5vTPpoEoXhQlhX9aoLwtuBlP8SLx1ePnrLY9UBT9g3_4EQBp1uyDz1sgvvv7UqG-nQ"></script>-->
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

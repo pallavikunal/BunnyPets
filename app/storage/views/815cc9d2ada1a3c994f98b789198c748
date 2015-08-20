@@ -1,0 +1,358 @@
+<?php $__env->startSection('content'); ?>
+<?php echo $__env->make('page.banner', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div class="user-booking-detail container marketing">    
+    <?php if(Session::has('message')): ?>
+    <div class="marginTop10"><?php echo Session::get('message'); ?></div>
+    <?php endif; ?>
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">
+        <div class="col-xs-12 col-sm-4 col-md-4 col-lg-3">
+            <div class="transaction-left-col MuseoSans500">
+                <?php echo Form::hidden('loggedInEmail',Auth::user()->email,['id'=>'loggedInEmail']); ?>
+
+                <?php echo Form::hidden('orderId',$booking->order_id,['id'=>'orderId']); ?>
+
+                <?php echo Form::hidden('url',Request::url(),['id' => 'url']); ?>
+
+                <?php echo Form::hidden('content',$content,['id' => 'content']); ?>
+
+                <div class="sub-right-colm marginBottom10">
+                    <?php if($booking->order_status == 1): ?>
+                    <span class="floatL width10"><img src="<?php echo asset('packages/images/checkmark1.png'); ?>" width="20"></span>
+                    <?php endif; ?>
+                    
+                        <?php if($booking->order_status == 1): ?>
+                        <span class="floatR width80">
+                        <b>Thank You!</b> <br>
+                        <h5 class="color-yellow">Your booking has been confirmed! </h5>
+                        <b>Your adventure awaits you!</b>
+                        </span>
+                        <?php else: ?> 
+                        <span class="width80">
+                            <?php if($booking->order_status == 2): ?>                        
+                                <h5 class="color-yellow">Your booking has been cancelled! </h5>                        
+                            <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates < date("Y-m-d"))): ?>                        
+                                <h5 class="color-yellow">Your booking has been expired! </h5>                        
+                            <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates > date("Y-m-d"))): ?>                        
+                                <h5 class="color-yellow">Thank you for your booking request! </h5>                        
+                            <?php else: ?>                        
+                            <h5 class="color-yellow">Your booking has been failed! </h5>                        
+                            <?php endif; ?>
+                            </span>
+                        <?php endif; ?>
+                        
+                    
+                    
+                    <div class="clearfix"></div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="sub-right-colm marginBottom10">
+
+<!--<span class="floatL width10"><img src="<?php echo asset('packages/images/checkmark1.png'); ?>" width="30" height="30"></span>-->
+                    <div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <b>Your Operator / Agency details</b>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 col-md-12 col-lg-12"><br>
+                            <span class="star-strip star-strip<?php echo (int)$tourReview; ?>"></span>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <table class="table">
+                                <tbody>
+                                    <tr>
+                                        <th><b>Operator:</b></th>
+                                        <td><?php echo ucwords($booking->agent->firstName." ".$booking->agent->lastName); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Agency:</b></th>
+                                        <td><?php echo ($booking->agent->agencyName)?ucfirst($booking->agent->agencyName): 'N/A'; ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Email:</b></th>
+                                        <td><?php echo wordwrap($booking->agent->email,19,"<br />\n", true); ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th><b>Contact:</b></th>
+                                        <td><?php echo ($booking->agent->contactNumber)?$booking->agent->contactNumber:'Not Provided'; ?></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <hr>
+                        </div>
+                        <div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+				 <div class="sub-right-colm marginBottom10">
+					<div class="row">
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <b>Need Help?</b>
+                        </div>
+                        <div class="clearfix"><br></div>
+                        <div class="col-sm-12 col-md-12 col-lg-12">
+                            <img src="<?php echo asset('packages/images/email-icon.png'); ?>" width="25">
+                            <a href="mailto:ask@trailwala.com" class="color-yellow">&nbsp;ask@trailwala.com</a>
+                        </div>
+                        <div class="clearfix"></div>
+                        
+                    </div>
+                </div>
+				<div class="clearfix"></div>
+				<div class="sub-right-colm marginBottom10">
+					<div class="row">
+						<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <img src="<?php echo asset('packages/images/save-icon1.png'); ?>" width="18">
+                            <a target="_blank" href="<?php echo URL::route('convert-pdf',[$booking->order_id]); ?>" class="color-yellow">Save</a>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <img src="<?php echo asset('packages/images/print-icon.png'); ?>" width="18">
+                            <a href="javascript:window.print();" class="color-yellow">Print</a>
+                        </div>
+                        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                            <img src="<?php echo asset('packages/images/email-icon.png'); ?>" width="18">
+                            <a href="javascript:void(0)" data-toggle="modal" id="open-email-pdf-popup" class="color-yellow">Email</a>
+                            
+                        </div>
+                        <div class="clearfix"></div>
+					</div>
+				</div>
+				<div class="clearfix"></div>
+            </div>
+			<div class="clearfix"></div>
+        </div>
+		<div class="clearfix visible-xs"></div>
+        <div class="col-xs-12 col-sm-8 col-md-8 col-lg-9"> 
+            <div class="sub-left-colm ransaction-right-col MuseoSans500">
+                <!--<hr class="hrLine">-->
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <?php if($booking->order_status == 1): ?><h3 class="color-green">Booking confirmed</h3>
+                    <?php elseif($booking->order_status == 2): ?><h3 class="color-red">Booking Cancelled</h3>
+                    <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates < date("Y-m-d"))): ?><h3 class="color-red">Booking Expired</h3>
+                    <?php elseif($booking->order_status == 4 && ($booking->booking->tour_dates > date("Y-m-d"))): ?><h3 class="color-green">Booking Requested</h3>
+                    <?php else: ?> <h3 class="color-red">Booking Failure </h3><?php endif; ?>
+                </div>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th><b>Booking No.:</b></th>
+                                <td><?php echo $booking->order_id; ?></td>
+                            </tr>                           
+                            <tr>
+                                <th><b>Booked On:</b></th>
+                                <td><?php echo date("dS F Y",strtotime($booking->created_at)); ?></td>
+                            </tr>
+                            <tr>
+                                <th><b>Tour Start On:</b></th>
+                                <td><?php echo date("dS F Y",strtotime($booking->booking->tour_dates)); ?></td>
+                            </tr>
+                            <tr>
+                                <th><b>Booked For:</b></th>
+                                <td><?php echo ucwords($booking->user->firstName ." ".  $booking->user->lastName); ?></td>
+                            </tr>                            
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+            <hr>
+            <!-- Modal popup strat here -->        
+            <div id="load-send-mail-content"></div>
+            <!-- Modal popup end here -->
+            <div class="sub-left-colm ransaction-right-col MuseoSans500">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h3><?php echo ucfirst($booking->booking->tours->title); ?></h3>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-5 col-md-4 col-lg-3">
+                    <?php if(!empty($tourImages['image_name']) && ($tourImages['image_name'] != NULL)): ?>
+                    <img width="150" height="auto" class="img-responsive"  src="<?php echo asset('uploads/tours'); ?>/<?php echo $booking->booking->tours->user->id; ?>/<?php echo $booking->booking->tours->id; ?>/thumb_150X133_<?php echo $tourImages['image_name']; ?>"
+                         alt="<?php echo $tourImages['title']; ?>"  title="<?php echo $tourImages['title']; ?>"  >
+                    <?php else: ?>
+                    <img alt="img" src="<?php echo asset('packages/images/trave-list-img.png'); ?>" class="img-responsive">
+                    <?php endif; ?>
+                </div>
+                <div class="col-sm-12 col-md-8 col-lg-9">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th width="130"><b>Activity Type:</b></th>
+                                <td><?php echo $booking->booking->tours->category->name; ?></td>
+                            </tr>
+                            <tr>
+                                <th><b>Location:</b></th>
+                                <td><?php echo $booking->booking->tours->region->name; ?>, <?php echo $booking->booking->tours->state->name; ?>, <?php echo $booking->booking->tours->country->name; ?></td>
+                            </tr>
+                            <tr>
+                                <th><b>Duration:</b></th>
+                                <td><?php echo $extraInfo['activity_duration'][0]." Day "; ?>
+
+                                <?php echo (!empty($extraInfo['activity_duration'][1]))?$extraInfo['activity_duration'][1]." Hours":""; ?>
+
+                                <?php echo (!empty($extraInfo['activity_duration'][2]))?$extraInfo['activity_duration'][2]." Minutes":""; ?></td>
+                            </tr>                            
+                            <tr class="last">
+                                <th><b>Fitness level:</b></th>
+                                <td><?php $fitnessLevel = $booking->booking->tours->fitness_level; ?>
+                                <?php if(1 == $fitnessLevel): ?>Low
+                                <?php elseif(2 == $fitnessLevel): ?>Moderate
+                                <?php elseif(3 == $fitnessLevel): ?>High
+                                <?php else: ?> Higher
+                                <?php endif; ?></td>
+                            </tr>
+                            <tr>
+                                <th><b>Participants:</b></th>
+                                <td><?php echo $booking->booking->adults; ?> X Adult, <?php echo $booking->booking->childs; ?> X Child (Age 1 - 12 years)</td>
+                            </tr>
+                            <tr>
+                                <th><b>Refund policy:</b></th>
+                                <td><?php echo ($extraInfo['tour_info']['cancellation_policy'])?ucfirst($extraInfo['tour_info']['cancellation_policy']): 'N/A'; ?></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="clearfix"></div>
+            </div>
+            <hr>
+            <div class="sub-left-colm ransaction-right-col MuseoSans500">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <h3>Payment Details</h3>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th width="195"><b>Total Fare:</b></th>
+                                <td>
+                                <span class="Rupee-Foradian">`</span> <?php echo $booking->booking->booking_amount; ?>
+
+                                    <?php $commission = round((Config::get('config.comission') / 100) * $booking->booking->booking_amount); ?>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th><b>Total Amount <?php if($booking->order_status == 1): ?>Charged <?php endif; ?>:</b></th>
+                                <td><span class="Rupee-Foradian">`</span> <?php echo $booking->booking->booking_amount + $commission; ?></td>
+                            </tr>
+                            <tr>
+                                <th><b>Payment mode:</b></th>
+                                <td>
+                                    <?php if($booking->order_type == 2): ?> Offline
+                                    <?php else: ?> Online
+                                    <?php endif; ?>                                   
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <th><b>Note:</b></th>
+                                <td>Any discount or promotional offer, if availed, has been adjusted in the Total Amount Charged.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="clearfix"></div>
+				<hr>
+			</div>
+            <hr>
+			<div class="sub-left-colm ransaction-right-col MuseoSans500">
+                <div class="col-sm-12 col-md-12 col-lg-12">
+                    <div id="map-canvas"></div>
+                </div>
+                <div class="clearfix"></div>
+			</div>
+        </div>
+    </div>
+</div>
+<?php $__env->startSection('page-script'); ?>
+<?php echo HTML::script('https://maps.googleapis.com/maps/api/js'); ?>
+
+<script type="text/javascript">
+    var google;
+    var lat = '<?php echo $booking->booking->tours->lat; ?>';
+    var long = '<?php echo $booking->booking->tours->long; ?>';
+    var contentString = "<b>Meet Location</b>:<?php echo preg_replace( '~[\r\n\"\']*~', '', $booking->booking->tours->meetLocationAtMap );; ?>-<?php echo $booking->booking->tours->pincode; ?>";
+    function initialize() {
+        var latlng = new google.maps.LatLng(lat, long);
+        var mapCanvas = document.getElementById('map-canvas');
+        var mapOptions = {
+            center: new google.maps.LatLng(lat, long),
+            zoom: 4,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+        var map = new google.maps.Map(mapCanvas, mapOptions)
+        geocoder = new google.maps.Geocoder();
+        var marker = new google.maps.Marker({
+            position: latlng,
+            map: map
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: contentString
+        });
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+        });
+    }
+
+    google.maps.event.addDomListener(window, 'load', initialize);
+
+    $(document).on('click', '#open-email-pdf-popup', function() {
+        openSendMailPopUp({'type': CONFIG.get('BOOKING_SEND_MAIL_POPUP'), 'email': $("#loggedInEmail").val(), 'email_content': $("#content").val()});//
+    });
+
+    function openSendMailPopUp(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $('#load-send-mail-content').html(response.view);
+        $('#sendMail').modal();
+
+        return false;
+    }
+
+    $(document).on('click', "#submit-mail", function(event) {
+        var loginBtn = $("#submit-mail");
+        var data = $("#frmSendMail").serialize() + "&type=" + CONFIG.get('BOOKING_SEND_MAIL_SUBMIT') + "&orderId=" + $("#orderId").val();
+        loginBtn.val('Sending..');
+        var response = sendBookingDetailsMail(data);
+        if (typeof response.info.valid != 'undefined' && parseInt(response.info.valid) == 1) {
+            var redirect = (response.info.url.length > 0) ? response.info.url : $("#url").val();
+            window.location.href = redirect;
+            return false;
+        }
+
+        loginBtn.val('Submit');
+        $("#email").focus();
+        event.preventDefault();
+    });
+
+    function sendBookingDetailsMail(data)
+    {
+        var res = executeAjaxRequest('', data, false);
+        var response = $.parseJSON(res);
+        $("span[id^='error_']").html("");
+        if (response.info.error_exists == '1') {
+            $.each(response.info.messages, function(index, value) {
+                if (index == '0') {
+                    $("#errorMessage").append(value);
+                } else {
+                    $("#error_" + index).append(value);
+                }
+            });
+        } else {
+            $("#sendMailForm").css("display", "none");
+            $("#sendMailFormSuccess").css("display", "block");
+            setTimeout(function() {
+                $(".close").trigger("click");
+            }, 3000);
+        }
+
+        return response;
+    }
+</script>
+<?php $__env->stopSection(); ?>
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

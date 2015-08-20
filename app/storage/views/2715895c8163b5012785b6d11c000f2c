@@ -1,0 +1,128 @@
+<?php $__env->startSection('content'); ?>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        <?php echo trans('backend.users.edit_update_user'); ?>
+
+        <small><?php echo trans('backend.users.edit_update_user'); ?></small>
+    </h1>
+    <ol class="breadcrumb">
+        <li><a href="#"><i class="fa fa-dashboard"></i> <?php echo trans('backend.home'); ?></a></li>
+        <li><a href="<?php echo URL::route('admin.user.index'); ?>"><?php echo trans('backend.users.users'); ?></a></li>
+        <li class="active"><?php echo trans('backend.update'); ?></li>
+    </ol>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header">
+                    <h3 class="box-title"><?php echo trans('backend.users.edit_update_user'); ?></h3>
+                </div><!-- /.box-header -->
+                <!-- form start -->
+                <?php echo Form::model($user, ['route' => ['admin.user.update', $user->id ], 'method' => 'patch', 'files' => 'true']); ?>
+
+                <?php echo Form::hidden('roleId', $user->role_id); ?>                
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="firstName"><?php echo trans('backend.users.index_first_name'); ?></label>
+                        <?php echo Form::text('firstName', $user->firstName, ['class' => 'form-control', 'id'=> 'firstName','placeholder' => trans('backend.users.enter_first_name')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('firstName'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName"><?php echo trans('backend.users.index_last_name'); ?></label>
+                        <?php echo Form::text('lastName', $user->lastName, ['class' => 'form-control', 'id'=> 'lastName','placeholder' => trans('backend.users.enter_last_name')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('lastName'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><?php echo trans('backend.users.index_email'); ?></label>
+                        <?php echo Form::text('email', $user->email ,['class' => 'form-control', 'id'=> 'email','placeholder' => trans('backend.users.enter_email')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('email'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="password"><?php echo trans('backend.users.password'); ?></label>
+                        <?php echo Form::Input('password','password',null,['class' => 'form-control', 'id'=> 'password','placeholder' => trans('backend.users.enter_user_password')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('password'); ?></p>
+                    </div>
+
+                    <?php if($user->role_id != '1'): ?>
+                    <div class="form-group">
+                        <label for="role"><?php echo trans('backend.users.select_role'); ?></label>
+                        <?php echo Form::select('role',$roles,$user->role_id,['class' => 'form-control', 'id'=> 'role','placeholder' => 'Select Type']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('role'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="status"><?php echo trans('backend.users.select_status'); ?></label>
+                        <?php echo Form::select('status', array('0' => trans('backend.users.index_inactive'), '1' => trans('backend.users.index_active'), '2' => trans('backend.users.index_blocked')), $user->status, ['class' => 'form-control', 'id'=> 'status']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('status'); ?></p>
+                    </div>
+                    <div class="form-group">
+                        <label for="agencyName"><?php echo trans('backend.users.agencyName'); ?></label>
+                        <?php echo Form::text('agencyName', $user->agencyName ,['class' => 'form-control', 'id'=> 'agencyName','placeholder' => trans('backend.users.enter_agencyName')]); ?>
+
+                        <p class='text-red'><?php echo $errors->first('agencyName'); ?></p>
+                    </div>        
+                    <div class="form-group">
+                        <label for="agencyAddress"><?php echo trans('frontend.agent.profile.agency_address'); ?></label>
+                        <?php echo Form::textarea('agencyAddress',$user->agencyAddress, ['class' => 'form-control',
+                            'id'=> 'agencyAddress','rows' => '5', 'cols' => '10']); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('agencyAddress'); ?></span>
+                    </div>                    
+                    <div class="form-group">
+                        <label for="aboutMe"><?php echo trans('frontend.agent.profile.about_me'); ?></label>
+                        <?php echo Form::textarea('aboutMe',$user->about_me, ['class' => 'form-control',
+                            'id'=> 'aboutMe','rows' => '5', 'cols' => '10']); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('aboutMe'); ?></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="contactNumber"><?php echo trans('frontend.agent.profile.contact_number'); ?></label>
+                        <?php echo Form::text('contactNumber',$user->contactNumber,['class' => 'form-control', 'id'=> 'contactNumber','placeholder' => trans('frontend.agent.profile.enter_contact_number')]); ?>
+
+                        <span class="color-red fontSize12"><?php echo $errors->first('contactNumber'); ?></span>
+                    </div>                    
+                    <?php endif; ?>
+
+                    <div class="form-group">
+                        <label for="image"><?php echo trans('backend.users.user_image'); ?></label>
+                        <?php echo Form::file('image',null,['class' => 'form-control', 'id'=> 'image']); ?>
+
+                        <p class='text-red'><?php echo $errors->first('image'); ?></p>
+                        <br>
+                        <p>
+                            <?php if($user->avtar): ?>
+                            <img src="<?php echo asset('/uploads/avtar/'); ?>/<?php echo $user->avtar; ?>" width="160px;" height="152px;">
+                            <?php else: ?>
+                            <img src="<?php echo asset('/packages/images/'); ?>/user-pic-.png" class="img-circle" alt='<?php echo ucwords(Auth::user()->firstName. " ".Auth::user()->lastName ); ?>'>
+                            <?php endif; ?>
+                        </p>
+                        
+                    </div>
+                    <div class="form-group">
+                        <label for="image"></label>
+                    </div>
+                </div><!-- /.box-body -->
+
+                <div class="box-footer">
+                    <?php echo Form::submit(trans('backend.save'), array('class' => 'btn btn-primary')); ?>
+
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+<?php $__env->stopSection(); ?>
+
+
+<?php echo $__env->make('layouts.admin', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

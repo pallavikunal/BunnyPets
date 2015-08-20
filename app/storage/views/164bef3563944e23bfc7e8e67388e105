@@ -1,0 +1,39 @@
+<div class="modal fade" id="askQuestion" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="askQuestionForm">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Contact Operator</h4>
+                </div>
+                <?php echo Form::open(['name' => 'frmSendQuestion','id' => 'frmSendQuestion']); ?>
+
+                <div class="modal-body">
+                    <?php echo Form::textarea('question',null,['class' => 'popup-textarea', 'id'=> 'question', 'style'=>'resize: none;','rows' => 8, 'cols' => 32, 'placeholder' => "Question*"]); ?>
+
+                    <span id="error_question" class="color-red fontSize12 floatL alignLeft"></span>
+                    <?php echo Form::text('emailAddress',Input::get('email'),['class' => 'popup-input marginTop5', 'id'=> 'emailAddress', 'placeholder' => "Email Address*"]); ?>
+
+                    <span id="error_emailAddress" class="color-red fontSize12 floatL alignLeft"></span>
+                    <?php echo Form::text('contactNumber',null,['class' => 'popup-input marginTop5', 'id'=> 'contactNumber', 'placeholder' => "Contact number"]); ?>
+
+                    <span id="error_contactNumber" class="color-red fontSize12 floatL alignLeft"></span>
+                    <?php echo Form::button("Submit" , array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100' , 'id' => 'submit-question')); ?>
+
+                    <div class="clearfix"></div>
+                </div>
+                <?php echo Form::close(); ?>
+
+            </div>
+            <div id="askQuestionSuccess" style="display: none">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                    <h4 class="modal-title color-yellow MuseoSlab500 alignLeft" id="myModalLabel">Contact Operator</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="color-green fontSize12">Your message has been delivered.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

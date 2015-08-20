@@ -1,0 +1,59 @@
+<?php echo $__env->make('page.banner', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<?php $__env->startSection('content'); ?>
+<div class="container marketing">
+    <!-- Three columns of text below the carousel -->
+    <div class="row marginTop30 marginBottom30">        
+        <div class="col-sm-9">
+
+            <?php if(Session::has('message')): ?>
+            <?php echo Session::get('message'); ?>
+
+            <?php endif; ?>
+
+            <?php if($result['valid'] != '1'): ?>
+            <div class="color-red">
+                Sorry! Your reset password link has expired.                
+            </div>
+            <?php else: ?>            
+            <?php echo Form::open(['route' => 'user.resetpassword','method' => 'post']); ?>
+
+            <div class="userProfile-right-col MuseoSans500">
+                <h3 class="MuseoSans300 color-maroon">Change Password</h3>
+
+                <div class="col-sm-5 floatL">
+                    <ul>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Email</label>
+                            <?php echo Form::text('emailDisable',$result['email'],['class' => 'popup-input', 'id'=> 'email','placeholder' => 'Enter Email', 'disabled'=>"disabled" ]); ?>
+
+                            <?php echo Form::hidden('email',$result['email']); ?>                            
+                        </li>
+                        <li class="marginBottom10">
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">New Password</label>
+                            <?php echo Form::Input('password','password',null,['class' => 'popup-input', 'id'=> 'email','placeholder' => 'Enter Password*']); ?>
+
+                            <span class="color-red"><?php echo $errors->first('password'); ?></span>
+                        </li>
+                        <li class="marginBottom10">                
+                            <label class="MuseoSans300 color-maroon fontSize16 font-sz-normal">Confirm Password</label>
+                            <?php echo Form::Input('password','password_confirmation',null,['class' => 'popup-input', 'id'=> 'password_confirmation','placeholder' => 'Confirm Password*']); ?>                                                        
+                            <span class="color-red"><?php echo $errors->first('password_confirmation'); ?></span>
+                        </li>
+                    </ul>
+                </div>         
+
+                <div class="clearfix"></div>
+                <div class="col-sm-3">        
+                    <?php echo Form::submit('Submit', array('class' => 'btn btn-search1 marginTop20 floatL fontSize14 MuseoSans300 width100')); ?>
+
+                </div>
+            </div>
+            <?php endif; ?>
+            <?php echo Form::close(); ?>            
+
+        </div>
+    </div><!-- /.row -->
+</div>
+<div class="clearfix"></div>
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('layouts.base', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>

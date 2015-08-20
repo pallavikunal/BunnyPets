@@ -1,0 +1,139 @@
+@charset "utf-8";
+/* CSS Document */
+
+/* iPhone 4 ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio : 1.5), only screen and (min-device-pixel-ratio : 1.5) {
+/* Styles */
+}
+
+/* This is only  for android and iphones with min 640px resolutions */
+@media only screen and (min-width:640px) and (-webkit-min-device-pixel-ratio: 2) and (orientation : portrait) {
+.carousel-caption{width:100%; left:5%;}
+.btn-search1{padding-left:2.5%; padding-right:2.5%; background-color:#f7941e; border-color:#f7941e;}
+}
+
+/* This is only 3rd and 4th generation Retina iPads (or tablets with similar resolution) to add @2x graphics, or other features for the tablet's Retina display */
+@media only screen and (min-device-width:768px) and (-webkit-min-device-pixel-ratio: 2) and (orientation : portrait) {
+/* home page banner Styles */
+.carousel-caption{width:100%; left:5%;}
+.btn-search1{padding-left:2.5%; padding-right:2.5%; background-color:#f7941e; border-color:#f7941e;}
+
+}
+
+/* This is only 3rd and 4th generation Retina iPads (or tablets with similar resolution) to add @2x graphics, or other features for the tablet's Retina display */
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation : portrait) {
+/* home page banner Styles */
+.carousel-caption{width:100%; left:5%;}
+.btn-search1{padding-left:2.2%; padding-right:2.2%;}
+
+}
+
+/* This is only 3rd and 4th generation Retina iPads (or tablets with similar resolution) to add @2x graphics, or other features for the tablet's Retina display */
+@media only screen and (-webkit-min-device-pixel-ratio: 2) and (orientation : landscape) {
+/* Styles */
+}
+
+
+/* This is only 1st and 2nd and ipad-air generation for the lower resolution iPad Non Retina display or other features for the tablet's Non Retina display */
+@media only screen and (min-device-width:768px) and (-webkit-min-device-pixel-ratio: 1) and (orientation : portrait) {
+/* home page banner Styles */
+.carousel-caption{width:100%; left:5%;border-radius: 5px;}
+.carousel-caption2{border-radius: 5px;}
+.carousel-caption6{border-radius: 5px;}
+.btn-search1{padding-left:2.2%; padding-right:2.2%; background-color:#f7941e; border-color:#f7941e;}
+.btn-log-in-agent{padding-left:5%; padding-right:5%;background-color:#f7941e; border-color:#f7941e;}
+.input-form-icon3,.input-form-icon1{text-indent:2.3em;}
+.carousel-caption2{width:90%; left:5%;}
+.trip-list{padding-left:2.3%; padding-right:2.3%; background-color:#f7941e; border-color:#f7941e;}
+.input-form-icon2{text-indent:20px;}
+
+/* agent login */
+.carousel-caption3{width:90%; left:5%;}
+.carousel-caption4{width:90%; left:5%;border-radius:5px;}
+.carousel-caption5{width:90%; left:5%;border-radius:5px;}
+
+/*Popular destinations section on home page */
+.m-positionRelative{top:-270px;}
+
+/* footer Styles */
+.footer-container div:nth-child(2){ border-right:0;}
+.footer-link ul{margin:0;padding:0;}
+.footer-link li a{text-align:right; width:125px;}
+.footer-link li:last-child a{text-align:left;}
+.m-Footer-col-1{width:50%; margin-bottom:2%;margin-left:0;}
+.m-botm-logo{margin-left:37%;}
+.m-footer-link-1{margin-left:12%;}
+
+/*search list page*/
+.sub-right{width:100%; margin-left:0;}
+.m-sub-left-colm-sort{width:32%; float:left; margin-top:0;}
+
+/* tour detail page */
+.m-glance-col-R{width:49%;float:left;margin-right:2%;}
+.m-write-col-L{ width:49%;float:left;height:352px;}
+.m-sidebar-module{margin:0;}
+.ui-tabs .ui-tabs-nav li.ui-tabs-active{padding:0 4.2em;}
+
+/* common styles */
+.m-margin-t-6{margin-top:6%;}
+.m-margin-L-R-2{margin-left:2%;margin-right:2%;}
+}
+
+/* This is only 1st and 2nd generation for the lower resolution iPad Non Retina display or other features for the tablet's Non Retina display */
+@media only screen and (min-device-width:768px) and (-webkit-min-device-pixel-ratio: 1) and (orientation : landscape) {
+/*home banner style */
+.btn-search1{padding-left:3%; padding-right:3%;}
+
+/* footer Styles */
+.footer-link ul{margin:0;padding:0;}
+.footer-link li a{text-align:right; width:125px;}
+.footer-link li:last-child a{text-align:left;}
+
+/* Popular destinations section style on home page */
+.region-name{width:223px;}
+.m-positionRelative{top:-250px;}
+
+/*search list page*/
+.sub-right{width:100%; margin-left:0;}
+.input-form-icon3, .input-form-icon1{text-indent:30px;}
+
+
+}
+@media only screen and (min-device-width:1280px) and (-webkit-min-device-pixel-ratio: 1) and (orientation : landscape) {
+/* footer Styles */
+.footer-container{width:97%;}
+}
+@media only screen and (min-width:1400px) and (max-width: 1600px) {
+	/*this is for window desktop */
+.btn-search1{padding-left:4%; padding-right:4%;}
+}
+@media only screen and (min-device-width:1400px) and (max-device-width:1440px) and (-webkit-min-device-pixel-ratio:1)  {
+	/*this is for mac desktop */
+.btn-search1{padding-left:3.6%; padding-right:3.6%;}
+}
+
+
+@media only screen and (min-width:992px) and (max-width: 1199px) {
+/* this is for desktop version only*/
+
+/* tour detail page */
+.container{width:984px;}
+.sidebar-module{width:36%;}
+
+/*agent  login */
+.carousel-caption{border-radius: 5px;}
+.carousel-caption2{border-radius: 5px;}
+.carousel-caption6{border-radius: 5px;}
+.carousel-caption3{width:70%;}
+.carousel-caption4{width:70%;;border-radius:5px;}
+.carousel-caption5{width:70%;border-radius:5px;}
+.btn-log-in-agent{padding-left:5%; padding-right:5%;}
+
+}
+@media only screen and (min-width:768px) and (max-width: 991px) {
+/* this is for desktop version only*/
+
+/* tour detail page */
+.sidebar-module{margin:0;}
+}
+

@@ -1,0 +1,219 @@
+<!-- Modal popup strat here -->
+<div id="agent-register-modal-content"></div>
+<div id="agent-forget-password-modal-content"></div>
+<!-- Modal popup end here --> 
+
+<div class="clearfix"></div>
+<!-- FOOTER -->
+<footer class="footerBG paddingTop40">
+  <!--<p class="pull-right"><a href="#">Back to top</a></p>
+  <p>Â© 2014 Company, Inc. Â· <a href="/#">Privacy</a> Â· <a href="http://getbootstrap.com/examples/carousel/#">Terms</a></p>-->
+    <div class="footer-container min-height100">
+        <div class="width23 container-col floatL borderRight footerColHeight">
+            <div class="marginLeft60P"><img src="<?php echo asset('packages/images/footer-logo.png'); ?>"> </div>
+            <div class="footer-link MuseoSans300 fontSize12">
+                <li><a href="<?php echo URL::to('/'); ?>/agent/about-us" class="alignRight">About Us</a></li>
+                <li><a href="http://www.trailwala.com/blog/badges/" target="_blank">Trailwala Badges</a></li>
+                <!--<li><a href="<?php echo URL::to('/'); ?>/agent/acceptance-of-the-terms-of-use">Terms of Use</a></li>-->
+            </div>
+            <div class="clearfix"></div>
+            <div class="footer-link MuseoSans300 fontSize12 marginTop10">
+                <li><a href="<?php echo URL::to('/'); ?>/agent/contact" class="alignRight">Contact</a></li>
+                <li><a href="<?php echo URL::to('/'); ?>/agent/vendor-agreement">Vendor Agreement</a></li>
+                <!--<li><a href="<?php echo URL::to('/'); ?>/agent/privacy-policy">Privacy Policy</a></li>-->
+            </div>
+            <div class="clearfix"></div>
+            <div class="footer-link MuseoSans300 fontSize12 marginTop10">
+               <!-- <li><a href="<?php echo URL::to('/'); ?>/agent/contact-us">Contact</a></li>
+                <li><a href="<?php echo URL::to('/'); ?>/agent/vendor-agreement">Vendor Agreement</a></li>-->
+                <li><a href="<?php echo URL::to('/'); ?>/agent/privacy-policy" class="alignRight">Privacy Policy</a></li>
+                <li><a href="<?php echo URL::to('/'); ?>/agent/acceptance-of-the-terms-of-use">Terms of Use</a></li>
+            </div>
+        </div>
+        <div class="col-lg-3 col-sm-3 borderRight footerColHeight">
+            <div class="MuseoSlab100 fontSize16 alignCenter marginBottom25">Subscribe to Our Newsletter</div>
+            <div class="clearfix"></div>
+            <div class="input-group width70 floatL marginLeft20">
+                <input type="text" name="email-subscribe" id="email-subscribe" class="form-control" placeholder="Email Address">
+                <p class="alert" id="message">
+                </p>
+            </div>
+            <button class="btn btn-search1 floatL fontSize14 MuseoSans300" type="button" name="subscribe" id="subscribe"><b>Go</b></button>
+        </div>
+        <div class="col-lg-4 col-sm-4 borderRight footerColHeight">
+            <div class="MuseoSlab100 fontSize16 alignCenter marginBottom25">Connect with us</div>
+            <div class="clearfix"></div>
+            <div class="footer-link MuseoSans300 fontSize12 alignCenter">
+                <span class="alignCenter color-whiite width100 floatL"><a href="" class="color-whiite line-height20">find the perfect outdoor adventure in the Indian subcontinent.</a></span>
+                <span class="clearfix"></span>
+                <span class="alignCenter color-whiite width100 floatL"><a href="" class="color-whiite line-height20">find the perfect outdoor adventure in the Indian subcontinent.</a></span>
+                <span class="clearfix"></span>
+                <span class="alignCenter color-whiite width100 floatL"><a href="" class="color-whiite line-height20">find the perfect outdoor adventure in the Indian subcontinent.</a></span>
+                <span class="clearfix"></span>
+                <span class="alignCenter color-whiite width100 floatL "><a href="" class="color-whiite line-height20">find the perfect outdoor adventure in the Indian subcontinent.</a></span>
+            </div>
+        </div>
+        <div class="col-lg-2 col-sm-2 footerColHeight" style="margin-left:21px;">
+            <div class="MuseoSlab100 fontSize16 alignCenter marginBottom25">Connect with us</div>
+            <div class="clearfix"></div>
+            <div class="social-icon">
+                <span><a href="https://www.facebook.com/trailwalainc" target="_blank"><img src="<?php echo asset('packages/images/FB-icon.png'); ?>" width="27" height="26"></a></span>
+                <span><a href="https://twitter.com/trailwala" target="_blank"><img src="<?php echo asset('packages/images/tw-icon.png'); ?>" width="27" height="26"></a></span>
+                <span><a href="http://instagram.com/" target="_blank"><img src="<?php echo asset('packages/images/Instagram.png'); ?>" width="27" height="26"></a></span>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+        <div class="MuseoSans300 marginBottom20 fontSize12 marginTop40 color-grey alignCenter">© 2014-2015 UrbanLogue Pvt. Ltd. All rights reserved.</div>
+        <div class="clearfix"></div>
+    </div>
+</footer>
+
+<script src="<?php echo asset('packages/js/jquery.min.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/bootstrap.min.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/ie10-viewport-bug-workaround.js'); ?>"></script>
+<script src="<?php echo asset('packages/js/common.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/jquery-ui.min.js'); ?>"></script>
+<script type='text/javascript' src="<?php echo asset('packages/js/partner.popup.script.js'); ?>"></script>
+
+<script type="text/javascript">
+var BASE_URL = '<?php echo url("/"); ?>';
+function openPopUp(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $('#agent-register-modal-content').html(response.view);
+    $('#showPartnerRegister').modal();
+
+    return false;
+}
+
+function loginRegister(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $("span[id^='error_']").html("");
+    $("#successMessage").html("");
+
+    if (response.info.error_exists == '1') {
+        $.each(response.info.messages, function(index, value) {
+            $("#error_" + index).append(value);
+        });
+    } else {
+        $("#successMessageRegistration").css("display", "block").append(response.info.messages);
+    }
+
+    return response;
+}
+
+function openForgetPasswordPopUp(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $('#agent-forget-password-modal-content').html(response.view);
+    $('#showPartnerForgotPassword').modal();
+
+    return false;
+}
+
+function callForgetPassword(data)
+{
+    var res = executeAjaxRequest('', data, false);
+    var response = $.parseJSON(res);
+    $("#error_email_forget").html("");
+    $("#successMessage").html("");
+
+    if (response.info.error_exists == '1') {
+        $.each(response.info.messages, function(index, value) {
+            $("#error_email_forget").append(value);
+        });
+    } else {
+        $("#successMessage").append(response.info.messages);
+    }
+
+    return response;
+}
+
+function subscribeUser()
+{
+    var user = $("#email-subscribe").val();
+    if (typeof user != 'undefined') {
+        var data = {
+            'email': user,
+            'type': CONFIG.get('NEWSLETTER_SUBSCRIBE')
+        };
+        $("#message").html('');
+        $("#subscribe").html('<b>Go</b>');
+        var res = executeAjaxRequest($(this), data, false);
+        var result = $.parseJSON(res);
+        if (result.valid == 1) {
+            $("#message").html('<p class="alert alert-success">' + result.message+'</p>');
+            $("#email-subscribe").val('');
+        } else {
+            $("#message").html('<p class="alert alert-danger">' + result.message+'</p>');
+        }
+
+        $("#subscribe").html('<b>Go</b>');
+    }    
+}
+
+$(function() {
+
+
+    $(document).on('click', "#partnerRegister", function() {
+        openPopUp({'type': CONFIG.get('AGENT_REGISTER_PAGE')});
+    });
+
+    $(document).on('click', "#partnerForgotPassword", function() {
+        openForgetPasswordPopUp({'type': CONFIG.get('AGENT_FORGET_PASSWORD_PAGE')});
+    });
+
+$(document).on('submit', "#frmRegister", function(event) {
+        var registrBtn = $("#register-button");
+        var data = $("#frmRegister").serialize() + "&type=" + CONFIG.get('DO_AGENT_REGISTER');
+        registrBtn.val('Signing up..');
+        var response = loginRegister(data);
+        registrBtn.val('Sign Up');        
+        if (response.info.error_exists == '1') {
+            $("#firstName").focus();
+        } else {            
+            window.location.href = response.info.url;
+        }
+        event.preventDefault();
+    });
+
+    $(document).on('submit', "#frmForgetPassword", function(event) {
+        var registrBtn = $("#submit-button");
+        var data = $("#frmForgetPassword").serialize() + "&type=" + CONFIG.get('POST_AGENT_FORGET_PASSWORD');
+        registrBtn.val('Submitting...');
+        var response = callForgetPassword(data);
+        registrBtn.val('Submit');
+        if (parseInt(response.info.error_exists) == 0) {
+            $("#frmForgetPassword")[0].reset();
+            $("#email").focus();
+        }
+        event.preventDefault();
+    });
+    $('#partnerRegister').on('hide.bs.modal', function() {
+
+    });
+
+    $('#partnerForgotPassword').on('hide.bs.modal', function() {
+    });
+
+    $('#myModal').on('hide.bs.modal', function() {
+        //alert('Hey, I heard you like modals...');
+    })
+    
+    $(document).on('click', "#subscribe", function() {
+        subscribeUser();
+    });
+    
+    $(document).on('keyup', "#email-subscribe", function(event) {
+        if (event.keyCode == 13 || event.which == 13) {
+            subscribeUser();
+        }
+    });    
+});
+</script>
+<?php echo $__env->yieldContent('page-script'); ?>
+
